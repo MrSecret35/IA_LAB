@@ -83,7 +83,7 @@
 
 (defrule computer-player-step-n (declare (salience -10))
   (status (step ?s) (mode computer))
-  
+  =>
   (bind ?i_1 (random 1 (length$  (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) ) ) )
   (bind ?r_Pos1 (nth$ ?i_1 (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) )) 
   (bind ?color1  (fact-slot-value ?r_Pos1 colore))
@@ -92,10 +92,8 @@
   (bind ?r_Pos2 (nth$ ?i_2 (find-all-facts  ((?var cp)) (and (neq ?var:posizione ?color1) (and (= ?var:posizione 2) (>= ?var:valore 0)))) )) 
   (bind ?color2  (fact-slot-value ?r_Pos2 colore))
 
-
-  =>
-  (assert (guess (step ?s) (g  ?pos1 ?pos2 purple orange) ))
-  (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 "crlf)
+  (assert (guess (step ?s) (g  ?color1 ?color2 purple orange) ))
+  ;(printout t "Colore: " ?color1 "crlf)    QUESTA RIGA DA ERRORE NON CAPISCO PERCHE'
   (pop-focus)
 )
 
