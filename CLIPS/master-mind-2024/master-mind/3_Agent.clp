@@ -92,7 +92,15 @@
   (bind ?r_Pos2 (nth$ ?i_2 (find-all-facts  ((?var cp)) (and (neq ?var:posizione ?color1) (and (= ?var:posizione 2) (>= ?var:valore 0)))) )) 
   (bind ?color2  (fact-slot-value ?r_Pos2 colore))
 
-  (assert (guess (step ?s) (g  ?color1 ?color2 purple orange) ))
+  (bind ?i_3 (random 1 (length$  (find-all-facts  ((?var cp)) (and (= ?var:posizione 3) (>= ?var:valore 0))) ) ) )
+  (bind ?r_Pos3 (nth$ ?i_3 (find-all-facts  ((?var cp)) (and (neq ?var:posizione ?color2) (and (neq ?var:posizione ?color1) (and (= ?var:posizione 3) (>= ?var:valore 0))))) ))
+  (bind ?color3  (fact-slot-value ?r_Pos3 colore))
+
+  (bind ?i_4 (random 1 (length$  (find-all-facts  ((?var cp)) (and (= ?var:posizione 4) (>= ?var:valore 0))) ) ) )
+  (bind ?r_Pos4 (nth$ ?i_4 (find-all-facts  ((?var cp)) (and (neq ?var:posizione ?color3) (and (neq ?var:posizione ?color2) (and (neq ?var:posizione ?color1) (and (= ?var:posizione 4) (>= ?var:valore 0)))))) ))
+  (bind ?color4  (fact-slot-value ?r_Pos4 colore))
+
+  (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
   ;(printout t "Colore: " ?color1 "crlf)    QUESTA RIGA DA ERRORE NON CAPISCO PERCHE'
   (pop-focus)
 )
