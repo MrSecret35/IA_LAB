@@ -69,6 +69,8 @@
   (status (step 0) (mode computer))
   =>
   (assert (guess (step 0) (g blue green red yellow) ))
+  (printout t "La tua giocata allo step: 0 -> blue green red yellow"crlf)
+
   (pop-focus)
 )
 
@@ -76,6 +78,8 @@
   (status (step 1) (mode computer))
   =>
   (assert (guess (step 1) (g orange white black purple) ))
+  (printout t "La tua giocata allo step: 1 -> orange white black purple " crlf)
+
   (pop-focus)
 )
 
@@ -99,7 +103,7 @@
   (bind ?color4  (fact-slot-value ?r_Pos4 colore))
 
   (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
-  (printout t "Colore: " ?color1 crlf)
+  (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
   (pop-focus)
 )
 
@@ -111,6 +115,8 @@
   (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
   (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c1) (modify ?var (valore (- ?var:valore 100))) )
   (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c2) (modify ?var (valore (- ?var:valore 100))) )
   (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c3) (modify ?var (valore (- ?var:valore 100))) )
@@ -126,6 +132,8 @@
   ?cp3 <- (cp (posizione 3) (colore ?c3) (valore ?v3&:(>= ?v3 0)))
   ?cp4 <- (cp (posizione 4) (colore ?c4) (valore ?v4&:(>= ?v4 0)))
   =>
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
   (modify ?cp1 (valore (- ?v1 100)) )
   (modify ?cp2 (valore (- ?v2 100)) )
   (modify ?cp3 (valore (- ?v3 100)) )
@@ -137,25 +145,12 @@
   (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c4) (modify ?var (valore (+ ?var:valore 0.5))) )
 )
 
-
-(defrule stampa (declare (salience -10))
-  (answer (step ?s) (right-placed ?rp) (miss-placed ?mp))
-  ;?g <- (cp (posizione 1) (colore blue) (valore ?V1))
-  =>
-  ;(modify ?g (valore (+ ?V1 1)) )
-  ;(printout t "Valore Blue " ?V1 crlf)
-  (printout t "Right aaaaaaaaaaa placed " ?rp " missplaced " ?mp crlf)
-  ;(assetr (fatto soluzione proposta))
-)
-
-
+;--------------------------------------------------------
+;-----  da eliminare una volta completate tutte le possibilità
 (defrule stampa (declare (salience -9))
   (answer (step ?s) (right-placed ?rp) (miss-placed ?mp))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-  ;?s1&:(eq(- ?s 1) ?s1)
   =>
-  (printout t "La tua giocata allo step: " ?s " -> " ?c1 " " ?c2 " " ?c3 " " ?c4 crlf)
-  (printout t "Right aaaaaaaaaaa placed " ?rp " missplaced " ?mp crlf)
-  ;(bind ?x (- ?s 1))
-  ;(printout t "Lo step prima era:  " ?x crlf)
+  (printout t "Right placed aaaaaa" ?rp " missplaced " ?mp crlf)
 )
+
