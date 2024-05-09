@@ -8,3 +8,14 @@
 
   (cp (posizione 3) (colore ?pos3&~?pos2&~?pos1) (valore ?n&:(>= ?n 0)))
   (cp (posizione 4) (colore ?pos4&~?pos3&~?pos2&~?pos1) (valore ?n&:(>= ?n 0)))
+
+
+---------------------------------------
+|  g  |  m  |     cp    |   altre op
+---------------------------------------
+|  0  |  0  |   -100,0  | mettere -100 anche alle altre posizioni con lo stesso Colore
+|  0  |  4  |   -100,0  | mettere -100 anche a tutti gli altri colori in tutte le pos (sono sicuro quei colori)
+|  0  |  ?  |   -100,0  | +0,5 ai colori nelle altre posizioni
+|  4  |  0  |    ---    | Vinto
+|  ?  |  0  |      1,0  | 
+|  ?  |  ?  |      1,5  |
