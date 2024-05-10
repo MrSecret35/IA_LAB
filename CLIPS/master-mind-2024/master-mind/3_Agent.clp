@@ -25,41 +25,41 @@
 
 ;(colors blue green red yellow orange white black purple)
 (deffacts colore-posizione
-  (cp (posizione 1) (colore blue)   (valore 0))
-  (cp (posizione 1) (colore green)  (valore 0))
-  (cp (posizione 1) (colore red)    (valore 0))
-  (cp (posizione 1) (colore yellow) (valore 0))
-  (cp (posizione 1) (colore orange) (valore 0))
-  (cp (posizione 1) (colore white)  (valore 0))
-  (cp (posizione 1) (colore black)  (valore 0))
-  (cp (posizione 1) (colore purple) (valore 0))
+  (cp (posizione 1) (colore blue)   (valore 0) )
+  (cp (posizione 1) (colore green)  (valore 0) )
+  (cp (posizione 1) (colore red)    (valore 0) )
+  (cp (posizione 1) (colore yellow) (valore 0) )
+  (cp (posizione 1) (colore orange) (valore 0) )
+  (cp (posizione 1) (colore white)  (valore 0) )
+  (cp (posizione 1) (colore black)  (valore 0) )
+  (cp (posizione 1) (colore purple) (valore 0) )
   ;---------------------------------------------
-  (cp (posizione 2) (colore blue)   (valore 0))
-  (cp (posizione 2) (colore green)  (valore 0))
-  (cp (posizione 2) (colore red)    (valore 0))
-  (cp (posizione 2) (colore yellow) (valore 0))
-  (cp (posizione 2) (colore orange) (valore 0))
-  (cp (posizione 2) (colore white)  (valore 0))
-  (cp (posizione 2) (colore black)  (valore 0))
-  (cp (posizione 2) (colore purple) (valore 0))
+  (cp (posizione 2) (colore blue)   (valore 0) )
+  (cp (posizione 2) (colore green)  (valore 0) )
+  (cp (posizione 2) (colore red)    (valore 0) )
+  (cp (posizione 2) (colore yellow) (valore 0) )
+  (cp (posizione 2) (colore orange) (valore 0) )
+  (cp (posizione 2) (colore white)  (valore 0) )
+  (cp (posizione 2) (colore black)  (valore 0) )
+  (cp (posizione 2) (colore purple) (valore 0) )
   ;---------------------------------------------
-  (cp (posizione 3) (colore blue)   (valore 0))
-  (cp (posizione 3) (colore green)  (valore 0))
-  (cp (posizione 3) (colore red)    (valore 0))
-  (cp (posizione 3) (colore yellow) (valore 0))
-  (cp (posizione 3) (colore orange) (valore 0))
-  (cp (posizione 3) (colore white)  (valore 0))
-  (cp (posizione 3) (colore black)  (valore 0))
-  (cp (posizione 3) (colore purple) (valore 0))
+  (cp (posizione 3) (colore blue)   (valore 0) )
+  (cp (posizione 3) (colore green)  (valore 0) )
+  (cp (posizione 3) (colore red)    (valore 0) )
+  (cp (posizione 3) (colore yellow) (valore 0) )
+  (cp (posizione 3) (colore orange) (valore 0) )
+  (cp (posizione 3) (colore white)  (valore 0) )
+  (cp (posizione 3) (colore black)  (valore 0) )
+  (cp (posizione 3) (colore purple) (valore 0) )
   ;---------------------------------------------
-  (cp (posizione 4) (colore blue)   (valore 0))
-  (cp (posizione 4) (colore green)  (valore 0))
-  (cp (posizione 4) (colore red)    (valore 0))
-  (cp (posizione 4) (colore yellow) (valore 0))
-  (cp (posizione 4) (colore orange) (valore 0))
-  (cp (posizione 4) (colore white)  (valore 0))
-  (cp (posizione 4) (colore black)  (valore 0))
-  (cp (posizione 4) (colore purple) (valore 0))
+  (cp (posizione 4) (colore blue)   (valore 0) )
+  (cp (posizione 4) (colore green)  (valore 0) )
+  (cp (posizione 4) (colore red)    (valore 0) )
+  (cp (posizione 4) (colore yellow) (valore 0) )
+  (cp (posizione 4) (colore orange) (valore 0) )
+  (cp (posizione 4) (colore white)  (valore 0) )
+  (cp (posizione 4) (colore black)  (valore 0) )
+  (cp (posizione 4) (colore purple) (valore 0) )
 )
 ;  ---------------------------------------------
 ;  ------------ Scelta della mossa -------------
@@ -148,15 +148,20 @@
 )
 
 (defrule aggiorna-pesi-0-X (declare (salience -7))
-  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)&:(< ?mp 4)) )
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
 
-  ?cp1 <- (cp (posizione 1) (colore ?c1) (valore ?v1&:(>= ?v1 0)))
-  ?cp2 <- (cp (posizione 2) (colore ?c2) (valore ?v2&:(>= ?v2 0)))
-  ?cp3 <- (cp (posizione 3) (colore ?c3) (valore ?v3&:(>= ?v3 0)))
-  ?cp4 <- (cp (posizione 4) (colore ?c4) (valore ?v4&:(>= ?v4 0)))
   =>
   (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (eq ?var:colore ?c1)) ) ) )
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (eq ?var:colore ?c2)) ) ) )
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (eq ?var:colore ?c3)) ) ) )
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (eq ?var:colore ?c4)) ) ) )
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
 
   (modify ?cp1 (valore (- ?v1 100)) )
   (modify ?cp2 (valore (- ?v2 100)) )
@@ -170,15 +175,19 @@
 )
 
 (defrule aggiorna-pesi-X-0 (declare (salience -7))
-  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (answer (step ?s) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-
-  ?cp1 <- (cp (posizione 1) (colore ?c1) (valore ?v1&:(>= ?v1 0)))
-  ?cp2 <- (cp (posizione 2) (colore ?c2) (valore ?v2&:(>= ?v2 0)))
-  ?cp3 <- (cp (posizione 3) (colore ?c3) (valore ?v3&:(>= ?v3 0)))
-  ?cp4 <- (cp (posizione 4) (colore ?c4) (valore ?v4&:(>= ?v4 0)))
   =>
   (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (eq ?var:colore ?c1)) ) )) 
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (eq ?var:colore ?c2)) ) ))
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (eq ?var:colore ?c3)) ) ))
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (eq ?var:colore ?c4)) ) ))
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
 
   (modify ?cp1 (valore (+ ?v1 1)) )
   (modify ?cp2 (valore (+ ?v2 1)) )
@@ -192,15 +201,20 @@
 )
 
 (defrule aggiorna-pesi-X-X (declare (salience -7))
-  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (answer (step ?s) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
 
-  ?cp1 <- (cp (posizione 1) (colore ?c1) (valore ?v1&:(>= ?v1 0)))
-  ?cp2 <- (cp (posizione 2) (colore ?c2) (valore ?v2&:(>= ?v2 0)))
-  ?cp3 <- (cp (posizione 3) (colore ?c3) (valore ?v3&:(>= ?v3 0)))
-  ?cp4 <- (cp (posizione 4) (colore ?c4) (valore ?v4&:(>= ?v4 0)))
   =>
   (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (eq ?var:colore ?c1)) ) ))
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (eq ?var:colore ?c2)) ) ))
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (eq ?var:colore ?c3)) ) ))
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (eq ?var:colore ?c4)) ) ))
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
 
   (modify ?cp1 (valore (+ ?v1 1.5)) )
   (modify ?cp2 (valore (+ ?v2 1.5)) )
@@ -209,15 +223,20 @@
 )
 
 (defrule aggiorna-pesi-0-4 (declare (salience -7))
-  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(= ?mp 4)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
 
-  ?cp1 <- (cp (posizione 1) (colore ?c1) (valore ?v1&:(>= ?v1 0)))
-  ?cp2 <- (cp (posizione 2) (colore ?c2) (valore ?v2&:(>= ?v2 0)))
-  ?cp3 <- (cp (posizione 3) (colore ?c3) (valore ?v3&:(>= ?v3 0)))
-  ?cp4 <- (cp (posizione 4) (colore ?c4) (valore ?v4&:(>= ?v4 0)))
   =>
   (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (= ?var:colore ?c1)) ) ))
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (= ?var:colore ?c2)) ) ))
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (= ?var:colore ?c3)) ) ))
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (= ?var:colore ?c4)) ) ))
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
 
   (modify ?cp1 (valore (- ?v1 100)) )
   (modify ?cp2 (valore (- ?v2 100)) )
@@ -225,13 +244,4 @@
   (modify ?cp4 (valore (- ?v4 100)) )
 
   (delayed-do-for-all-facts ((?var cp)) (neq (neq (neq (neq ?var:colore ?c1) ?var:colore ?c2) ?var:colore ?c3) ?var:colore ?c4) (modify ?var (valore (- ?var:valore 100))) )
-)
-
-;--------------------------------------------------------
-;-----  da eliminare una volta completate tutte le possibilità
-(defrule stampa (declare (salience -9))
-  (answer (step ?s) (right-placed ?rp) (miss-placed ?mp))
-  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-  =>
-  (printout t "Right placed aaaaaa" ?rp " missplaced " ?mp crlf)
 )
