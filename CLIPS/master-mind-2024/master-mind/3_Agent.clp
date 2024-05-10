@@ -175,10 +175,10 @@
   =>
   (printout t "Right placed " ?rp " missplaced " ?mp crlf)
 
-  (modify ?cp1 (valore (- ?v1 1.5)) )
-  (modify ?cp2 (valore (- ?v2 1.5)) )
-  (modify ?cp3 (valore (- ?v3 1.5)) )
-  (modify ?cp4 (valore (- ?v4 1.5)) )
+  (modify ?cp1 (valore (+ ?v1 1.5)) )
+  (modify ?cp2 (valore (+ ?v2 1.5)) )
+  (modify ?cp3 (valore (+ ?v3 1.5)) )
+  (modify ?cp4 (valore (+ ?v4 1.5)) )
 )
 
 (defrule aggiorna-pesi-0-4 (declare (salience -7))
