@@ -17,5 +17,5 @@
 |  0  |  4  |   -100,0  | mettere -100 anche a tutti gli altri colori in tutte le pos (sono sicuro quei colori)
 |  0  |  ?  |   -100,0  | +0,5 ai colori nelle altre posizioni
 |  4  |  0  |    ---    | Vinto
-|  ?  |  0  |      1,0  | 
+|  ?  |  0  |      1,0  | mettere -100 ai colori nelle altre posizioni
 |  ?  |  ?  |      1,5  |

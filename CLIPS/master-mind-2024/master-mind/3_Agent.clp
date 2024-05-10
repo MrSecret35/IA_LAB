@@ -85,7 +85,7 @@
 
 (defrule computer-player-step-n (declare (salience -10))
   (maxduration ?x)
-  (status (step ?s&:(< ?s ?x)) (mode computer))
+  (status (step ?s&:(< ?s (- ?x 1))) (mode computer))
   =>
   (bind ?i_1 (random 1 (length$  (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) ) ) )
   (bind ?r_Pos1 (nth$ ?i_1 (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) )) 
@@ -112,7 +112,7 @@
 
 (defrule computer-player-step-last (declare (salience -10))
   (maxduration ?x)
-  (status (step ?s&:(= ?s ?x)) (mode computer))
+  (status (step ?s&:(= ?s (- ?x 1))) (mode computer))
   =>
   (bind ?r_Pos1 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) valore) ) )
   (bind ?color1  (fact-slot-value ?r_Pos1 colore))
@@ -126,6 +126,7 @@
   (bind ?r_Pos4 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 4) (>= ?var:valore 0))) valore) ) )
   (bind ?color4  (fact-slot-value ?r_Pos1 colore))
 
+  (printout t "Ultimo GIRO: " ?x crlf)
   (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
   (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
   (pop-focus)
