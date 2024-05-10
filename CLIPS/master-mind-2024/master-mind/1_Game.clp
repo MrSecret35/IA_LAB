@@ -102,6 +102,15 @@
    (printout t "The secret code was: " $?code crlf)
 )  
 
+(defrule for-computer-gameover (declare (salience -15))
+  (status (step ?s) (mode computer))
+  (maxduration ?d&:(>= ?s ?d))
+  (secret-code (code $?code))
+=>
+   (printout t "GAME OVER!! " crlf)
+   (printout t "The secret code was: " $?code crlf)
+)  
+
 (defrule  random-start (declare (salience 100))
 	(random)
 	(not (secret-code (code $?)))

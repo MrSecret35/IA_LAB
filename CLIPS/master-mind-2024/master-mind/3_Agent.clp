@@ -104,6 +104,8 @@
 
   (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
   (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
+  (bind ?x (length$  (find-all-facts  ((?var cp))  (< ?var:valore 0))) ) 
+  (printout t "STAMPA: " ?x crlf)
   (pop-focus)
 )
 
@@ -143,6 +145,59 @@
   (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c2) (modify ?var (valore (+ ?var:valore 0.5))) )
   (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c3) (modify ?var (valore (+ ?var:valore 0.5))) )
   (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c4) (modify ?var (valore (+ ?var:valore 0.5))) )
+)
+
+(defrule aggiorna-pesi-X-0 (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+
+  ?cp1 <- (cp (posizione 1) (colore ?c1) (valore ?v1&:(>= ?v1 0)))
+  ?cp2 <- (cp (posizione 2) (colore ?c2) (valore ?v2&:(>= ?v2 0)))
+  ?cp3 <- (cp (posizione 3) (colore ?c3) (valore ?v3&:(>= ?v3 0)))
+  ?cp4 <- (cp (posizione 4) (colore ?c4) (valore ?v4&:(>= ?v4 0)))
+  =>
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (modify ?cp1 (valore (- ?v1 1)) )
+  (modify ?cp2 (valore (- ?v2 1)) )
+  (modify ?cp3 (valore (- ?v3 1)) )
+  (modify ?cp4 (valore (- ?v4 1)) )
+)
+
+(defrule aggiorna-pesi-X-X (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+
+  ?cp1 <- (cp (posizione 1) (colore ?c1) (valore ?v1&:(>= ?v1 0)))
+  ?cp2 <- (cp (posizione 2) (colore ?c2) (valore ?v2&:(>= ?v2 0)))
+  ?cp3 <- (cp (posizione 3) (colore ?c3) (valore ?v3&:(>= ?v3 0)))
+  ?cp4 <- (cp (posizione 4) (colore ?c4) (valore ?v4&:(>= ?v4 0)))
+  =>
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (modify ?cp1 (valore (- ?v1 1.5)) )
+  (modify ?cp2 (valore (- ?v2 1.5)) )
+  (modify ?cp3 (valore (- ?v3 1.5)) )
+  (modify ?cp4 (valore (- ?v4 1.5)) )
+)
+
+(defrule aggiorna-pesi-0-4 (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+
+  ?cp1 <- (cp (posizione 1) (colore ?c1) (valore ?v1&:(>= ?v1 0)))
+  ?cp2 <- (cp (posizione 2) (colore ?c2) (valore ?v2&:(>= ?v2 0)))
+  ?cp3 <- (cp (posizione 3) (colore ?c3) (valore ?v3&:(>= ?v3 0)))
+  ?cp4 <- (cp (posizione 4) (colore ?c4) (valore ?v4&:(>= ?v4 0)))
+  =>
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (modify ?cp1 (valore (- ?v1 100)) )
+  (modify ?cp2 (valore (- ?v2 100)) )
+  (modify ?cp3 (valore (- ?v3 100)) )
+  (modify ?cp4 (valore (- ?v4 100)) )
+
+  (delayed-do-for-all-facts ((?var cp)) (neq (neq (neq (neq ?var:colore ?c1) ?var:colore ?c2) ?var:colore ?c3) ?var:colore ?c4) (modify ?var (valore (- ?var:valore 100))) )
 )
 
 ;--------------------------------------------------------
