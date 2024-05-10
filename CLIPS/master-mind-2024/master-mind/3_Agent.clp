@@ -74,7 +74,7 @@
   (pop-focus)
 )
 
-(defrule computer-player-step-1 (declare (salience -9))
+(defrule computer-player-step-1 (declare (salience -90))
   (status (step 1) (mode computer))
   =>
   (assert (guess (step 1) (g orange white black purple) ))
@@ -200,8 +200,8 @@
   (delayed-do-for-all-facts ((?var cp)) (and (eq ?var:colore ?c4) (neq ?var:posizione 4)) (modify ?var (valore (- ?var:valore 100))) )
 )
 
-(defrule aggiorna-pesi-X-X (declare (salience -7))
-  (answer (step ?s) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+(defrule aggiorna-pesi-X-X-rp (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(> ?mp 0)&:(> ?rp ?mp)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
 
   =>
@@ -220,6 +220,27 @@
   (modify ?cp2 (valore (+ ?v2 1.5)) )
   (modify ?cp3 (valore (+ ?v3 1.5)) )
   (modify ?cp4 (valore (+ ?v4 1.5)) )
+)
+(defrule aggiorna-pesi-X-X-mp (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(> ?mp 0)&:(<= ?rp ?mp)))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+
+  =>
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (eq ?var:colore ?c1)) ) ))
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (eq ?var:colore ?c2)) ) ))
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (eq ?var:colore ?c3)) ) ))
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (eq ?var:colore ?c4)) ) ))
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
+
+  (modify ?cp1 (valore (+ ?v1 0.5)) )
+  (modify ?cp2 (valore (+ ?v2 0.5)) )
+  (modify ?cp3 (valore (+ ?v3 0.5)) )
+  (modify ?cp4 (valore (+ ?v4 0.5)) )
 )
 
 (defrule aggiorna-pesi-0-4 (declare (salience -7))
