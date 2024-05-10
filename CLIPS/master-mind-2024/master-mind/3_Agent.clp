@@ -84,7 +84,8 @@
 )
 
 (defrule computer-player-step-n (declare (salience -10))
-  (status (step ?s) (mode computer))
+  (maxduration ?x)
+  (status (step ?s&:(< ?s ?x)) (mode computer))
   =>
   (bind ?i_1 (random 1 (length$  (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) ) ) )
   (bind ?r_Pos1 (nth$ ?i_1 (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) )) 
@@ -106,6 +107,27 @@
   (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
   (bind ?x (length$  (find-all-facts  ((?var cp))  (< ?var:valore 0))) ) 
   (printout t "STAMPA: " ?x crlf)
+  (pop-focus)
+)
+
+(defrule computer-player-step-last (declare (salience -10))
+  (maxduration ?x)
+  (status (step ?s&:(= ?s ?x)) (mode computer))
+  =>
+  (bind ?r_Pos1 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) valore) ) )
+  (bind ?color1  (fact-slot-value ?r_Pos1 colore))
+
+  (bind ?r_Pos2 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 2) (>= ?var:valore 0))) valore) ) )
+  (bind ?color2  (fact-slot-value ?r_Pos1 colore))
+
+  (bind ?r_Pos3 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 3) (>= ?var:valore 0))) valore) ) )
+  (bind ?color3  (fact-slot-value ?r_Pos1 colore))
+
+  (bind ?r_Pos4 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 4) (>= ?var:valore 0))) valore) ) )
+  (bind ?color4  (fact-slot-value ?r_Pos1 colore))
+
+  (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
+  (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
   (pop-focus)
 )
 
@@ -158,10 +180,15 @@
   =>
   (printout t "Right placed " ?rp " missplaced " ?mp crlf)
 
-  (modify ?cp1 (valore (- ?v1 1)) )
-  (modify ?cp2 (valore (- ?v2 1)) )
-  (modify ?cp3 (valore (- ?v3 1)) )
-  (modify ?cp4 (valore (- ?v4 1)) )
+  (modify ?cp1 (valore (+ ?v1 1)) )
+  (modify ?cp2 (valore (+ ?v2 1)) )
+  (modify ?cp3 (valore (+ ?v3 1)) )
+  (modify ?cp4 (valore (+ ?v4 1)) )
+
+  (delayed-do-for-all-facts ((?var cp)) (and (eq ?var:colore ?c1) (neq ?var:posizione 1)) (modify ?var (valore (- ?var:valore 100))) )
+  (delayed-do-for-all-facts ((?var cp)) (and (eq ?var:colore ?c2) (neq ?var:posizione 2)) (modify ?var (valore (- ?var:valore 100))) )
+  (delayed-do-for-all-facts ((?var cp)) (and (eq ?var:colore ?c3) (neq ?var:posizione 3)) (modify ?var (valore (- ?var:valore 100))) )
+  (delayed-do-for-all-facts ((?var cp)) (and (eq ?var:colore ?c4) (neq ?var:posizione 4)) (modify ?var (valore (- ?var:valore 100))) )
 )
 
 (defrule aggiorna-pesi-X-X (declare (salience -7))
@@ -208,4 +235,3 @@
   =>
   (printout t "Right placed aaaaaa" ?rp " missplaced " ?mp crlf)
 )
-
