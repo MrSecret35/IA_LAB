@@ -138,20 +138,7 @@
   (bind ?r_Pos4 (nth$ 1(find-all-facts ((?var cp)) (and (= ?var:posizione 4) (= ?var:valore ?valP4)))))
   (bind ?color4 (fact-slot-value ?r_Pos4 colore))
 
-  ;(bind ?r_Pos1 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) valore) ) )
-  ;(bind ?color1  (fact-slot-value ?r_Pos1 colore))
-
-  ;(bind ?r_Pos2 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 2) (>= ?var:valore 0))) valore) ) )
-  ;(bind ?color2  (fact-slot-value ?r_Pos1 colore))
-
-  ;(bind ?r_Pos3 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 3) (>= ?var:valore 0))) valore) ) )
-  ;(bind ?color3  (fact-slot-value ?r_Pos1 colore))
-
-  ;(bind ?r_Pos4 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 4) (>= ?var:valore 0))) valore) ) )
-  ;(bind ?color4  (fact-slot-value ?r_Pos1 colore))
-
   (printout t "Ultimo GIRO: " ?x crlf)
-  ;(assert (guess (step ?s) (g  ?color1 white green orange) ))
   (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
   (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
   (pop-focus)
