@@ -106,27 +106,52 @@
   (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
   (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
   (bind ?x (length$  (find-all-facts  ((?var cp))  (< ?var:valore 0))) ) 
-  (printout t "STAMPA: " ?x crlf)
+  (printout t "Numero possibilità eliminate: " ?x crlf)
   (pop-focus)
 )
 
 (defrule computer-player-step-last (declare (salience -10))
   (maxduration ?x)
   (status (step ?s&:(= ?s (- ?x 1))) (mode computer))
+
+  (cp (posizione 1) (valore ?valP1&:(>= ?valP1 0)))
+  (not (cp (posizione 1) (valore ?valP1_bis&:(> ?valP1_bis ?valP1))))
+
+  (cp (posizione 2) (valore ?valP2&:(>= ?valP2 0)))
+  (not (cp (posizione 2) (valore ?valP2_bis&:(> ?valP2_bis ?valP2))))
+
+  (cp (posizione 3) (valore ?valP3&:(>= ?valP3 0)))
+  (not (cp (posizione 3) (valore ?valP3_bis&:(> ?valP3_bis ?valP3))))
+
+  (cp (posizione 4) (valore ?valP4&:(>= ?valP4 0)))
+  (not (cp (posizione 4) (valore ?valP4_bis&:(> ?valP4_bis ?valP4))))
   =>
-  (bind ?r_Pos1 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) valore) ) )
-  (bind ?color1  (fact-slot-value ?r_Pos1 colore))
+  (bind ?r_Pos1 (nth$ 1(find-all-facts ((?var cp)) (and (= ?var:posizione 1) (= ?var:valore ?valP1)))))
+  (bind ?color1 (fact-slot-value ?r_Pos1 colore))
 
-  (bind ?r_Pos2 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 2) (>= ?var:valore 0))) valore) ) )
-  (bind ?color2  (fact-slot-value ?r_Pos1 colore))
+  (bind ?r_Pos2 (nth$ 1(find-all-facts ((?var cp)) (and (= ?var:posizione 2) (= ?var:valore ?valP2)))))
+  (bind ?color2 (fact-slot-value ?r_Pos2 colore))
 
-  (bind ?r_Pos3 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 3) (>= ?var:valore 0))) valore) ) )
-  (bind ?color3  (fact-slot-value ?r_Pos1 colore))
+  (bind ?r_Pos3 (nth$ 1(find-all-facts ((?var cp)) (and (= ?var:posizione 3) (= ?var:valore ?valP3)))))
+  (bind ?color3 (fact-slot-value ?r_Pos3 colore))
 
-  (bind ?r_Pos4 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 4) (>= ?var:valore 0))) valore) ) )
-  (bind ?color4  (fact-slot-value ?r_Pos1 colore))
+  (bind ?r_Pos4 (nth$ 1(find-all-facts ((?var cp)) (and (= ?var:posizione 4) (= ?var:valore ?valP4)))))
+  (bind ?color4 (fact-slot-value ?r_Pos4 colore))
+
+  ;(bind ?r_Pos1 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) valore) ) )
+  ;(bind ?color1  (fact-slot-value ?r_Pos1 colore))
+
+  ;(bind ?r_Pos2 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 2) (>= ?var:valore 0))) valore) ) )
+  ;(bind ?color2  (fact-slot-value ?r_Pos1 colore))
+
+  ;(bind ?r_Pos3 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 3) (>= ?var:valore 0))) valore) ) )
+  ;(bind ?color3  (fact-slot-value ?r_Pos1 colore))
+
+  ;(bind ?r_Pos4 (nth$ 0 (sort < (find-all-facts  ((?var cp)) (and (= ?var:posizione 4) (>= ?var:valore 0))) valore) ) )
+  ;(bind ?color4  (fact-slot-value ?r_Pos1 colore))
 
   (printout t "Ultimo GIRO: " ?x crlf)
+  ;(assert (guess (step ?s) (g  ?color1 white green orange) ))
   (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
   (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
   (pop-focus)
