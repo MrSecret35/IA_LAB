@@ -50,7 +50,7 @@
 (defrule computer-player-step-0 (declare (salience -9))
   (status (step 0) (mode computer))
   =>
-  (assert (guess (step 0) (g red blue black green) ))
+  (assert (guess (step 0) (g red blue orange green) ))
   (printout t "La tua giocata allo step: 0 -> blue green red yellow"crlf)
   (pop-focus)
 )
@@ -59,7 +59,7 @@
   (status (step ?n) (mode computer))
   =>
   (bind ?l (length (find-all-facts ((?var code)) TRUE)))
-  (assert (guess (step ?n) (g red blue black green) ))
+  (assert (guess (step ?n) (g red blue orange green) ))
   (printout t "mosse rimanenti  " ?l crlf)
   (printout t "La tua giocata allo step: n -> red blue green black" crlf)
   (pop-focus)
@@ -109,12 +109,12 @@
   =>
   (delayed-do-for-all-facts ((?var code)) 
                             (not ( or (or (or (or (or
-                              (and (eq ?var:p1 c1) (eq ?var:p2 c2) )
-                              (and (eq ?var:p1 c1) (eq ?var:p3 c3) ) )
-                              (and (eq ?var:p1 c1) (eq ?var:p4 c4) ) )
-                              (and (eq ?var:p2 c2) (eq ?var:p3 c3) ) )
-                              (and (eq ?var:p2 c2) (eq ?var:p4 c4) ) )
-                              (and (eq ?var:p3 c3) (eq ?var:p4 c4) )  
+                              (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2) )
+                              (and (eq ?var:p1 ?c1) (eq ?var:p3 ?c3) ) )
+                              (and (eq ?var:p1 ?c1) (eq ?var:p4 ?c4) ) )
+                              (and (eq ?var:p2 ?c2) (eq ?var:p3 ?c3) ) )
+                              (and (eq ?var:p2 ?c2) (eq ?var:p4 ?c4) ) )
+                              (and (eq ?var:p3 ?c3) (eq ?var:p4 ?c4) )  
                             ) )
                             (retract ?var)
   )
