@@ -43,26 +43,27 @@
   (assert (code (p1 ?color_1) (p2 ?color_2) (p3 ?color_3) (p4 ?color_4)) )
 )
 
-(defrule computer-player-step-0 (declare (salience -9))
-  (status (step 0) (mode computer))
-  =>
-  (assert (guess (step 0) (g blue green red yellow) ))
-  (printout t "La tua giocata allo step: 0 -> blue green red yellow"crlf)
-  (pop-focus)
-)
-
-(defrule computer-player-step-0 (declare (salience -9))
-  (status (step ?n) (mode computer))
-  =>
-  (assert (guess (step ?n) (g red blue green black) ))
-  (printout t "La tua giocata allo step: 0 -> blue green red yellow"crlf)
-  (pop-focus)
-)
-
 ;  ---------------------------------------------
 ;  ------------ Scelta della mossa -------------
 ;  ---------------------------------------------
 
+(defrule computer-player-step-0 (declare (salience -9))
+  (status (step 0) (mode computer))
+  =>
+  (assert (guess (step 0) (g red blue black green) ))
+  (printout t "La tua giocata allo step: 0 -> blue green red yellow"crlf)
+  (pop-focus)
+)
+
+(defrule computer-player-step-n (declare (salience -10))
+  (status (step ?n) (mode computer))
+  =>
+  (bind ?l (length (find-all-facts ((?var code)) TRUE)))
+  (assert (guess (step ?n) (g red blue black green) ))
+  (printout t "mosse rimanenti  " ?l crlf)
+  (printout t "La tua giocata allo step: n -> red blue green black" crlf)
+  (pop-focus)
+)
 
 ;  ---------------------------------------------
 ;  -------- Esame mossa / Cambio Valori --------
@@ -81,6 +82,16 @@
 ;  ---------------------------------------------
 ;  -------- RP --------
 ;  ---------------------------------------------
+(defrule elimina_facts_rp_0 (declare (salience -7))
+  (rp (valore 0) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  ?g <- (code (p1 ?color_1) 
+        (p2 ?color_2)
+        (p3 ?color_3) 
+        (p4 ?color_4) )
+  =>
+  (retract ?g)
+)
 (defrule elimina_facts_rp_1 (declare (salience -7))
   (rp (valore 1) (step ?s))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
@@ -97,18 +108,26 @@
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
   (delayed-do-for-all-facts ((?var code)) 
-                            (eq ?var:p1 blue)
-                            (printout t "il valore: " ?var:p1 ) 
+                            (not ( or (or (or (or (or
+                              (and (eq ?var:p1 c1) (eq ?var:p2 c2) )
+                              (and (eq ?var:p1 c1) (eq ?var:p3 c3) ) )
+                              (and (eq ?var:p1 c1) (eq ?var:p4 c4) ) )
+                              (and (eq ?var:p2 c2) (eq ?var:p3 c3) ) )
+                              (and (eq ?var:p2 c2) (eq ?var:p4 c4) ) )
+                              (and (eq ?var:p3 c3) (eq ?var:p4 c4) )  
+                            ) )
+                            (retract ?var)
   )
 )
 (defrule elimina_facts_rp_3 (declare (salience -7))
-  (rp (valore 2) (step ?s))
+  (rp (valore 3) (step ?s))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
   (delayed-do-for-all-facts ((?var code)) 
-                            (or (or (or (and (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2))(eq ?var:p3 ?c3))
+                            (not (or (or (or (and (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2))(eq ?var:p3 ?c3))
                             (and (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2))(eq ?var:p4 ?c4)))
                             (and (and (eq ?var:p1 ?c1) (eq ?var:p3 ?c3))(eq ?var:p4 ?c4)))
-                            (and (and (eq ?var:p2 ?c2) (eq ?var:p3 ?c3))(eq ?var:p4 ?c4))) 
+                            (and (and (eq ?var:p2 ?c2) (eq ?var:p3 ?c3))(eq ?var:p4 ?c4))))
+                            (retract ?var)
   )
 )
