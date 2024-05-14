@@ -19,3 +19,86 @@
 |  4  |  0  |    ---    | Vinto
 |  ?  |  0  |      1,0  | mettere -100 ai colori nelle altre posizioni
 |  ?  |  ?  |      1,5  |
+
+
+
+
+--------------------------------
+|  g  | Cosa Fare: c1 c2 c3 c4
+--------------------------------
+|  0  |  eliminare la combinazione corrente
+|  1  |  eliminare tutte le combinazioni che NON hanno:
+            c1 come 1 posizione
+            OR c2 come 2 pos
+            OR c3 come 3 pos
+            OR c4 come 4 pos
+          eliminare tutti i code che hanno
+            c1 not in 1
+            && c2 not in 2
+            && c3 not in 3
+            && c4 not in 4
+
+          a b c d 
+          b a d c 
+          a c d b 
+          
+
+
+|  2  |   eliminare tutte le combinazioni che NON hanno:
+            c1 c2 __ __
+            c1 __ c3 __
+            c1 __ __ c4
+            __ c2 c3 __
+            __ c2 __ c4
+            __ __ c3 c4
+|  3  |   eliminare tutte le combinazioni che NON hanno:
+            c1 c2 c3 __
+            c1 c2 __ c4
+            c1 __ c3 c4
+            __ c2 c3 c4
+
+--------------------------------
+|  mp  | Cosa Fare: c1 c2 c3 c4
+--------------------------------
+|  0  | eliminare la combinazione corrente 
+|  1  | eliminare tutte le combinazioni che non hanno:
+          c1 __ __ __
+          __ c1 __ __
+          __ __ c1 __
+          __ __ __ c1
+          OR
+          c2 __ __ __
+          __ c2 __ __
+          __ __ c2 __
+          __ __ __ c2
+          OR
+          c3 __ __ __
+          __ c3 __ __
+          __ __ c3 __
+          __ __ __ c3
+          OR
+          c4 __ __ __
+          __ c4 __ __
+          __ __ c4 __
+          __ __ __ c4
+
+|  2  | eliminare tutte le combinazioni che non hanno:
+          (c1 c2)(c1 c3)(c1 c4)(c2 c1)(c2 c3)(c2 c4)(c3 c1)(c3 c2)(c3 c4)(c4 c1)(c4 c2)(c4 c3)
+          c1 c2 __ __
+          c1 __ c2 __
+          c1 __ __ c2
+          __ c1 c2 __
+          __ c1 __ c2
+          __ __ c1 c2
+          OR ...
+|  3  |
+|  4  |
+
+
+
+
+a b c d 
+ 1
+
+tutti dove non ci sono ne a ne b ne c ne d
+
