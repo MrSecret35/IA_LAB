@@ -51,6 +51,8 @@
             __ c2 c3 __
             __ c2 __ c4
             __ __ c3 c4
+
+            
 |  3  |   eliminare tutte le combinazioni che NON hanno:
             c1 c2 c3 __
             c1 c2 __ c4
