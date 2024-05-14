@@ -17,6 +17,10 @@
   (slot valore)
   (slot step)
 )
+(deftemplate mp
+  (slot valore)
+  (slot step)
+)
 
 (deftemplate code
   (slot p1) (slot p2) (slot p3) (slot p4)
@@ -50,7 +54,7 @@
 (defrule computer-player-step-0 (declare (salience -9))
   (status (step 0) (mode computer))
   =>
-  (assert (guess (step 0) (g red blue orange green) ))
+  (assert (guess (step 0) (g orange green blue purple) ))
   (printout t "La tua giocata allo step: 0 -> blue green red yellow"crlf)
   (pop-focus)
 )
@@ -59,7 +63,7 @@
   (status (step ?n) (mode computer))
   =>
   (bind ?l (length (find-all-facts ((?var code)) TRUE)))
-  (assert (guess (step ?n) (g red blue orange green) ))
+  (assert (guess (step ?n) (g orange green blue purple) ))
   (printout t "mosse rimanenti  " ?l crlf)
   (printout t "La tua giocata allo step: n -> red blue green black" crlf)
   (pop-focus)
@@ -74,21 +78,23 @@
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
   (assert (rp (valore ?rp) (step ?s)))
+  (assert (mp (valore ?mp) (step ?s)))
   ;(assert (miss-placed ?mp))
 
   (printout t "Right placed " ?rp " missplaced " ?mp crlf)
 
 )
+
 ;  ---------------------------------------------
 ;  -------- RP --------
 ;  ---------------------------------------------
 (defrule elimina_facts_rp_0 (declare (salience -7))
   (rp (valore 0) (step ?s))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-  ?g <- (code (p1 ?color_1) 
-        (p2 ?color_2)
-        (p3 ?color_3) 
-        (p4 ?color_4) )
+  ?g <- (code (p1 ?c1) 
+        (p2 ?c2)
+        (p3 ?c3) 
+        (p4 ?c4) )
   =>
   (retract ?g)
 )
@@ -128,6 +134,24 @@
                             (and (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2))(eq ?var:p4 ?c4)))
                             (and (and (eq ?var:p1 ?c1) (eq ?var:p3 ?c3))(eq ?var:p4 ?c4)))
                             (and (and (eq ?var:p2 ?c2) (eq ?var:p3 ?c3))(eq ?var:p4 ?c4))))
+                            (retract ?var)
+  )
+)
+
+;  ---------------------------------------------
+;  -------- MP --------iteral slot value found in the assert command
+does not match the allowed values for s
+;  ---------------------------------------------
+(defrule elimina_facts_mp_1 (declare (salience -7))
+  (mp (valore 1) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code)) 
+                            (and (and (and 
+                            (not (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) )
+                            (not (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) )
+                            (not (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) )
+                            (not (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) )
                             (retract ?var)
   )
 )
