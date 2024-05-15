@@ -139,8 +139,7 @@
 )
 
 ;  ---------------------------------------------
-;  -------- MP --------iteral slot value found in the assert command
-does not match the allowed values for s
+;  -------- MP --------
 ;  ---------------------------------------------
 (defrule elimina_facts_mp_1 (declare (salience -7))
   (mp (valore 1) (step ?s))
@@ -152,6 +151,20 @@ does not match the allowed values for s
                             (not (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) )
                             (not (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) )
                             (not (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) )
+                            (retract ?var)
+  )
+)
+
+(defrule elimina_facts_mp_4 (declare (salience -7))
+  (mp (valore 4) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code)) 
+                            (not (and (and (and 
+                            (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                            (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) )
+                            (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) )
+                            (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) )
                             (retract ?var)
   )
 )
