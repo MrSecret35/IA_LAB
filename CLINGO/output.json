@@ -1,47 +1,22 @@
 {
-    "Call": [
-        {
-            "Witnesses": [
-                {
-                    "Value": [
-                        "assign_andata(1,corigliano,milan)",
-                        "assign_andata(1,domodossola,cumiana)",
-                        "assign_andata(1,inter,juve)",
-                        "assign_andata(2,domodossola,cumiana)",
-                        "assign_andata(2,inter,corigliano)",
-                        "assign_andata(2,juve,milan)",
-                        "assign_andata(3,inter,cumiana)",
-                        "assign_andata(3,juve,domodossola)",
-                        "assign_andata(3,milan,corigliano)",
-                        "assign_ritorno(1,cumiana,corigliano)",
-                        "assign_ritorno(1,domodossola,juve)",
-                        "assign_ritorno(1,milan,inter)",
-                        "assign_ritorno(2,domodossola,corigliano)",
-                        "assign_ritorno(2,inter,milan)",
-                        "assign_ritorno(2,juve,cumiana)",
-                        "assign_ritorno(3,corigliano,juve)",
-                        "assign_ritorno(3,cumiana,milan)",
-                        "assign_ritorno(3,domodossola,inter)"
-                    ]
-                }
-            ]
-        }
-    ],
-    "Calls": 1,
+    "Solver": "clingo version 5.4.1",
     "Input": [
         "go.cl"
     ],
+    "Call": [
+        {}
+    ],
+    "Result": "UNSATISFIABLE",
     "Models": {
-        "Number": 1,
-        "More": "yes"
+        "Number": 0,
+        "More": "no"
     },
-    "Result": "SATISFIABLE",
-    "Solver": "clingo version 5.4.1",
+    "Calls": 1,
     "Time": {
-        "Total": 0.005,
+        "Total": 0.007,
         "Solve": 0.0,
         "Model": 0.0,
         "Unsat": 0.0,
-        "CPU": 0.005
+        "CPU": 0.007
     }
 }

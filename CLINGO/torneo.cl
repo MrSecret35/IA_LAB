@@ -12,6 +12,14 @@
 % nessuna squadra giochi contro se stessa
 :- assign_andata(G,S1,S1).
 
+% non esistano giornate con partine invertine nello stesso girone
+:- assign_andata(G,S1,S2), assign_andata(G1,S2,S1).
+
+% non esistano giornate con la stessa partita nello stesso girone
+:- assign_andata(G,S1,S2), assign_andata(G1,S1,S2).
+
+
+
 %-------------------------------------------------
 %-------------------- Ritorno -------------------- 
 %-------------------------------------------------
@@ -26,9 +34,19 @@
 % nessuna squadra giochi contro se stessa
 :- assign_ritorno(G,S1,S1).
 
+% non esistano giornate con partine invertine nello stesso girone
+:- assign_ritorno(G,S1,S2), assign_ritorno(G1,S2,S1).
+
+% non esistano giornate con la stessa partita nello stesso girone
+:- assign_ritorno(G,S1,S2), assign_ritorno(G1,S1,S2).
+
 %-------------------------------------------------
 %------------------- Controlli ------------------- 
 %-------------------------------------------------
 
+%non esistano giornate speculati
 :- assign_andata(G,S1,S2), assign_ritorno(G,S1,S2).
 :- assign_andata(G,S1,S2), assign_ritorno(G,S2,S1).
+
+%una squadra non giochi 2 volte contro la stessa in casa o fuori casa
+:- assign_andata(G,S1,S2), assign_ritorno(G1,S1,S2).

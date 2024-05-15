@@ -1,2 +1,2 @@
-giornata_andata(1..3).
-giornata_ritorno(1..3). 
+giornata_andata(1..5).
+giornata_ritorno(1..5). 
