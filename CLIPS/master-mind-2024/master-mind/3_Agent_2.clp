@@ -54,8 +54,12 @@
 (defrule computer-player-step-0 (declare (salience -9))
   (status (step 0) (mode computer))
   =>
+  (bind ?l (length (find-all-facts ((?var code)) TRUE)))
+  (printout t "mosse rimanenti  " ?l crlf)
+
   (assert (guess (step 0) (g blue red yellow green) ))
   (printout t "La tua giocata allo step: 0 -> blue red yellow green"crlf)
+
   (pop-focus)
 )
 
@@ -63,6 +67,8 @@
   (status (step ?n) (mode computer))
   =>
   (bind ?l (length (find-all-facts ((?var code)) TRUE)))
+  (printout t "mosse rimanenti  " ?l crlf)
+
   (bind ?i (random 0 ?l) )
   (bind ?g (nth ?i (find-all-facts ((?var code)) TRUE) ) )
 
@@ -72,8 +78,8 @@
   (bind ?c4  (fact-slot-value ?g p4))
 
   (assert (guess (step ?n) (g ?c1 ?c2 ?c3 ?c4) ))
-  (printout t "mosse rimanenti  " ?l crlf)
   (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?c3 " " ?c4 crlf)
+
   (pop-focus)
 )
 
@@ -94,7 +100,7 @@
 )
 
 ;  ---------------------------------------------
-;  -------- RP --------
+;  --------------- Right pPlaced ---------------
 ;  ---------------------------------------------
 
 (defrule elimina_facts_rp_0 (declare (salience -7))
@@ -152,7 +158,7 @@
 )
 
 ;  ---------------------------------------------
-;  -------- MP --------
+;  ---------------- Miss Placed ----------------
 ;  ---------------------------------------------
 (defrule elimina_facts_mp_0 (declare (salience -7))
   (mp (valore 0) (step ?s))

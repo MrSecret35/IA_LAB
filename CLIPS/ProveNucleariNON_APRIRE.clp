@@ -41,8 +41,6 @@
           a b c d 
           b a d c 
           a c d b 
-          
-
 
 |  2  |   eliminare tutte le combinazioni che NON hanno:
             c1 c2 __ __
@@ -51,8 +49,6 @@
             __ c2 c3 __
             __ c2 __ c4
             __ __ c3 c4
-
-            
 |  3  |   eliminare tutte le combinazioni che NON hanno:
             c1 c2 c3 __
             c1 c2 __ c4
@@ -62,36 +58,44 @@
 --------------------------------
 |  mp  | Cosa Fare: c1 c2 c3 c4
 --------------------------------
-|  0  | eliminare la combinazione corrente 
-|  1  | eliminare tutte le combinazioni che non hanno:
-          c1 __ __ __
+|  0  | eliminare la combinazione corrente ---> NO
+        elimino tutte le combinazioni che contengono questi colori tranne quella corrente
+|  1  | eliminare tutte le combinazioni che hanno:
+          not
+          
           __ c1 __ __
           __ __ c1 __
           __ __ __ c1
-          OR
+        AND
+          not
           c2 __ __ __
-          __ c2 __ __
+          _
           __ __ c2 __
           __ __ __ c2
-          OR
+        AND
+          not
           c3 __ __ __
           __ c3 __ __
-          __ __ c3 __
+         
           __ __ __ c3
-          OR
+        AND
+          not
           c4 __ __ __
           __ c4 __ __
           __ __ c4 __
-          __ __ __ c4
+          
 
 |  2  | eliminare tutte le combinazioni che non hanno:
           (c1 c2)(c1 c3)(c1 c4)(c2 c1)(c2 c3)(c2 c4)(c3 c1)(c3 c2)(c3 c4)(c4 c1)(c4 c2)(c4 c3)
+          (c1 c2)(c2 c1)(c1 c3)(c3 c1)(c1 c4)(c4 c1)(c2 c3)(c3 c2)(c2 c4)(c4 c2)(c3 c4)(c4 c3)
           c1 c2 __ __
           c1 __ c2 __
           c1 __ __ c2
           __ c1 c2 __
           __ c1 __ c2
           __ __ c1 c2
+
+          Ci sia c1 e c2.
           OR ...
 |  3  |
 |  4  |
