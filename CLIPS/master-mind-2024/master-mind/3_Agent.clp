@@ -19,10 +19,6 @@
   (slot valore) ; valore associato a ciascuna lettera-posizione
 )
 
-(deftemplate cps
-  (multislot cp (cardinality 8 8))
-)
-
 ;(colors blue green red yellow orange white black purple)
 (deffacts colore-posizione
   (cp (posizione 1) (colore blue)   (valore 0) )
@@ -61,6 +57,9 @@
   (cp (posizione 4) (colore black)  (valore 0) )
   (cp (posizione 4) (colore purple) (valore 0) )
 )
+
+
+
 ;  ---------------------------------------------
 ;  ------------ Scelta della mossa -------------
 ;  ---------------------------------------------
@@ -143,6 +142,8 @@
   (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
   (pop-focus)
 )
+
+
 
 ;  ---------------------------------------------
 ;  -------- Esame mossa / Cambio Valori --------
@@ -234,6 +235,7 @@
   (modify ?cp3 (valore (+ ?v3 1.5)) )
   (modify ?cp4 (valore (+ ?v4 1.5)) )
 )
+
 (defrule aggiorna-pesi-X-X-mp (declare (salience -7))
   (answer (step ?s) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(> ?mp 0)&:(<= ?rp ?mp)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )

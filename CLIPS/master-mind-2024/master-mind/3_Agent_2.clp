@@ -47,6 +47,8 @@
   (assert (code (p1 ?color_1) (p2 ?color_2) (p3 ?color_3) (p4 ?color_4)) )
 )
 
+
+
 ;  ---------------------------------------------
 ;  ------------ Scelta della mossa -------------
 ;  ---------------------------------------------
@@ -83,6 +85,8 @@
   (pop-focus)
 )
 
+
+
 ;  ---------------------------------------------
 ;  -------- Esame mossa / Cambio Valori --------
 ;  ---------------------------------------------
@@ -99,8 +103,10 @@
 
 )
 
+
+
 ;  ---------------------------------------------
-;  --------------- Right pPlaced ---------------
+;  --------------- Right Placed ----------------
 ;  ---------------------------------------------
 
 (defrule elimina_facts_rp_0 (declare (salience -7))
@@ -128,6 +134,7 @@
   ;(printout t "elimino: " ?color_1 "  "  ?color_2 "  "  ?color_3 "  "  ?color_4 crlf)
   (retract ?g)
 )
+
 (defrule elimina_facts_rp_2 (declare (salience -7))
   (rp (valore 2) (step ?s))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
@@ -144,6 +151,7 @@
                             (retract ?var)
   )
 )
+
 (defrule elimina_facts_rp_3 (declare (salience -7))
   (rp (valore 3) (step ?s))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
@@ -156,6 +164,8 @@
                             (retract ?var)
   )
 )
+
+
 
 ;  ---------------------------------------------
 ;  ---------------- Miss Placed ----------------
