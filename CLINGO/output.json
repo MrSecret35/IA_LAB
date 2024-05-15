@@ -8,37 +8,36 @@
             "Witnesses": [
                 {
                     "Value": [
-                        "assign_andata(1,corigliano,milan)",
+                        "assign_andata(1,corigliano,domodossola)",
                         "assign_andata(1,cumiana,inter)",
-                        "assign_andata(1,domodossola,juve)",
-                        "assign_andata(2,corigliano,juve)",
+                        "assign_andata(1,milan,juve)",
                         "assign_andata(2,cumiana,milan)",
-                        "assign_andata(2,domodossola,inter)",
-                        "assign_andata(3,corigliano,inter)",
+                        "assign_andata(2,domodossola,juve)",
+                        "assign_andata(2,inter,corigliano)",
                         "assign_andata(3,domodossola,cumiana)",
-                        "assign_andata(3,milan,juve)",
-                        "assign_andata(4,corigliano,cumiana)",
-                        "assign_andata(4,domodossola,milan)",
-                        "assign_andata(4,inter,juve)",
-                        "assign_andata(5,cumiana,juve)",
-                        "assign_andata(5,domodossola,corigliano)",
-                        "assign_andata(5,milan,inter)",
-                        
+                        "assign_andata(3,inter,milan)",
+                        "assign_andata(3,juve,corigliano)",
+                        "assign_andata(4,corigliano,milan)",
+                        "assign_andata(4,cumiana,juve)",
+                        "assign_andata(4,inter,domodossola)",
+                        "assign_andata(5,corigliano,cumiana)",
+                        "assign_andata(5,juve,inter)",
+                        "assign_andata(5,milan,domodossola)",
+                        "assign_ritorno(1,corigliano,juve)",
                         "assign_ritorno(1,cumiana,domodossola)",
-                        "assign_ritorno(1,inter,corigliano)",
-                        "assign_ritorno(1,juve,milan)",
-                        "assign_ritorno(2,inter,cumiana)",
-                        "assign_ritorno(2,juve,domodossola)",
+                        "assign_ritorno(1,milan,inter)",
+                        "assign_ritorno(2,domodossola,inter)",
+                        "assign_ritorno(2,juve,cumiana)",
                         "assign_ritorno(2,milan,corigliano)",
-                        "assign_ritorno(3,inter,domodossola)",
-                        "assign_ritorno(3,juve,corigliano)",
-                        "assign_ritorno(3,milan,cumiana)",
-                        "assign_ritorno(4,corigliano,domodossola)",
-                        "assign_ritorno(4,inter,milan)",
-                        "assign_ritorno(4,juve,cumiana)",
-                        "assign_ritorno(5,cumiana,corigliano)",
-                        "assign_ritorno(5,juve,inter)",
-                        "assign_ritorno(5,milan,domodossola)"
+                        "assign_ritorno(3,cumiana,corigliano)",
+                        "assign_ritorno(3,domodossola,milan)",
+                        "assign_ritorno(3,inter,juve)",
+                        "assign_ritorno(4,domodossola,corigliano)",
+                        "assign_ritorno(4,inter,cumiana)",
+                        "assign_ritorno(4,juve,milan)",
+                        "assign_ritorno(5,corigliano,inter)",
+                        "assign_ritorno(5,juve,domodossola)",
+                        "assign_ritorno(5,milan,cumiana)"
                     ]
                 }
             ]
@@ -51,10 +50,10 @@
     },
     "Calls": 1,
     "Time": {
-        "Total": 0.01,
-        "Solve": 0.001,
-        "Model": 0.001,
+        "Total": 0.012,
+        "Solve": 0.002,
+        "Model": 0.002,
         "Unsat": 0.0,
-        "CPU": 0.01
+        "CPU": 0.012
     }
 }

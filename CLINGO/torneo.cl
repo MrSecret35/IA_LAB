@@ -18,6 +18,9 @@
 % non esistano giornate con la stessa partita nello stesso girone
 :- assign_andata(G,S1,S2), assign_andata(G1,S1,S2), G!=G1.
 
+%Due squadre che appartengono alla stessa città non possono giocare in casa nello stesso giorno
+:- assign_andata(G,S1,S2), sc(S1,C1), sc(S3,C1), assign_andata(G,S3,S4), S1!=S3.
+
 
 
 %-------------------------------------------------
@@ -39,6 +42,9 @@
 
 % non esistano giornate con la stessa partita nello stesso girone
 :- assign_ritorno(G,S1,S2), assign_ritorno(G1,S1,S2), G!=G1.
+
+%Due squadre che appartengono alla stessa città non possono giocare in casa nello stesso giorno
+:- assign_ritorno(G,S1,S2), sc(S1,C1), sc(S3,C1), assign_ritorno(G,S3,S4), S1!=S3.
 
 %-------------------------------------------------
 %------------------- Controlli ------------------- 
