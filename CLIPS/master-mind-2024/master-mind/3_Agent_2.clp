@@ -63,9 +63,17 @@
   (status (step ?n) (mode computer))
   =>
   (bind ?l (length (find-all-facts ((?var code)) TRUE)))
-  (assert (guess (step ?n) (g orange green blue red) ))
+  (bind ?i (random 0 ?l) )
+  (bind ?g (nth ?i (find-all-facts ((?var code)) TRUE) ) )
+
+  (bind ?c1  (fact-slot-value ?g p1))
+  (bind ?c2  (fact-slot-value ?g p2))
+  (bind ?c3  (fact-slot-value ?g p3))
+  (bind ?c4  (fact-slot-value ?g p4))
+
+  (assert (guess (step ?n) (g ?c1 ?c2 ?c3 ?c4) ))
   (printout t "mosse rimanenti  " ?l crlf)
-  (printout t "La tua giocata allo step: n -> red blue green black" crlf)
+  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?c3 " " ?c4 crlf)
   (pop-focus)
 )
 
@@ -88,16 +96,21 @@
 ;  ---------------------------------------------
 ;  -------- RP --------
 ;  ---------------------------------------------
+
 (defrule elimina_facts_rp_0 (declare (salience -7))
   (rp (valore 0) (step ?s))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-  ?g <- (code (p1 ?c1) 
-        (p2 ?c2)
-        (p3 ?c3) 
-        (p4 ?c4) )
   =>
-  (retract ?g)
+  (delayed-do-for-all-facts ((?var code)) 
+                            (or (or (or
+                            (eq ?var:p1 ?c1)
+                            (eq ?var:p2 ?c2) ) 
+                            (eq ?var:p3 ?c3) ) 
+                            (eq ?var:p4 ?c4) )
+                            (retract ?var)
+  )
 )
+
 (defrule elimina_facts_rp_1 (declare (salience -7))
   (rp (valore 1) (step ?s))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
@@ -141,6 +154,20 @@
 ;  ---------------------------------------------
 ;  -------- MP --------
 ;  ---------------------------------------------
+(defrule elimina_facts_mp_0 (declare (salience -7))
+  (mp (valore 0) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code)) 
+                            (and (and (and 
+                            (or (or (eq ?var:p2 ?c1) (eq ?var:p3 ?c1) ) (eq ?var:p4 ?c1) )
+                            (or (or (eq ?var:p1 ?c2) (eq ?var:p3 ?c2) ) (eq ?var:p4 ?c2) ) )
+                            (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p4 ?c3) ) )
+                            (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) ) )
+                            (retract ?var)
+  )
+)
+
 (defrule elimina_facts_mp_1 (declare (salience -7))
   (mp (valore 1) (step ?s))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
