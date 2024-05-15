@@ -54,8 +54,8 @@
 (defrule computer-player-step-0 (declare (salience -9))
   (status (step 0) (mode computer))
   =>
-  (assert (guess (step 0) (g orange green blue red) ))
-  (printout t "La tua giocata allo step: 0 -> blue green red yellow"crlf)
+  (assert (guess (step 0) (g blue red yellow green) ))
+  (printout t "La tua giocata allo step: 0 -> blue red yellow green"crlf)
   (pop-focus)
 )
 
@@ -201,6 +201,29 @@
                                       (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ) )
                             (not (and (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) 
                                       (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ) )
+                            
+                            (retract ?var)
+  )
+)
+
+(defrule elimina_facts_mp_3 (declare (salience -7))
+  (mp (valore 3) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code))
+                             
+                            (and (and (and (not (and (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                                      (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) 
+                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) )
+                            (not (and (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                                      (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) 
+                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ))
+                            (not (and (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) 
+                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ))
+                            (not (and (and (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) 
+                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) 
+                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ))
                             
                             (retract ?var)
   )
