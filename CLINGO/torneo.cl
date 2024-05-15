@@ -16,7 +16,7 @@
 :- assign_andata(G,S1,S2), assign_andata(G1,S2,S1).
 
 % non esistano giornate con la stessa partita nello stesso girone
-:- assign_andata(G,S1,S2), assign_andata(G1,S1,S2).
+:- assign_andata(G,S1,S2), assign_andata(G1,S1,S2), G!=G1.
 
 
 
@@ -38,7 +38,7 @@
 :- assign_ritorno(G,S1,S2), assign_ritorno(G1,S2,S1).
 
 % non esistano giornate con la stessa partita nello stesso girone
-:- assign_ritorno(G,S1,S2), assign_ritorno(G1,S1,S2).
+:- assign_ritorno(G,S1,S2), assign_ritorno(G1,S1,S2), G!=G1.
 
 %-------------------------------------------------
 %------------------- Controlli ------------------- 
