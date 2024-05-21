@@ -1,0 +1,62 @@
+L'algoritmo A* (A-star) è un algoritmo di ricerca utilizzato per trovare il percorso più breve tra due nodi in un grafo, spesso utilizzato in contesti di navigazione e intelligenza artificiale, come nei giochi e nei sistemi di navigazione robotica. Funziona combinando le proprietà della ricerca in ampiezza (BFS) e della ricerca greedy (best-first search), utilizzando una funzione di costo che tiene conto sia del costo accumulato dal nodo iniziale, sia di una stima del costo per raggiungere il nodo obiettivo.
+
+Ecco una spiegazione dettagliata del funzionamento dell'algoritmo A*:
+
+### 1. Definizione delle funzioni di costo
+
+L'algoritmo A* utilizza due funzioni di costo principali:
+
+- **G(n)**: il costo accumulato dal nodo iniziale al nodo corrente \( n \).
+- **H(n)**: una stima euristica del costo per raggiungere il nodo obiettivo dal nodo corrente \( n \). Questa funzione deve essere ammissibile, cioè non deve sovrastimare il costo reale.
+
+La funzione di costo totale, che A* cerca di minimizzare, è definita come:
+
+\[ F(n) = G(n) + H(n) \]
+
+### 2. Inizializzazione
+
+- Inserire il nodo iniziale nella lista **open** (la lista dei nodi da esaminare) con un costo \( F \) pari a \( H \).
+- Creare una lista **closed** (la lista dei nodi già esaminati) inizialmente vuota.
+
+### 3. Ciclo principale dell'algoritmo
+
+1. **Selezione del nodo**: Estrarre il nodo \( n \) con il costo \( F \) più basso dalla lista open.
+2. **Controllo obiettivo**: Se \( n \) è il nodo obiettivo, l'algoritmo termina e il percorso è stato trovato.
+3. **Espansione dei vicini**: Espandere il nodo \( n \) generando tutti i suoi vicini.
+   - Per ogni vicino \( m \):
+     - Calcolare \( G(m) \) come \( G(n) \) più il costo per muoversi da \( n \) a \( m \).
+     - Calcolare \( F(m) \) come \( G(m) + H(m) \).
+     - Se \( m \) è già nella lista closed con un costo \( F \) inferiore, ignorarlo.
+     - Se \( m \) è già nella lista open con un costo \( F \) inferiore, aggiornare il costo e il nodo padre.
+     - Altrimenti, aggiungere \( m \) alla lista open.
+4. **Aggiornamento delle liste**: Spostare \( n \) dalla lista open alla lista closed.
+5. **Ripetizione**: Ripetere il ciclo fino a quando la lista open non è vuota o l'obiettivo non è raggiunto.
+
+### 4. Terminazione
+
+- Se l'algoritmo trova il nodo obiettivo, può ricostruire il percorso tracciando i nodi padre a partire dal nodo obiettivo fino al nodo iniziale.
+- Se la lista open si svuota senza trovare il nodo obiettivo, significa che non esiste un percorso.
+
+### Vantaggi e Svantaggi
+
+- **Vantaggi**:
+  - A* è completo, cioè trova una soluzione se esiste.
+  - È ottimale, cioè trova il percorso più breve se l'euristica \( H \) è ammissibile.
+  - È efficiente se l'euristica è ben scelta.
+
+- **Svantaggi**:
+  - Può consumare molta memoria, poiché tiene traccia di molti nodi.
+  - La scelta dell'euristica \( H \) è cruciale per le prestazioni.
+
+### Applicazioni
+
+A* è ampiamente utilizzato in vari ambiti, tra cui:
+- **Giochi**: per la navigazione dei personaggi.
+- **Robotica**: per la pianificazione del percorso.
+- **Sistemi di navigazione GPS**: per trovare percorsi ottimali.
+
+### Esempio pratico
+
+Immaginiamo di voler trovare il percorso più breve in una griglia da un punto A a un punto B. L'algoritmo A* valuterà ogni cella sulla base della distanza già percorsa (G) e della distanza stimata rimanente (H, ad esempio usando la distanza manhattan), aggiornando continuamente le sue stime e scegliendo il percorso apparentemente più promettente fino a raggiungere l'obiettivo.
+
+In sintesi, l'algoritmo A* è uno strumento potente ed efficiente per la ricerca del percorso ottimale in molti contesti applicativi, grazie alla sua combinazione di esplorazione globale e valutazione locale dei costi.
