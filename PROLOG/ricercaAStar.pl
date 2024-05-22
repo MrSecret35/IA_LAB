@@ -1,8 +1,9 @@
 %wrapper
-ricerca(Cammino):-
+ricerca(CamminoInvertito):-
     iniziale(S0),
     euristica(S0,H),
-    ricercaAStar([(S0,0,H, [])], [], Cammino).
+    ricercaAStar([(S0,0,H, [])], [], Cammino),
+    inv(Cammino, CamminoInvertito).
 
 ricercaAStar([(S,_,_, Cammino)| _], _, Cammino):-
     finale(S).
@@ -50,7 +51,7 @@ ricercaAStar([(S,G,H, Cammino)| Open], Closed, Risultato):-
 ricercaAStar([(S,G,H, Cammino)| Open], Closed, Risultato):-
     findall(Az, applicabile(Az,S),ElencoAz),
     elabora((S,G,H, Cammino), ElencoAz, Open, Closed, ListaNuovaOpen),
-    ricercaAStar(ListaNuovaOpen, [(S,G,H, Cammino)| Closed], Risultato).
+    ricercaAStar(ListaNuovaOpen, [(S,G,H, Cammino)| Closed], Risultato),!.
 
 
 elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
@@ -108,6 +109,13 @@ euristica(pos(X,Y),Ris):-
     Y2 is abs(Y-Y1),
     Ris is X2 + Y2 .
 
+% Inversione lista
+invOpt([],Temp,Temp).
+
+invOpt([Head|Tail],Temp,Res):-
+    invOpt(Tail,[Head|Temp],Res).
+
+inv(L,R):-invOpt(L,[],R).
     
 %aggiungi((S,G,H,C), Lista, ListaNuova):-
 
