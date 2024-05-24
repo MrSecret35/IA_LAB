@@ -57,7 +57,7 @@ ricercaAStar([(S,G,H, Cammino)| Open], Closed, Risultato):-
 elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
     trasforma(Az,S,SNuovo),
     euristica(SNuovo,HNuovo),
-    \+ member((SNuovo,_,_,C), Closed),
+    \+ member((SNuovo,_,_,_), Closed),
     aggiungi((SNuovo,G+1,HNuovo,[Az|C]), Open, ListaNuovaOpen),
     elabora((S,G,H,C), ElencoAz, ListaNuovaOpen, Closed, Res).
 
@@ -65,10 +65,11 @@ elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
     trasforma(Az,S,SNuovo),
     euristica(SNuovo,HNuovo),
     CostoSNuovo is G+1+HNuovo,
-    member((SNuovo,_,_, C), Closed),
-    restituisci(SNuovo,Closed,(SNuovo,G_,H_,_)),
+    member((SNuovo,_,_,_), Closed),
+    restituisci(SNuovo,Closed,(SNuovo,G_,H_,C_)),
     CostoSNuovo_ is G_ + H_,
-    CostoSNuovo < CostoSNuovo_,
+    CostoSNuovo =< CostoSNuovo_,
+    C \== C_,
     aggiungi((SNuovo,G+1,HNuovo,[Az|C]), Open, ListaNuovaOpen),
     elabora((S,G,H,C), ElencoAz, ListaNuovaOpen, Closed, Res).
 
@@ -76,7 +77,7 @@ elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
     trasforma(Az,S,SNuovo),
     euristica(SNuovo,HNuovo),
     CostoSNuovo is G+1+HNuovo,
-    member((SNuovo,_,_, C), Closed),
+    member((SNuovo,_,_,_), Closed),
     restituisci(SNuovo,Closed,(SNuovo,G_,H_,_)),
     CostoSNuovo_ is G_ + H_,
     CostoSNuovo >= CostoSNuovo_,
