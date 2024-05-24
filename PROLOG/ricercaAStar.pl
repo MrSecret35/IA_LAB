@@ -50,14 +50,14 @@ ricercaAStar([(S,G,H, Cammino)| Open], Closed, Risultato):-
 
 ricercaAStar([(S,G,H, Cammino)| Open], Closed, Risultato):-
     findall(Az, applicabile(Az,S),ElencoAz),
-    elabora((S,G,H, Cammino), ElencoAz, Open, Closed, ListaNuovaOpen),
-    ricercaAStar(ListaNuovaOpen, [(S,G,H, Cammino)| Closed], Risultato),!.
+    elabora((S,G,H, Cammino), ElencoAz, Open, Closed, [(S_,G_,H_, Cammino_)| ListaNuovaOpen] ),
+    ricercaAStar([(S_,G_,H_, Cammino_)| ListaNuovaOpen], [(S_,G_,H_, Cammino_) | [(S,G,H, Cammino)| Closed]], Risultato).
 
 
 elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
     trasforma(Az,S,SNuovo),
     euristica(SNuovo,HNuovo),
-    \+ member((SNuovo,_,_,_), Closed),
+    \+ member((SNuovo,_,_,C), Closed),
     aggiungi((SNuovo,G+1,HNuovo,[Az|C]), Open, ListaNuovaOpen),
     elabora((S,G,H,C), ElencoAz, ListaNuovaOpen, Closed, Res).
 
@@ -65,7 +65,7 @@ elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
     trasforma(Az,S,SNuovo),
     euristica(SNuovo,HNuovo),
     CostoSNuovo is G+1+HNuovo,
-    member((SNuovo,_,_, _), Closed),
+    member((SNuovo,_,_, C), Closed),
     restituisci(SNuovo,Closed,(SNuovo,G_,H_,_)),
     CostoSNuovo_ is G_ + H_,
     CostoSNuovo < CostoSNuovo_,
@@ -76,7 +76,7 @@ elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
     trasforma(Az,S,SNuovo),
     euristica(SNuovo,HNuovo),
     CostoSNuovo is G+1+HNuovo,
-    member((SNuovo,_,_, _), Closed),
+    member((SNuovo,_,_, C), Closed),
     restituisci(SNuovo,Closed,(SNuovo,G_,H_,_)),
     CostoSNuovo_ is G_ + H_,
     CostoSNuovo >= CostoSNuovo_,
@@ -92,7 +92,7 @@ aggiungi((S,G,H,C), [], [(S,G,H,C)]).
 
 aggiungi((S,G,H,C), [(S_,G_,H_,C_)| Open], [(S_,G_,H_,C_)| Lista]):-
     Costo is G+H,
-    Costo>G_ + H_,
+    Costo>=G_ + H_,
     aggiungi((S,G,H,C), Open, Lista).
 
 %Dato uno stato e una lista Restituisci i valori corrispondenti a quello stato
