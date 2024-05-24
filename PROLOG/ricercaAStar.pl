@@ -8,50 +8,16 @@ ricerca(CamminoInvertito):-
 ricercaAStar([(S,_,_, Cammino)| _], _, Cammino):-
     finale(S).
 
-/*
-ric_prof_lim([(S,G,H, Cammino)| Open], Closed, Risultato):-
-    azione applicabile
-    nuovo stato SNuovo
-    calcolo costo nuovo stato G*1 + New_H
-    controllo se esiste nella lista closed
-        se esiste controllo se il costo è minore 
-            se minore lo riapro
-    se non esiste -> Marcare come aperto SNuovo
-    agigungo SNuovo agli stati aperti in ordine crescente
-    aggiungo S alla lista dei Closed
-    andiamo al prossimo stato minore 
-*/
-
-/*
-ricercaAStar([(S,G,H, Cammino)| Open], Closed, Risultato):-
-    applicabile(Az,S),
-    trasforma(Az,S,SNuovo),
-    euristica(SNuovo,HNuovo),
-    %CostoSNuovo is G+1+HNuovo,
-    \+ member(SNuovo,Closed),
-    %aggiungi((Snuovo,G+1,HNuovo,[Az|Cammino]), Open, ListaNuova),
-    %ric_prof_lim(ListaNuova, [(S,G,H, Cammino)| Closed], Risultato).
-    ricercaAStar([(SNuovo,G+1,HNuovo,[Az|Cammino]) | Open], [(S,G,H, Cammino)| Closed], Risultato).
-
-ricercaAStar([(S,G,H, Cammino)| Open], Closed, Risultato):-
-    applicabile(Az,S),
-    trasforma(Az,S,SNuovo),
-    euristica(SNuovo,HNuovo),
-    CostoSNuovo is G+1+HNuovo,
-    member(SNuovo,Closed),
-    restituisci(SNuovo,Closed,(SNuovo,GSNuovo,HSNUovo,_)),
-    CostoSNuovoS is GSNuovo + HSNUovo,
-    CostoSNuovo<CostoSNuovoS,
-    %aggiungi((Snuovo,G+1,HNuovo,[Az|Cammino]), Open, ListaNuova),
-    %ric_prof_lim(ListaNuova, [(S,G,H, Cammino)| Closed], Risultato).
-    ricercaAStar([(SNuovo,G+1,HNuovo,[Az|Cammino]) | Open], [(S,G,H, Cammino)| Closed], Risultato).
-*/
-
-
 ricercaAStar([(S,G,H, Cammino)| Open], Closed, Risultato):-
     findall(Az, applicabile(Az,S),ElencoAz),
     elabora((S,G,H, Cammino), ElencoAz, Open, Closed, [(S_,G_,H_, Cammino_)| ListaNuovaOpen] ),
     ricercaAStar([(S_,G_,H_, Cammino_)| ListaNuovaOpen], [(S_,G_,H_, Cammino_) | [(S,G,H, Cammino)| Closed]], Risultato).
+
+ricercaAStar([(S,G,H, Cammino)| Open], Closed, ["Finish"]):-
+    Open == [],
+    findall(Az, applicabile(Az,S),ElencoAz),
+    elabora((S,G,H, Cammino), ElencoAz, Open, Closed, ListaNuovaOpen ),
+    ListaNuovaOpen == [], !.
 
 
 elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
@@ -80,7 +46,7 @@ elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
     member((SNuovo,_,_,_), Closed),
     restituisci(SNuovo,Closed,(SNuovo,G_,H_,_)),
     CostoSNuovo_ is G_ + H_,
-    CostoSNuovo >= CostoSNuovo_,
+    CostoSNuovo > CostoSNuovo_,
     elabora((S,G,H,C), ElencoAz, Open, Closed, Res).
 
 elabora(_, [], Open, _, Open).
@@ -121,4 +87,4 @@ inv(L,R):-invOpt(L,[],R).
 %aggiungi((S,G,H,C), Lista, ListaNuova):-
 
 
-
+firstElem([Head | _], Head).
