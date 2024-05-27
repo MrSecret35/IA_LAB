@@ -10,7 +10,7 @@ ricercaAStar([(S,_,_, Cammino)| _], _, Cammino):-
 
 ricercaAStar([(S,G,H, Cammino)| Open], Closed, Risultato):-
     findall(Az, applicabile(Az,S),ElencoAz),
-    elabora((S,G,H, Cammino), ElencoAz, Open, Closed, [(S_,G_,H_, Cammino_)| ListaNuovaOpen] ),
+    elabora((S,G,H, Cammino), ElencoAz, Open, Closed, [(S_,G_,H_, Cammino_)| ListaNuovaOpen] ), !,
     ricercaAStar([(S_,G_,H_, Cammino_)| ListaNuovaOpen], [(S_,G_,H_, Cammino_) | [(S,G,H, Cammino)| Closed]], Risultato).
 
 ricercaAStar([(S,G,H, Cammino)| Open], Closed, ["Finish"]):-
@@ -18,7 +18,6 @@ ricercaAStar([(S,G,H, Cammino)| Open], Closed, ["Finish"]):-
     findall(Az, applicabile(Az,S),ElencoAz),
     elabora((S,G,H, Cammino), ElencoAz, Open, Closed, ListaNuovaOpen ),
     ListaNuovaOpen == [], !.
-
 
 elabora((S,G,H,C), [Az| ElencoAz], Open, Closed, Res):-
     trasforma(Az,S,SNuovo),

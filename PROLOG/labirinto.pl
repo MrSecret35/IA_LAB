@@ -14,6 +14,7 @@ occupata(pos(5,5)).
 occupata(pos(4,5)).
 occupata(pos(3,5)).
 occupata(pos(2,5)).
+occupata(pos(1,5)). % Da Rimuovere
 occupata(pos(4,7)).
 occupata(pos(5,7)).
 occupata(pos(6,7)).

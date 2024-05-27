@@ -4,4 +4,4 @@ num_colonne(4).
 iniziale(pos(4,2)).
 finale(pos(1,4)).
 
-occupata(pos(4,1)).
+occupata(pos(1,1)).
