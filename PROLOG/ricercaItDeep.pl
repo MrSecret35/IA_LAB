@@ -8,7 +8,7 @@ ricerca(Cammino,Soglia):-
     iniziale(S0),
     ric_prof_lim(S0,Soglia,_,[],StatoFinale),
     \+ finale(StatoFinale),
-    SogliaN is Soglia+1,
+    SogliaN is Soglia+1,!,
     ricerca(Cammino,SogliaN).
 
 %ricerca in profondità
