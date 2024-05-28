@@ -16,6 +16,7 @@ ric_prof_lim(S,0,[],_,S).
 
 ric_prof_lim(S,Soglia,[Az|ListaAzioni],ListaStatiVisitati,StatoFinale):-
     Soglia>0,
+    \+ finale(S),
     applicabile(Az,S),
     trasforma(Az,S,SNuovo),
     \+ member(SNuovo,ListaStatiVisitati),
