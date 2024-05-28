@@ -22,3 +22,8 @@ occupata(pos(8,7)).
 occupata(pos(4,8)).
 occupata(pos(4,9)).
 occupata(pos(4,10)).
+
+start(X):-
+    retract(occupata(pos(7,1))),
+    assert(occupata(pos(7,6))),
+    X is 3.

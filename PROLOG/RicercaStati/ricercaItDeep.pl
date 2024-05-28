@@ -1,15 +1,18 @@
 %wrapper
-ricerca(Cammino,Soglia):-
+ricerca(Cammino):-
+    start(Cammino,0).
+
+start(Cammino,Soglia):-
     iniziale(S0),
     ric_prof_lim(S0,Soglia,Cammino,[],StatoFinale),
     finale(StatoFinale).
 
-ricerca(Cammino,Soglia):-
+start(Cammino,Soglia):-
     iniziale(S0),
     ric_prof_lim(S0,Soglia,_,[],StatoFinale),
     \+ finale(StatoFinale),
     SogliaN is Soglia+1,!,
-    ricerca(Cammino,SogliaN).
+    start(Cammino,SogliaN).
 
 %ricerca in profondità
 ric_prof_lim(S,0,[],_,S).
