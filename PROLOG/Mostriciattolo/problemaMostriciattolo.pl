@@ -6,9 +6,17 @@
 %----------------------Trasforma-------------------------
 %--------------------------------------------------------
 
-trasformaMostro(Az,S,SNuovo,Ghiaccio,StatoP):-
+trasformaMostro(Az,S,SNuovo,Ghiaccio,StatoP,Gemme,GemmeN):-
     nApplicabili(Az,S,Ghiaccio,StatoP,N),
-    trasformaN(Az,S,N,SNuovo).
+    trasformaN(Az,S,N,SNuovo),
+    rimuoviGemme(Az,S,SNuovo,Gemme,GemmeN).
+
+trasformaMostroConMartello(Az,S,SNuovo,Ghiaccio,StatoP,GhiaccioFinale,Gemme,GemmeN):-
+    nApplicabili(Az,S,[],StatoP,N),
+    trasformaN(Az,S,N,SNuovo),
+    rimuoviGhiaccio(Az,S,SNuovo,Ghiaccio,GhiaccioFinale),
+    rimuoviGemme(Az,S,SNuovo,Gemme,GemmeN).
+    %rimuoviGhiaccio(Az,S,SNuovo,Gemma,Gemma2).
 
 trasformaGhiaccio(Az,[G | ListaG],[SNuovoGhiaccio| NewLista],Ghiaccio,StatoP):-
     nApplicabili(Az,G,Ghiaccio,StatoP,N),
@@ -84,7 +92,7 @@ trasformaN(sud,pos(R,C),N,pos(RSotto,C)):-RSotto is R+N.
 
 
 %--------------------------------------------------------
-%-------------------Leggi Ghiaccio-----------------------
+%----------------------Ghiaccio--------------------------
 %--------------------------------------------------------
 
 leggiGiaccio(T,[G | Lista]):-
@@ -93,3 +101,64 @@ leggiGiaccio(T,[G | Lista]):-
     leggiGiaccio([G|T], Lista).
 
 leggiGiaccio(_,[]).
+
+
+rimuoviGhiaccio(Az,S,SNuovo,Ghiaccio,GhiaccioFin):-
+    S \== SNuovo,
+    trasforma(Az,S, S1),
+    member(S1,Ghiaccio),
+    rimuovi(S1,Ghiaccio,GhiaccioN),
+    rimuoviGhiaccio(Az,S1,SNuovo,GhiaccioN,GhiaccioFin).
+
+rimuoviGhiaccio(Az,S,SNuovo,Ghiaccio,GhiaccioFin):-
+    S \== SNuovo,
+    trasforma(Az,S, S1),
+    \+ member(S1,Ghiaccio),
+    rimuoviGhiaccio(Az,S1,SNuovo,Ghiaccio,GhiaccioFin).
+
+rimuoviGhiaccio(_,S,SNuovo,Ghiaccio,Ghiaccio):-
+    S == SNuovo.
+
+
+
+%--------------------------------------------------------
+%------------------------Gemme---------------------------
+%--------------------------------------------------------
+
+leggiGemme(T,[G | Lista]):-
+    gemma(G),
+    \+ member(G,T),
+    leggiGemme([G|T], Lista).
+
+leggiGemme(_,[]).
+
+
+rimuoviGemme(Az,S,SNuovo,Gemme,GemmeFin):-
+    S \== SNuovo,
+    trasforma(Az,S, S1),
+    member(S1,Gemme),
+    rimuovi(S1,Gemme,GemmeN),
+    rimuoviGemme(Az,S1,SNuovo,GemmeN,GemmeFin).
+
+rimuoviGemme(Az,S,SNuovo,Gemme,GemmeFin):-
+    S \== SNuovo,
+    trasforma(Az,S, S1),
+    \+ member(S1,Gemme),
+    rimuoviGemme(Az,S1,SNuovo,Gemme,GemmeFin).
+
+rimuoviGemme(_,S,SNuovo,Gemme,Gemme):-
+    S == SNuovo.
+
+%--------------------------------------------------------
+%----------------------Funzioni--------------------------
+%--------------------------------------------------------
+
+rimuovi(X,[X1 | Arr],[X1 | ArrFin]):-
+    X \== X1,
+    rimuovi(X, Arr, ArrFin).
+
+rimuovi(X,[X | Arr],ArrFin):-
+    rimuovi(X, Arr, ArrFin).
+
+rimuovi(_,[],[]).
+    
