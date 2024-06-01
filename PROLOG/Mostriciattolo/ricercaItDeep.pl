@@ -5,7 +5,7 @@ ricerca(Cammino):-
     leggiGiaccio([],Ghiaccio),
     leggiGemme([],Gemme),
     martello(Martello),
-
+    length(Gemme, NumeroGemmeIniziali),
     % write("Giaccio: "),write(Ghiaccio),write("\n"),
     %write("Gemme: "),write(Gemme),write("\n"),
     startMartello(S0,Cammino1,Soglia,Martello,Ghiaccio,GhiaccioFinale,Gemme, GemmeFinali),
@@ -18,9 +18,15 @@ ricerca(Cammino):-
     %write(Cammino1),write("\n"),
     %write(Cammino2),write("\n"),
 
-    scriviCammino2(Martello,Cammino2,GhiaccioFinale,_,GemmeFinali,_),
-
+    scriviCammino2(Martello,Cammino2,GhiaccioFinale,_,GemmeFinali,GemmeFinaliFinali),
     told,
+
+    length(GemmeFinaliFinali, NumeroGemmeFinali),
+    NumeroGemmePrese is NumeroGemmeIniziali-NumeroGemmeFinali,
+    
+    write(Cammino1),write("\n"),write(Cammino2),write("\n"),
+    write("Gemme trovate: "),write(NumeroGemmePrese),write("\n"),
+
     append(Cammino1,Cammino2,Cammino).
 
 %--------------------------------------------------------
