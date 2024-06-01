@@ -76,14 +76,18 @@ ric_prof_lim_portale(S,0,[],_,S,G,G,GE,GE).
 ric_prof_lim_portale(S,Soglia,[Az|ListaAzioni],ListaStatiVisitati,StatoFinale,Ghiaccio,GhiaccioFinale,Gemme,GemmeFinali):-
     Soglia>0,
     \+ finale(S),
-    applicabileTutto(Az,[ S | Ghiaccio ]),
+    applicabileTuttoMartello(Az,[ S | Ghiaccio ]),
     trasformaMostroConMartello(Az,S,SNuovo,Ghiaccio,S,GhiaccioNuovoDopoMostro,Gemme,GemmeN),
     trasformaGhiaccio(Az,GhiaccioNuovoDopoMostro,GhiaccioN, Ghiaccio,S),
     \+ member(SNuovo,ListaStatiVisitati),
     SogliaN is Soglia-1,
     ric_prof_lim_portale(SNuovo,SogliaN,ListaAzioni,[SNuovo|ListaStatiVisitati],StatoFinale,GhiaccioN,GhiaccioFinale,GemmeN,GemmeFinali).
 
-%----------------------------------------------------------------------
+
+
+%--------------------------------------------------------
+%-------------------------Output-------------------------
+%--------------------------------------------------------
 
 scriviCammino1(S,[Az|ListaAzioni],Ghiaccio,GhiaccioFinale,Gemme,GemmeFinali):-
     write("Posizione: "),write(S),write("\n"),
@@ -101,8 +105,6 @@ scriviCammino1(S,[],Ghiaccio,Ghiaccio,Gemme,Gemme):-
     write("Ghiaccio: "),write(Ghiaccio),write("\n"),
     write("Gemme: "),write(Gemme),write("\n"),
     write("\n").
-
-%---
 
 scriviCammino2(S,[Az|ListaAzioni],Ghiaccio,GhiaccioFinale,Gemme,GemmeFinali):-
     write("Posizione: "),write(S),write("\n"),

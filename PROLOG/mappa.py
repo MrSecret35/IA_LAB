@@ -73,6 +73,10 @@ def update_map(frame, ax, data):
     for pos in gemme:
         ax.add_patch(patches.Rectangle((pos[1], pos[0]), 1, 1, edgecolor='black', facecolor='yellow'))
 
+    for pos in ghiaccio:
+        for posG in gemme:
+            if pos==posG:
+                ax.add_patch(patches.Rectangle((pos[1], pos[0]), 1, 1, edgecolor='black', facecolor='green'))
 def main():
     data = read_file('output.txt')
     fig, ax = create_map()

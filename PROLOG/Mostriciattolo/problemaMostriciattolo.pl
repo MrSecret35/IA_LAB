@@ -78,6 +78,16 @@ applicabileStato(Az,S,Ghiaccio):-
     trasforma(Az,S,SNuovo),
     \+ member(SNuovo,Ghiaccio).
 
+%--------------------------------------------------------
+%-------------Applicabile Con Martello-------------------
+%--------------------------------------------------------
+
+applicabileTuttoMartello(Az,[G | _]):-
+    applicabile(Az,G).
+
+applicabileTuttoMartello(Az,[G | Lista]):-
+    \+ applicabile(Az,G),
+    applicabileTuttoMartello(Az,Lista).
 
 
 %--------------------------------------------------------
