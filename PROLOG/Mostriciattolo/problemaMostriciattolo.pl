@@ -174,23 +174,23 @@ rimuoviGemme(_,S,SNuovo,Gemme,Gemme):-
 %-------------------Gemme Contigue-----------------------
 %--------------------------------------------------------
 
-posizioniContigue([G | Lista], GemmeFinaliFinali, N, Cont):-
-    vicini(G, GemmeFinaliFinali),
+posizioniContigue([G | Lista],GemmeFinaliFinali,N,Cont):-
+    vicini(G,GemmeFinaliFinali),
     Nnuovo is Cont + 1,
-    posizioniContigue(Lista, GemmeFinaliFinali, N, Nnuovo).
+    posizioniContigue(Lista,GemmeFinaliFinali,N,Nnuovo).
 
-posizioniContigue([G | Lista], GemmeFinaliFinali, N, Cont):-
-    \+vicini(G, GemmeFinaliFinali),
+posizioniContigue([G | Lista],GemmeFinaliFinali,N,Cont):-
+    \+vicini(G,GemmeFinaliFinali),
     Nnuovo is Cont,
-    posizioniContigue(Lista, GemmeFinaliFinali, N, Nnuovo).
+    posizioniContigue(Lista,GemmeFinaliFinali,N,Nnuovo).
 
-posizioniContigue([], _, N, N).
+posizioniContigue([],_,N,N).
 
-vicini(pos(X,Y), [pos(X1,Y) | _]):- X is X1 + 1.
-vicini(pos(X,Y), [pos(X1,Y) | _]):- X is X1 - 1.
-vicini(pos(X,Y), [pos(X,Y1) | _]):- Y is Y1 + 1.
-vicini(pos(X,Y), [pos(X,Y1) | _]):- Y is Y1 - 1.
-vicini(pos(X,Y), [_ | ListaC]):- vicini(pos(X,Y), ListaC).
+vicini(pos(X,Y),[pos(X1,Y) | _]):- X is X1 + 1.
+vicini(pos(X,Y),[pos(X1,Y) | _]):- X is X1 - 1.
+vicini(pos(X,Y),[pos(X,Y1) | _]):- Y is Y1 + 1.
+vicini(pos(X,Y),[pos(X,Y1) | _]):- Y is Y1 - 1.
+vicini(pos(X,Y),[_ | ListaC]):- vicini(pos(X,Y), ListaC).
 
 
 
