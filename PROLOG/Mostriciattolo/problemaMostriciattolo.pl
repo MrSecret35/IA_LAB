@@ -152,23 +152,6 @@ leggiGemme(T,[G | Lista]):-
 leggiGemme(_,[]).
 
 
-rimuoviGemme(Az,S,SNuovo,Gemme,GemmeFin):-
-    S \== SNuovo,
-    trasforma(Az,S, S1),
-    member(S1,Gemme),
-    rimuovi(S1,Gemme,GemmeN),
-    rimuoviGemme(Az,S1,SNuovo,GemmeN,GemmeFin).
-
-rimuoviGemme(Az,S,SNuovo,Gemme,GemmeFin):-
-    S \== SNuovo,
-    trasforma(Az,S, S1),
-    \+ member(S1,Gemme),
-    rimuoviGemme(Az,S1,SNuovo,Gemme,GemmeFin).
-
-rimuoviGemme(_,S,SNuovo,Gemme,Gemme):-
-    S == SNuovo.
-
-
 
 %--------------------------------------------------------
 %-------------------Gemme Contigue-----------------------
