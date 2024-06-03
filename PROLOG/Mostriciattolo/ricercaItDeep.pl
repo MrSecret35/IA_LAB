@@ -1,28 +1,28 @@
 ricerca(Cammino):-
-    
     iniziale(S0),
     Soglia is 0,
-    leggiGiaccio([],Ghiaccio),
-    leggiGemme([],Gemme),
-
+    leggiGiaccio([], Ghiaccio),
+    leggiGemme([], Gemme),
 
     martello(Martello),
-    startMartello(S0,Cammino1,Soglia,Martello,Ghiaccio,GhiaccioFinale,Gemme,GemmeFinali),
+    startMartello(S0, Cammino1, Soglia, Martello, Ghiaccio, GhiaccioFinale, Gemme, GemmeFinali),
 
     finale(Portale),
-    startPortale(Martello,Cammino2,Soglia,Portale,GhiaccioFinale,_,GemmeFinali,GemmeFinaliFinali),
+    startPortale(Martello, Cammino2, Soglia, Portale, GhiaccioFinale, _, GemmeFinali, GemmeFinaliFinali),
 
-    posizioniContigue(GemmeFinaliFinali,GemmeFinaliFinali,N),
-    %N == 1+(1+(1+0)), 
-    write("Gemme Contigue: "),write(N),write("\n"),
+    posizioniContigue(GemmeFinaliFinali, GemmeFinaliFinali, N, 0),
+    N \== 0, 
+    write("Gemme Contigue: "), write(N), write("\n"),
     
     tell('output.txt'),
-    scriviCammino1(S0,Cammino1,Ghiaccio,_,Gemme,_),
-    scriviCammino2(Martello,Cammino2,GhiaccioFinale,_,GemmeFinali,_),
+    scriviCammino1(S0, Cammino1, Ghiaccio, _, Gemme, _),
+    scriviCammino2(Martello, Cammino2, GhiaccioFinale, _, GemmeFinali, _),
     told,
-    write(Cammino1),write("\n"),write(Cammino2),write("\n"),
+    write(Cammino1), write("\n"), write(Cammino2), write("\n"),
 
-    append(Cammino1,Cammino2,Cammino).
+    append(Cammino1, Cammino2, Cammino).
+
+
 
 %--------------------------------------------------------
 %--------------------Start Function----------------------
