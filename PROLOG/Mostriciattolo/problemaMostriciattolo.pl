@@ -6,24 +6,21 @@
 %----------------------Trasforma-------------------------
 %--------------------------------------------------------
 
-trasformaMostro(Az,S,SNuovo,Ghiaccio,StatoP,Gemme,GemmeN):-
-    nApplicabili(Az,S,Ghiaccio,StatoP,N),
-    trasformaN(Az,S,N,SNuovo),
-    rimuoviGemme(Az,S,SNuovo,Gemme,GemmeN).
+trasformaMostro(Az,S,SNuovo,Ghiaccio,StatoP,Gemme):-
+    nApplicabili(Az,S,Ghiaccio,Gemme,StatoP,N),
+    trasformaN(Az,S,N,SNuovo).
 
-trasformaMostroConMartello(Az,S,SNuovo,Ghiaccio,StatoP,GhiaccioFinale,Gemme,GemmeN):-
-    nApplicabili(Az,S,[],StatoP,N),
+trasformaMostroConMartello(Az,S,SNuovo,Ghiaccio,StatoP,GhiaccioFinale,Gemme):-
+    nApplicabili(Az,S,[],Gemme,StatoP,N),
     trasformaN(Az,S,N,SNuovo),
-    rimuoviGhiaccio(Az,S,SNuovo,Ghiaccio,GhiaccioFinale),
-    rimuoviGemme(Az,S,SNuovo,Gemme,GemmeN).
-    %rimuoviGhiaccio(Az,S,SNuovo,Gemma,Gemma2).
+    rimuoviGhiaccio(Az,S,SNuovo,Ghiaccio,GhiaccioFinale).
 
-trasformaGhiaccio(Az,[G | ListaG],[SNuovoGhiaccio| NewLista],Ghiaccio,StatoP):-
-    nApplicabili(Az,G,Ghiaccio,StatoP,N),
+trasformaGhiaccio(Az,[G | ListaG],[SNuovoGhiaccio| NewLista],Ghiaccio,Gemme,StatoP):-
+    nApplicabili(Az,G,Ghiaccio,Gemme,StatoP,N),
     trasformaN(Az,G,N,SNuovoGhiaccio),
-    trasformaGhiaccio(Az, ListaG, NewLista ,Ghiaccio,StatoP).
+    trasformaGhiaccio(Az, ListaG, NewLista ,Ghiaccio,Gemme,StatoP).
 
-trasformaGhiaccio(_,[],[],_,_).
+trasformaGhiaccio(_,[],[],_,_,_).
 
 
 
@@ -31,27 +28,33 @@ trasformaGhiaccio(_,[],[],_,_).
 %--------------------N Applicabili-----------------------
 %--------------------------------------------------------
 
-nApplicabili(Az,S,Ghiaccio,StatoP,1+N):-
+nApplicabili(Az,S,Ghiaccio,Gemme,StatoP,1+N):-
     applicabile(Az,S),
     trasforma(Az,S,SNuovo),
     \+ member(SNuovo,Ghiaccio),
-    %write(SNuovo),write("\n"),write(StatoP),write("\n"),write("\n"),write("\n"),
+    \+ member(SNuovo,Gemme),
     SNuovo \== StatoP,
-    nApplicabili(Az,SNuovo,Ghiaccio,StatoP,N).
+    nApplicabili(Az,SNuovo,Ghiaccio,Gemme,StatoP,N).
 
-nApplicabili(Az,S,Ghiaccio,StatoP,0+N):-
+nApplicabili(Az,S,Ghiaccio,Gemme,StatoP,0+N):-
     applicabile(Az,S),
     trasforma(Az,S,SNuovo),
     member(SNuovo,Ghiaccio),
-    nApplicabili(Az,SNuovo,Ghiaccio,StatoP,N).
+    nApplicabili(Az,SNuovo,Ghiaccio,Gemme,StatoP,N).
 
-nApplicabili(Az,S,Ghiaccio,StatoP,0+N):-
+nApplicabili(Az,S,Ghiaccio,Gemme,StatoP,0+N):-
+    applicabile(Az,S),
+    trasforma(Az,S,SNuovo),
+    member(SNuovo,Gemme),
+    nApplicabili(Az,SNuovo,Ghiaccio,Gemme,StatoP,N).
+
+nApplicabili(Az,S,Ghiaccio,Gemme,StatoP,0+N):-
     applicabile(Az,S),
     trasforma(Az,S,SNuovo),
     SNuovo == StatoP,
-    nApplicabili(Az,SNuovo,Ghiaccio,StatoP,N).
+    nApplicabili(Az,SNuovo,Ghiaccio,Gemme,StatoP,N).
 
-nApplicabili(Az,S,_,_,0):-
+nApplicabili(Az,S,_,_,_,0):-
     \+ applicabile(Az,S).
 
 
@@ -60,35 +63,35 @@ nApplicabili(Az,S,_,_,0):-
 %--------------------Applicabile-------------------------
 %--------------------------------------------------------
 
-applicabileTutto(Az,[G | Lista]):-
-    applicabileStato(Az,G,Lista).
+applicabileTutto(Az,[G | Lista],Gemme):-
+    applicabileStato(Az,G,Lista,Gemme).
 
-applicabileTutto(Az,[G | Lista]):-
-    \+ applicabileStato(Az,G,Lista),
-    applicabileTutto(Az,Lista).
+applicabileTutto(Az,[G | Lista],Gemme):-
+    \+ applicabileStato(Az,G,Lista,Gemme),
+    applicabileTutto(Az,Lista,Gemme).
 
-applicabileStato(Az,S,Ghiaccio):-
+
+applicabileStato(Az,S,Ghiaccio,Gemme):-
     applicabile(Az,S),
     trasforma(Az,S,SNuovo),
+    \+ member(SNuovo,Gemme),
     member(SNuovo,Ghiaccio),
-    applicabileStato(Az,SNuovo,Ghiaccio).
+    applicabileStato(Az,SNuovo,Ghiaccio,Gemme).
 
-applicabileStato(Az,S,Ghiaccio):-
+applicabileStato(Az,S,Ghiaccio,Gemme):-
     applicabile(Az,S),
     trasforma(Az,S,SNuovo),
+    \+ member(SNuovo,Gemme),
     \+ member(SNuovo,Ghiaccio).
 
 %--------------------------------------------------------
 %-------------Applicabile Con Martello-------------------
 %--------------------------------------------------------
 
-applicabileTuttoMartello(Az,[G | _]):-
-    applicabile(Az,G).
-
-applicabileTuttoMartello(Az,[G | Lista]):-
-    \+ applicabile(Az,G),
-    applicabileTuttoMartello(Az,Lista).
-
+applicabileTuttoMartello(Az,S,Ghiaccio,Gemme):-
+    applicabile(Az,S),
+    trasforma(Az,S,SNuovo),
+    \+ member(SNuovo,Gemme).
 
 %--------------------------------------------------------
 %---------------------Trasforma N------------------------
