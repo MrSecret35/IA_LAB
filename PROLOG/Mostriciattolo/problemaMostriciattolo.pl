@@ -88,10 +88,16 @@ applicabileStato(Az,S,Ghiaccio,Gemme):-
 %-------------Applicabile Con Martello-------------------
 %--------------------------------------------------------
 
-applicabileTuttoMartello(Az,S,Ghiaccio,Gemme):-
+applicabileTuttoMartello(Az,S,_,Gemme):-
     applicabile(Az,S),
     trasforma(Az,S,SNuovo),
     \+ member(SNuovo,Gemme).
+
+applicabileTuttoMartello(Az,_,Ghiaccio,Gemme):-
+    applicabileTutto(Az,Ghiaccio,Gemme).
+
+applicabileTuttoMartello(Az,_,_,Gemme):-
+    applicabileTutto(Az,Gemme,Gemme).
 
 %--------------------------------------------------------
 %---------------------Trasforma N------------------------
@@ -161,6 +167,29 @@ rimuoviGemme(Az,S,SNuovo,Gemme,GemmeFin):-
 
 rimuoviGemme(_,S,SNuovo,Gemme,Gemme):-
     S == SNuovo.
+
+
+
+%--------------------------------------------------------
+%-------------------Gemme Contigue-----------------------
+%--------------------------------------------------------
+
+posizioniContigue([G | Lista],GemmeFinaliFinali,1 + N):-
+    vicini(G, GemmeFinaliFinali),
+    posizioniContigue(Lista,GemmeFinaliFinali,N).
+
+posizioniContigue([G | Lista],GemmeFinaliFinali,0 + N):-
+    \+ vicini(G, GemmeFinaliFinali),
+    posizioniContigue(Lista,GemmeFinaliFinali,N).
+
+posizioniContigue([],_,0).
+
+vicini(pos(X,Y), [pos(X1,Y) | _]):- X is X1 + 1.
+vicini(pos(X,Y), [pos(X1,Y) | _]):- X is X1 - 1.
+vicini(pos(X,Y), [pos(X,Y1) | _]):- Y is Y1 + 1.
+vicini(pos(X,Y), [pos(X,Y1) | _]):- Y is Y1 - 1.
+vicini(pos(X,Y), [_ | ListaC]):- vicini(pos(X,Y), ListaC).
+
 
 %--------------------------------------------------------
 %----------------------Funzioni--------------------------

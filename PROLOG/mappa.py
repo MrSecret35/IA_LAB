@@ -81,7 +81,7 @@ def main():
     data = read_file('output.txt')
     fig, ax = create_map()
     
-    ani = FuncAnimation(fig, update_map, frames=len(data), fargs=(ax, data), repeat=False, interval=3000)
+    ani = FuncAnimation(fig, update_map, frames=len(data), fargs=(ax, data), repeat=False, interval=1000)
     
     plt.show()
 
