@@ -163,6 +163,7 @@ rimuoviGemme(_,S,SNuovo,Gemme,Gemme):-
 %----------------------Funzioni--------------------------
 %--------------------------------------------------------
 
+%----- rimuovi elem da un array
 rimuovi(X,[X1 | Arr],[X1 | ArrFin]):-
     X \== X1,
     rimuovi(X, Arr, ArrFin).
@@ -171,4 +172,14 @@ rimuovi(X,[X | Arr],ArrFin):-
     rimuovi(X, Arr, ArrFin).
 
 rimuovi(_,[],[]).
-    
+
+%----- inverti una lista
+invOpt([],Temp,Temp).
+
+invOpt([Head|Tail],Temp,Res):-
+    invOpt(Tail,[Head|Temp],Res).
+
+inv(L,R):-invOpt(L,[],R).
+
+%----- restituisci primo elemento
+firstElem([Head | _], Head).
