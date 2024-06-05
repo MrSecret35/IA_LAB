@@ -1,32 +1,32 @@
 ricerca(Cammino):-
     iniziale(S0),
     leggiGiaccio([],Ghiaccio),
-    leggiGemme([],Gemme),
+    leggiGemme([],Gemme),!,
 
     euristicaMartello(S0,H),
     ricercaAStarMartello([(S0,0,H,Ghiaccio,Gemme,[])], [], GhiaccioFinale, GemmeFinali, Cammino1),
+    %inv(Cammino1, CamminoInvertito1),
+    %write(CamminoInvertito1), write("\n"),
+
+    martello(S1),
+    euristicaPortale(S1,H1),
+    ricercaAStarPortale([(S1,0,H1, GhiaccioFinale, GemmeFinali,[])], [], _, GemmeFinaliFinali, Cammino2),
 
     inv(Cammino1, CamminoInvertito1),
-    write(CamminoInvertito1), write("\n").
+    inv(Cammino2, CamminoInvertito2),
 
-    % martello(S1),
-    % euristicaPortale(S1,H1),
-    % ricercaAStarPortale([(S1,0,H1,GhiaccioFinale,GemmeFinali,[])], [], _, GemmeFinaliFinali, Cammino2),
-% 
-    % inv(Cammino1, CamminoInvertito1),
-    % inv(Cammino2, CamminoInvertito2),
-% 
     % posizioniContigue(GemmeFinaliFinali,GemmeFinaliFinali,N,0),
     % %N \== 0, 
     % write("Gemme Contigue: "), write(N), write("\n"),
-% 
-    % tell('output.txt'),
-    % scriviCammino1(S0,CamminoInvertito1,Ghiaccio,_,Gemme,_),
-    % scriviCammino2(S1,CamminoInvertito2,GhiaccioFinale,_,GemmeFinali,_),
-    % told,
-    % write(CamminoInvertito1), write("\n"), write(CamminoInvertito2), write("\n"),
-    % 
-    % append(CamminoInvertito1,CamminoInvertito2,Cammino).
+
+    tell('output.txt'),
+    scriviCammino1(S0,CamminoInvertito1,Ghiaccio,_,Gemme,_),
+    scriviCammino2(S1,CamminoInvertito2,GhiaccioFinale,_,GemmeFinali,_),
+    told,
+    write(CamminoInvertito1), write("\n"), 
+    write(CamminoInvertito2), write("\n").
+    
+    %append(CamminoInvertito1,CamminoInvertito2,Cammino).
 
 %--------------------------------------------------------
 %-------------------Ricerca Martello---------------------
@@ -48,9 +48,10 @@ ricercaAStarMartello([(S,G,H, Gh,Ge, Cammino)| Open], Closed, GhiaccioFinale, Ge
     elaboraMartello((S,G,H,Gh,Ge,Cammino), ElencoAz, Open, Closed, [(S_,G_,H_,Gh_,Ge_, Cammino_)| ListaNuovaOpen] ), !,
     ricercaAStarMartello([(S_,G_,H_,Gh_,Ge_, Cammino_)| ListaNuovaOpen], [(S_,G_,H_,Gh_,Ge_, Cammino_) | [(S,G,H,Gh,Ge, Cammino)| Closed]], GhiaccioFinale, GemmeFinali,  Risultato).
 
-ricercaAStarMartello([(S,G,H,Gh,Ge, Cammino)| Open], Closed, _, _, ["Finish"]):-
+ricercaAStarMartello([(S,G,H,Gh,Ge, Cammino)| Open], Closed, [], [], ["Finish"]):-
     Open == [],
     findall(Az, applicabileTutto(Az,[S | Gh],Ge),ElencoAz),
+    write("ops4"),write("\n"),
     elaboraMartello((S,G,H,Gh,Ge,Cammino), ElencoAz, Open, Closed, ListaNuovaOpen ),
     ListaNuovaOpen == [],!.
 
@@ -108,14 +109,14 @@ ricercaAStarPortale([(S,_,_, Gh,Ge,Cammino)| _], _, Gh, Ge, Cammino):-
 
 ricercaAStarPortale([(S,G,H, Gh,Ge, Cammino)| Open], Closed, GhiaccioFinale, GemmeFinali,  Risultato):-
     findall(Az, applicabileTuttoMartello(Az,S,Gh,Ge),ElencoAz),
-    elaboraPortale((S,G,H,Gh,Ge,Cammino), ElencoAz, Open, Closed, [(S_,G_,H_,Gh_,Ge_, Cammino_)| ListaNuovaOpen] ), !,
+    elaboraPortale((S,G,H,Gh,Ge,Cammino), ElencoAz, Open, Closed, [(S_,G_,H_,Gh_,Ge_, Cammino_)| ListaNuovaOpen] ),!,
     ricercaAStarPortale([(S_,G_,H_,Gh_,Ge_, Cammino_)| ListaNuovaOpen], [(S_,G_,H_,Gh_,Ge_, Cammino_) | [(S,G,H,Gh,Ge, Cammino)| Closed]], GhiaccioFinale, GemmeFinali,  Risultato).
 
-ricercaAStarPortale([(S,G,H,Gh,Ge, Cammino)| Open], Closed, _,_, ["Finish"]):-
+ricercaAStarPortale([(S,G,H,Gh,Ge, Cammino)| Open], Closed, [],[], ["Finish"]):-
     Open == [],
     findall(Az, applicabileTuttoMartello(Az,S,Gh,Ge),ElencoAz),
     elaboraPortale((S,G,H,Gh,Ge,Cammino), ElencoAz, Open, Closed, ListaNuovaOpen ),
-    ListaNuovaOpen == [], !.
+    ListaNuovaOpen == [],!.
 
 
 elaboraPortale((S,G,H,Gh,Ge,C), [Az| ElencoAz], Open, Closed, Res):-

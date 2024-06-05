@@ -88,16 +88,22 @@ applicabileStato(Az,S,Ghiaccio,Gemme):-
 %-------------Applicabile Con Martello-------------------
 %--------------------------------------------------------
 
-applicabileTuttoMartello(Az,S,_,Gemme):-
+applicabileTuttoMartello(Az,S,Ghiaccio,Gemme):-
+    applicabile(Az,S),
+    trasforma(Az,S,SNuovo),
+    member(SNuovo,Gemme),
+    applicabileTuttoMartello(Az,SNuovo,Ghiaccio,Gemme).
+
+applicabileTuttoMartello(Az,S,Ghiaccio,Gemme):-
     applicabile(Az,S),
     trasforma(Az,S,SNuovo),
     \+ member(SNuovo,Gemme).
 
-applicabileTuttoMartello(Az,_,Ghiaccio,Gemme):-
-    applicabileTutto(Az,Ghiaccio,Gemme).
+%applicabileTuttoMartello(Az,_,Ghiaccio,Gemme):-
+%    applicabileTutto(Az,Ghiaccio,Gemme).
 
-applicabileTuttoMartello(Az,_,_,Gemme):-
-    applicabileTutto(Az,Gemme,Gemme).
+%applicabileTuttoMartello(Az,_,_,Gemme):-
+%    applicabileTutto(Az,Gemme,Gemme).
 
 %--------------------------------------------------------
 %---------------------Trasforma N------------------------
