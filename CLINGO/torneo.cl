@@ -58,7 +58,7 @@
 :- assign_andata(G,S1,S2), assign_ritorno(G1,S1,S2).
 
 % Nessuna squadra gioca 2 volte consecutive in casa o fuori casa tra andata e ritorno
-:- assign_andata(G,S1,S2), assign_ritorno(G1,S1,S3), assign_ritorno(G2,S1,S4), G + 1 == G1, G + 2 == G2.
+:- assign_andata(G,S1,S2), assign_ritorno(G1,S1,S3), assign_ritorno(G2,S1,S4), G + 1 == G1, G + 2 == G2. 
 :- assign_andata(G,S2,S1), assign_ritorno(G1,S3,S1), assign_ritorno(G2,S4,S1), G + 1 == G1, G + 2 == G2.
 :- assign_andata(G,S1,S2), assign_andata(G1,S1,S3), assign_ritorno(G2,S1,S4), G + 1 == G1, G + 2 == G2.
 :- assign_andata(G,S2,S1), assign_andata(G1,S3,S1), assign_ritorno(G2,S4,S1), G + 1 == G1, G + 2 == G2.
