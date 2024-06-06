@@ -1,4 +1,26 @@
 %------------------------------------------------
+%----------- Assegnamento Giornata 1 ------------ 
+%------------------------------------------------
+
+assign_andata(1,"Boston Celtics","New York Knicks").
+assign_andata(1,"Brooklyn Nets","Los Angeles Lakers").
+assign_andata(1,"Cumiana Basket","Juve Basket").
+assign_andata(1,"Detroit Pistons","Cleveland Cavaliers").
+assign_andata(1,"Houston Rockets","Phoenix Suns").
+assign_andata(1,"Los Angeles Clippers","Golden State Warriors").
+assign_andata(1,"Miami Heat","Atlanta Hawks").
+assign_andata(1,"Torino Basket","Orlando Magic").
+
+assign_ritorno(1,"Atlanta Hawks","Juve Basket").
+assign_ritorno(1,"Brooklyn Nets","Cumiana Basket").
+assign_ritorno(1,"Detroit Pistons","Boston Celtics").
+assign_ritorno(1,"Golden State Warriors","Phoenix Suns").
+assign_ritorno(1,"Miami Heat","Los Angeles Lakers").
+assign_ritorno(1,"New York Knicks","Houston Rockets").
+assign_ritorno(1,"Orlando Magic","Cleveland Cavaliers").
+assign_ritorno(1,"Torino Basket","Los Angeles Clippers").
+
+%------------------------------------------------
 %-------------------- Andata -------------------- 
 %------------------------------------------------
 
@@ -39,9 +61,6 @@
 % nessuna squadra giochi contro se stessa
 :- assign_ritorno(G,S1,S1).
 
-% non esistano giornate con partine invertine nello stesso girone
-:- assign_ritorno(G,S1,S2), assign_ritorno(G1,S2,S1).
-
 % non esistano giornate con la stessa partita nello stesso girone
 :- assign_ritorno(G,S1,S2), assign_ritorno(G1,S1,S2), G!=G1.
 
@@ -62,8 +81,7 @@
 :- assign_andata(G,S1,S2), assign_ritorno(G,S2,S1).
 
 %una squadra non giochi 2 volte contro la stessa in casa o fuori casa
-%:- assign_andata(G,S1,S2), assign_ritorno(G1,S1,S2), G != G1.
-%:- assign_andata(G,S2,S1), assign_ritorno(G1,S2,S1), G != G1.
+:- assign_andata(G,S1,S2), assign_ritorno(G1,S1,S2), G != G1.
 
 % una squadra non deve giocare 2 volte consecitive in casa o fuori casa 
 %1-2
