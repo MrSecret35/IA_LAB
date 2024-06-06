@@ -2,7 +2,7 @@ ricerca(Cammino):-
     iniziale(S0),
     Soglia is 0,
     leggiGiaccio([],Ghiaccio),
-    leggiGemme([],Gemme),
+    leggiGemme([],Gemme),!,
 
     martello(Martello),
     startMartello(S0,Cammino1,Soglia,Martello,Ghiaccio,GhiaccioFinale,Gemme,GemmeFinali),
@@ -11,7 +11,7 @@ ricerca(Cammino):-
     startPortale(Martello,Cammino2,Soglia,Portale,GhiaccioFinale,_,GemmeFinali,GemmeFinaliFinali),
 
     posizioniContigue(GemmeFinaliFinali,GemmeFinaliFinali,N,0),
-    N \== 0, 
+    %N \== 0, 
     write("Gemme Contigue: "), write(N), write("\n"),
     
     tell('output.txt'),
