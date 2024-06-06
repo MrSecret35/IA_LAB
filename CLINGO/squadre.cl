@@ -15,30 +15,19 @@ squadra("Cumiana Basket").
 squadra("Phoenix Suns").
 squadra("Houston Rockets").
 
-citta("California").
-citta("New York").
-citta("Massachusetts").
-citta("Ohio").
-citta("Michigan").
-citta("Georgia").
-citta("Florida").
-citta("Piemonte").
-citta("Arizona").
-citta("Texas").
-
 sc("Golden State Warriors","California").
 sc("Los Angeles Clippers","California").
-sc("Los Angeles Lakers","California").
+sc("Los Angeles Lakers","Mario1").
 sc("Brooklyn Nets","New York").
-sc("New York Knicks","New York").
+sc("New York Knicks","Mario2").
 sc("Boston Celtics","Massachusetts").
 sc("Cleveland Cavaliers","Ohio").
 sc("Detroit Pistons","Michigan").
 sc("Atlanta Hawks","Georgia").
 sc("Miami Heat","Florida").
-sc("Orlando Magic","Florida").
+sc("Orlando Magic","Mario3").
 sc("Juve Basket","Piemonte").
 sc("Torino Basket","Piemonte").
-sc("Cumiana Basket","Piemonte").
+sc("Cumiana Basket","Mario4").
 sc("Phoenix Suns","Arizona").
 sc("Houston Rockets","Texas").
