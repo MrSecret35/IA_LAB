@@ -62,7 +62,8 @@
 :- assign_andata(G,S1,S2), assign_ritorno(G,S2,S1).
 
 %una squadra non giochi 2 volte contro la stessa in casa o fuori casa
-%:- assign_andata(G,S1,S2), assign_ritorno(G1,S1,S2).
+%:- assign_andata(G,S1,S2), assign_ritorno(G1,S1,S2), G != G1.
+%:- assign_andata(G,S2,S1), assign_ritorno(G1,S2,S1), G != G1.
 
 % una squadra non deve giocare 2 volte consecitive in casa o fuori casa 
 %1-2
