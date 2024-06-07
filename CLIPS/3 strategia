@@ -1,0 +1,20 @@
+a b c d 
+	1g 1mp
+ assert
+g a _ _ _
+g _ b _ _ 
+g _ _ c _ 
+g _ _ _ d
+
+f b a c 
+	2g 0m
+
+g f b _ _ 
+g _ b a _ 
+g _ b _ cù
+
+f b h g 
+	1g 3mp
+
+g _ b _ _ 
+
