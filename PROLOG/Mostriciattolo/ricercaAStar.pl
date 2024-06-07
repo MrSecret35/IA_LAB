@@ -11,7 +11,7 @@ ricerca(Cammino):-
     martello(S1),
     euristicaPortale(S1,H1),
     ricercaAStarPortale([(S1,0,H1, GhiaccioFinale, GemmeFinali,[])], [], _, GemmeFinaliFinali, Cammino2),
-
+    
     inv(Cammino1, CamminoInvertito1),
     inv(Cammino2, CamminoInvertito2),
 
@@ -24,9 +24,9 @@ ricerca(Cammino):-
     scriviCammino2(S1,CamminoInvertito2,GhiaccioFinale,_,GemmeFinali,_),
     told,
     write(CamminoInvertito1), write("\n"), 
-    write(CamminoInvertito2), write("\n").
+    write(CamminoInvertito2), write("\n"),
     
-    %append(CamminoInvertito1,CamminoInvertito2,Cammino).
+    append(CamminoInvertito1,CamminoInvertito2,Cammino).
 
 %--------------------------------------------------------
 %-------------------Ricerca Martello---------------------
