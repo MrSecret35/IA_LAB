@@ -1,20 +1,69 @@
-a b c d 
-	1g 1mp
- assert
-g a _ _ _
-g _ b _ _ 
-g _ _ c _ 
-g _ _ _ d
+step 0
+a b c d
 
-f b a c 
-	2g 0m
+0 - 0
+    random altri 4
+0 - Y
+    assert tutti blank 
+    assert di possibili shuffle
 
-g f b _ _ 
-g _ b a _ 
-g _ b _ cù
+    prendiamo e shuffle 
+X - Y
+    assert di tutte le possibili X usanto il colore "blank" per il vuoto nelle altre pos
+    assert di possibili shuffle
 
-f b h g 
-	1g 3mp
+    prendiamo la prima e shuffle sui blank
+X - 0 
+    assert di tutte le possibili X usanto il colore "blank" per il vuoto nelle altre pos
 
-g _ b _ _ 
+Risultato:
+    assert di ogni possibile codice es:
+    (code  a b _ _ )
+    (codeS _ _ c d ) può essere tutti blank
 
+    (code  a _ c _ ) 
+    (codeS _ b _ d ) ...
+
+    (code  _ b c _ )
+    (codeS a _ _ d ) ...
+
+step n
+0 - 0
+    prendiamo il primo code e lo cancelliamo - retract
+
+    prendiamo il secondo e si sceglie / prendiamo il primo
+0 - Y
+    se peggiore 
+        prendiamo il primo code e lo cancelliamo - retract
+
+        prendiamo il secondo e si sceglie / prendiamo il primo
+
+    se uguale
+        prendiamo lo stesso e shuffle dei possibili
+
+    se migliore
+        retract di tutto
+        asset dei nuovi code codeS
+
+        prendiamo il primo e shuffle sui possibili
+
+X - Y
+    se peggiore
+        prendiamo il primo code e lo cancelliamo - retract
+
+        prendiamo il secondo e si sceglie / prendiamo il primo
+    se migliore
+        retract di tutto
+        asset dei nuovi code codeS
+
+        prendiamo il primo e shuffle sui possibili
+X - 0 
+    se peggiore
+        prendiamo il primo code e lo cancelliamo - retract
+
+        prendiamo il secondo e si sceglie / prendiamo il primo
+    se migliore
+        retract di tutto
+        asset dei nuovi code, codeS tutti blank
+
+        prendiamo il primo e shuffle sui possibili
