@@ -38,7 +38,7 @@
   (pop-focus)
 )
 
-(defrule computer-step-1-0-0 (declare (salience -9))
+(defrule computer-stepN-0-0 (declare (salience -9))
   (status (step ?n) (mode computer))
   (code (p1 blank) (p2 blank) (p3 blank) (p4 blank))
   (codeS (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4))
@@ -147,11 +147,24 @@
 ;  -------- Esame mossa / Cambio Valori --------
 ;  ---------------------------------------------
 
+;---------------- 0 - 0 ---------------- 
 (defrule step0-0-0 (declare (salience -7))
   (answer (step 0) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step 0) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
   (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+  (assert (codeS (p1 orange) (p2 white) (p3 black) (p4 purple) ))
+)
+
+(defrule stepN-0-0 (declare (salience -7))
+  (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(= ?mp 0)))
+  (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
+  ?c <- (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4))
+  ?cs <- (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
+  =>
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+  (retract ?c)
+  (retract ?cs)
   (assert (codeS (p1 orange) (p2 white) (p3 black) (p4 purple) ))
 )
 
@@ -163,6 +176,7 @@
   (assert (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4) ))
 )
 
+;---------------- X - Y ---------------- 
 (defrule stepN-1X-Y (declare (salience -7))
   (answer (step ?n) (right-placed 1) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
