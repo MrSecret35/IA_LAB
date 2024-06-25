@@ -21,9 +21,9 @@
   (slot p1) (slot p2) (slot p3) (slot p4)
 )
 
-;  ---------------------------------------------
-;  ------------ Scelta della mossa -------------
-;  ---------------------------------------------
+;  ----------------------------------------------
+;  ------------- Scelta della mossa -------------
+;  ----------------------------------------------
 
 (defrule computer-step-0 (declare (salience -9))
   (status (step 0) (mode computer))
@@ -50,13 +50,96 @@
   (printout t "La tua giocata allo step: " ?n " -> " ?c2 " " ?c3 " " ?c4 " " ?c1 crlf)
   (pop-focus)
 )
-(defrule computer-stepN-1G (declare (salience -9))
+;  -------------------------1 RP-------------------------
+(defrule computer-stepN-1G-POS1 (declare (salience -9))
   (status (step ?n) (mode computer))
   (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank))
   (codeS (p1 blank) (p2 ?s2) (p3 ?s3) (p4 ?s4))
   =>
   (assert (guess (step ?n) (g ?c1 ?s3 ?s4 ?s2) ))
   (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s3 " " ?s4 " " ?s2 crlf)
+  (pop-focus)
+)
+(defrule computer-stepN-1G-POS2 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 blank) (p2 ?c1) (p3 blank) (p4 blank))
+  (codeS (p1 ?s2) (p2 blank) (p3 ?s3) (p4 ?s4))
+  =>
+  (assert (guess (step ?n) (g ?s3 ?c1 ?s4 ?s2) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?s3 " " ?c1 " " ?s4 " " ?s2 crlf)
+  (pop-focus)
+)
+(defrule computer-stepN-1G-POS3 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 blank) (p2 blank) (p3 ?c1) (p4 blank))
+  (codeS (p1 ?s2) (p2 ?s3) (p3 blank) (p4 ?s4))
+  =>
+  (assert (guess (step ?n) (g ?s3 ?s4 ?c1 ?s2) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?s3 " " ?s4 " " ?c1 " " ?s2 crlf)
+  (pop-focus)
+)
+(defrule computer-stepN-1G-POS4 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c1))
+  (codeS (p1 ?s2) (p2 ?s3) (p3 ?s4) (p4 blank) )
+  =>
+  (assert (guess (step ?n) (g ?s3 ?s4 ?s2 ?c1) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?s3 " " ?s4 " " ?s2 " " ?c1 crlf)
+  (pop-focus)
+)
+;  -------------------------2 RP-------------------------
+(defrule computer-stepN-2G-POS1 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank))
+  (codeS (p1 blank) (p2 blank) (p3 ?s3) (p4 ?s4))
+  =>
+  (assert (guess (step ?n) (g ?c1 ?c2 ?s4 ?s3) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?s4 " " ?s3 crlf)
+  (pop-focus)
+)
+(defrule computer-stepN-2G-POS2 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 ?c1) (p2 blank) (p3 ?c2) (p4 blank))
+  (codeS (p1 blank) (p2 ?s2) (p3 blank) (p4 ?s4))
+  =>
+  (assert (guess (step ?n) (g ?c1 ?s4 ?c2 ?s2) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s4 " " ?c2 " " ?s2 crlf)
+  (pop-focus)
+)
+(defrule computer-stepN-2G-POS3 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 ?c1) (p2 blank) (p3 blank) (p4 ?c2))
+  (codeS (p1 blank) (p2 ?s2) (p3 blank) (p4 ?s4))
+  =>
+  (assert (guess (step ?n) (g ?c1 ?s4 ?c2 ?s2) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s4 " " ?c2 " " ?s2 crlf)
+  (pop-focus)
+)
+(defrule computer-stepN-2G-POS4 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 blank) (p2 ?c1) (p3 ?c2) (p4 blank))
+  (codeS (p2 ?s1) (p1 blank) (p4 blank) (p3 ?s4))
+  =>
+  (assert (guess (step ?n) (g ?s4 ?c1 ?c2 ?s1) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?s4 " " ?c1 " " ?c2 " " ?s1 crlf)
+  (pop-focus)
+)
+(defrule computer-stepN-2G-POS5 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 blank) (p2 ?c1) (p3 blank) (p4 ?c2))
+  (codeS (p1 ?s1) (p2 blank) (p3 ?s4) (p4 blank))
+  =>
+  (assert (guess (step ?n) (g ?s4 ?c1 ?s1 ?c2) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?s4 " " ?c1 " " ?s1 " " ?c2 crlf)
+  (pop-focus)
+)
+(defrule computer-stepN-2G-POS6 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 blank) (p2 blank) (p3 ?c1) (p4 ?c2))
+  (codeS (p1 ?s1) (p2 ?s2) (p3 blank) (p4 blank))
+  =>
+  (assert (guess (step ?n) (g ?s4 ?s1 ?c1 ?c2) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?s4 " " ?s1 " " ?c1 " " ?c2 crlf)
   (pop-focus)
 )
 
