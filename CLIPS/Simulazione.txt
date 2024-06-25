@@ -1,0 +1,29 @@
+Simulazione
+Secret code: 
+    orange white black purple
+
+
+0 - Gioco blue red yellow green
+---
+    f07 (code (p1 blank) (p2 blank) (p3 blank) (p4 blank) (rp 0) (mp 0))
+    f08 (codeS (p1 blank) (p2 blank) (p3 blank) (p4 blank) )
+---
+finisco in
+
+step0-0-0
+    cancello f08
+    f07 (code (p1 blank) (p2 blank) (p3 blank) (p4 blank) (rp 0) (mp 0))
+    f11 (codeS (p1 orange) (p2 white) (p3 black) (p4 purple) )
+
+computer-stepN-0-0
+    gioco (p2 white) (p3 black) (p4 purple) (p1 orange)
+
+
+stepN-0-Y
+    cancello f11
+    f23 (codeS (p1 black) (p2 purple) (p3 orange) (p4 white) )
+    
+stepN-0-Y
+    cancello f23
+    f23 (codeS (p1 black) (p2 purple) (p3 orange) (p4 white) )
+
