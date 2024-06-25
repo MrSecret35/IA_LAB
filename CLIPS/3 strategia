@@ -3,6 +3,8 @@ a b c d
 
 0 - 0
     random altri 4
+
+    prendiamo e shuffle 
 0 - Y
     assert tutti blank 
     assert di possibili shuffle
@@ -67,3 +69,43 @@ X - 0
         asset dei nuovi code, codeS tutti blank
 
         prendiamo il primo e shuffle sui possibili
+
+
+
+
+
+
+
+
+
+
+step 0
+
+0 - 0
+    step0-0-0
+0 - Y
+
+X - Y
+
+X - 0 
+
+step n
+0 - 0
+    stepN-0-0
+0 - Y
+
+X - Y
+    stepN-1X-Y
+    stepN-2X-Y
+    stepN-3X-Y
+X - 0 
+
+
+Scelte:
+    computer-step-0
+    computer-stepN-0-0
+    computer-stepN-1G-POS1
+    computer-stepN-1G-POS2
+    computer-stepN-1G-POS3
+    computer-stepN-1G-POS4
+
