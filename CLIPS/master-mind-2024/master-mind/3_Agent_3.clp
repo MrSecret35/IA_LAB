@@ -138,8 +138,8 @@
   (code (p1 blank) (p2 blank) (p3 ?c1) (p4 ?c2))
   (codeS (p1 ?s1) (p2 ?s2) (p3 blank) (p4 blank))
   =>
-  (assert (guess (step ?n) (g ?s4 ?s1 ?c1 ?c2) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?s4 " " ?s1 " " ?c1 " " ?c2 crlf)
+  (assert (guess (step ?n) (g ?s2 ?s1 ?c1 ?c2) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?s2 " " ?s1 " " ?c1 " " ?c2 crlf)
   (pop-focus)
 )
 
