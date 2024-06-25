@@ -50,7 +50,7 @@
   (printout t "La tua giocata allo step: " ?n " -> " ?c2 " " ?c3 " " ?c4 " " ?c1 crlf)
   (pop-focus)
 )
-;  -------------------------1 RP-------------------------
+;  ------------------------- 1 RP -------------------------
 (defrule computer-stepN-1G-POS1 (declare (salience -9))
   (status (step ?n) (mode computer))
   (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank))
@@ -87,7 +87,7 @@
   (printout t "La tua giocata allo step: " ?n " -> " ?s3 " " ?s4 " " ?s2 " " ?c1 crlf)
   (pop-focus)
 )
-;  -------------------------2 RP-------------------------
+;  ------------------------- 2 RP -------------------------
 (defrule computer-stepN-2G-POS1 (declare (salience -9))
   (status (step ?n) (mode computer))
   (code (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank))
