@@ -71,6 +71,7 @@
   (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank))
   (codeS (p1 blank) (p2 ?s2) (p3 ?s3) (p4 ?s4))
   =>
+  (printout t "computer-stepN-1G-POS1------------------------------------------------------------------" crlf)
   (assert (guess (step ?n) (g ?c1 ?s3 ?s4 ?s2) ))
   (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s3 " " ?s4 " " ?s2 crlf)
   (pop-focus)
@@ -80,6 +81,7 @@
   (code (p1 blank) (p2 ?c2) (p3 blank) (p4 blank))
   (codeS (p1 ?s1) (p2 blank) (p3 ?s3) (p4 ?s4))
   =>
+  (printout t "computer-stepN-1G-POS2------------------------------------------------------------------" crlf)
   (assert (guess (step ?n) (g ?s3 ?c2 ?s4 ?s1) ))
   (printout t "La tua giocata allo step: " ?n " -> " ?s3 " " ?c2 " " ?s4 " " ?s1 crlf)
   (pop-focus)
@@ -89,6 +91,7 @@
   (code (p1 blank) (p2 blank) (p3 ?c3) (p4 blank))
   (codeS (p1 ?s1) (p2 ?s2) (p3 blank) (p4 ?s4))
   =>
+  (printout t "computer-stepN-1G-POS3------------------------------------------------------------------" crlf)
   (assert (guess (step ?n) (g ?s2 ?s4 ?c3 ?s1) ))
   (printout t "La tua giocata allo step: " ?n " -> " ?s2 " " ?s4 " " ?c3 " " ?s1 crlf)
   (pop-focus)
@@ -98,6 +101,7 @@
   (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4))
   (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 blank) )
   =>
+  (printout t "computer-stepN-1G-POS4------------------------------------------------------------------" crlf)
   (assert (guess (step ?n) (g ?s2 ?s3 ?s1 ?c4) ))
   (printout t "La tua giocata allo step: " ?n " -> " ?s2 " " ?s3 " " ?s1 " " ?c4 crlf)
   (pop-focus)
@@ -233,7 +237,6 @@
   (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 blank) (rp 0) (mp ?mp)))
   (assert (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4) ))
   (printout t "------------------------------------------------------------------------------------------------" crlf)
-
 )
 ;SE UGUALE
 ; non fai nulla
@@ -297,33 +300,41 @@
 
   (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank) (rp 1) (mp 0)))
   (do-for-all-facts ((?s2 color) (?s3 color) (?s4 color)) 
-    (and (neq ?s2:name ?c1) 
-      (and  (and (neq ?s3:name ?s2:name) (neq ?s3:name ?c1)) 
-            (and (and (neq ?s4:name ?s3:name) (neq ?s4:name ?s2:name)) (neq ?s4:name ?c1)))) 
+    (and 
+      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4)
+      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4) (neq ?s3:name ?s2:name)
+      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s3:name) (neq ?s4:name ?s2:name) 
+    )
     (assert (codeS (p1 blank) (p2 ?s2:name) (p3 ?s3:name) (p4 ?s4:name) ))
   )
 
   (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 blank) (rp 1) (mp 0)))
   (do-for-all-facts ((?s1 color) (?s3 color) (?s4 color)) 
-    (and (neq ?s1:name ?c2) 
-      (and  (and (neq ?s3:name ?s1:name) (neq ?s3:name ?c2)) 
-            (and (and (neq ?s4:name ?s3:name) (neq ?s4:name ?s1:name)) (neq ?s4:name ?c2)))) 
+    (and 
+      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
+      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4) (neq ?s3:name ?s1:name)
+      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s3:name) (neq ?s4:name ?s1:name) 
+    )
     (assert (codeS (p1 ?s1:name) (p2 blank) (p3 ?s3:name) (p4 ?s4:name) ))
   )
 
   (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 blank) (rp 1) (mp 0)))
   (do-for-all-facts ((?s1 color) (?s2 color) (?s4 color)) 
-    (and (neq ?s1:name ?c3) 
-      (and  (and (neq ?s2:name ?s1:name) (neq ?s2:name ?c3)) 
-            (and (and (neq ?s4:name ?s2:name) (neq ?s4:name ?s1:name)) (neq ?s4:name ?c3)))) 
+    (and 
+      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
+      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4) (neq ?s2:name ?s1:name)
+      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s2:name) (neq ?s4:name ?s1:name) 
+    )
     (assert (codeS (p1 ?s1:name) (p2 ?s2:name) (p3 blank) (p4 ?s4:name) ))
   )
 
   (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4) (rp 1) (mp 0)))
   (do-for-all-facts ((?s1 color) (?s2 color) (?s3 color)) 
-    (and (neq ?s1:name ?c4) 
-      (and  (and (neq ?s2:name ?s1:name) (neq ?s2:name ?c4)) 
-            (and (and (neq ?s3:name ?s2:name) (neq ?s3:name ?s1:name)) (neq ?s3:name ?c4)))) 
+    (and 
+      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
+      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4) (neq ?s2:name ?s1:name)
+      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4) (neq ?s3:name ?s2:name) (neq ?s3:name ?s1:name) 
+    )
     (assert (codeS (p1 ?s1:name) (p2 ?s2:name) (p3 ?s3:name) (p4 blank)))
   )
   (printout t "------------------------------------------------------------------------------------------------" crlf)
