@@ -97,7 +97,6 @@ step n
 X - Y
     stepN-1X-Y
     stepN-2X-Y
-    stepN-3X-Y
 X - 0 
 
 

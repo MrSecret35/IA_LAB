@@ -17,13 +17,47 @@ step0-0-0
 
 computer-stepN-0-0
     gioco (p2 white) (p3 black) (p4 purple) (p1 orange)
-
+    modift f11 in f13
 
 stepN-0-Y
-    cancello f11
     f23 (codeS (p1 black) (p2 purple) (p3 orange) (p4 white) )
     
 stepN-0-Y
     cancello f23
     f23 (codeS (p1 black) (p2 purple) (p3 orange) (p4 white) )
+
+
+
+----
+f07
+f08
+-----
+f07 
+f11
+-----
+f07
+f13
+-----
+f24
+f25
+-----
+f24
+f27
+-----
+
+------------------------------------------------------------
+Simulazione
+Secret code: 
+    blue white black purple
+
+0 - Gioco blue red yellow green
+0 - 
+
+f07
+f08
+
+----
+togli f07
+togli f08
+
 

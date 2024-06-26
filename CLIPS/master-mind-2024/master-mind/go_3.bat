@@ -4,4 +4,5 @@
 (load 2_Code.clp)
 (load 3_Agent_3.clp)
 (reset)
+(watch facts)
 (run)
