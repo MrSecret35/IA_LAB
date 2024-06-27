@@ -192,21 +192,10 @@
 )
 
 ;---------------- 0 - Y ---------------- 
-(defrule step0-0-Y-Peggiore (declare (salience -7))
-  (answer (step 0) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
-  (guess (step 0) (g  ?g1 ?g2 ?g3 ?g4) )
-
-  =>
-  (printout t "-----------------------------------------" "Siamo in 0Y step 0 Right placed " ?rp " missplaced " ?mp crlf)
-  (do-for-fact  ((?var codeS)) TRUE (retract ?var))
-  (assert (codeS (p1 ?g1) (p2 ?g2) (p3 ?g3) (p4 ?g4) ))
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
-
-  
-)
 ;SE PEGGIORE
+; sia step 0 che N
 (defrule stepN-0-Y-Peggiore (declare (salience -7))
-  (answer (step ?n&:(> ?n 0)) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
 
   (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
@@ -214,6 +203,7 @@
   (test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
   (printout t "-----------------------------------------" "Siamo in peggiore Right placed " ?rp " missplaced " ?mp crlf)
+  (do-for-fact  ((?var code)) TRUE (retract ?var))
   (do-for-fact  ((?var codeS)) TRUE (retract ?var))
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 
@@ -221,7 +211,7 @@
 )
 ;SE MIGLIORE
 (defrule stepN-0-Y-Migliore (declare (salience -7))
-  (answer (step ?n&:(> ?n 0)) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
 
   (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
@@ -229,10 +219,11 @@
   (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
   (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
+  ;-------cancello tutto
   (do-for-all-facts  ((?var code)) TRUE (retract ?var))
   (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
 
-  
+  ;-------assert questi code
   (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 blank) (rp 0) (mp ?mp)))
   (assert (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4) ))
   (printout t "------------------------------------------------------------------------------------------------" crlf)
