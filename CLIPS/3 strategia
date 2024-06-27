@@ -129,7 +129,7 @@ assert codeS e f g h -> gli altri 4 colori
 X-0
 --Se Peggiore
     Cancello 1 (quello utilizzato) -> code e codeS
---Se migliore
+--Se migliore o uguale
     cancello tutto
     1-0 
         assert 4 code (a b c d) e 1 codeS (prendere 3 colori diversi da a b c d)
@@ -141,7 +141,7 @@ X-0
 X-Y
 --Se Peggiore
     Cancello 1 (quello utilizzato) -> code e codeS
---Se migliore
+--Se migliore o uguale
     cancello tutto
     1-Y
         assert 4 code (a b c d) e 1 codeS (prendere gli altri 3)
