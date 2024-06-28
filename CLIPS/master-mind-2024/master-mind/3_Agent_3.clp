@@ -75,7 +75,7 @@
   (modify ?cS (p1 blank) (p2 ?s3) (p3 ?s4) (p4 ?s2))
   (pop-focus)
 )
-(defrule computer-stepN-1G-POS2 (declare (salience -9))
+(defrule computer-stepN-1G-POS2 (declare (salience -10))
   (status (step ?n) (mode computer))
   (code (p1 blank) (p2 ?c2&:(neq ?c2 blank)) (p3 blank) (p4 blank))
   ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 blank) (p3 ?s3&:(neq ?s3 blank)) (p4 ?s4&:(neq ?s4 blank)))
@@ -86,7 +86,7 @@
   (modify ?cS (p1 ?s3) (p2 blank) (p3 ?s4) (p4 ?s1))
   (pop-focus)
 )
-(defrule computer-stepN-1G-POS3 (declare (salience -9))
+(defrule computer-stepN-1G-POS3 (declare (salience -11))
   (status (step ?n) (mode computer))
   (code (p1 blank) (p2 blank) (p3 ?c3&:(neq ?c3 blank)) (p4 blank))
   ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 blank) (p4 ?s4&:(neq ?s4 blank)))
@@ -97,7 +97,7 @@
   (modify ?cS (p1 ?s2) (p2 ?s4) (p3 blank) (p4 ?s1))
   (pop-focus)
 )
-(defrule computer-stepN-1G-POS4 (declare (salience -9))
+(defrule computer-stepN-1G-POS4 (declare (salience -12))
   (status (step ?n) (mode computer))
   (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
   ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 ?s3&:(neq ?s3 blank)) (p4 blank) )
@@ -120,7 +120,7 @@
   (modify ?cS (p1 blank) (p2 blank) (p3 ?s4) (p4 ?s3))
   (pop-focus)
 )
-(defrule computer-stepN-2G-POS2 (declare (salience -9))
+(defrule computer-stepN-2G-POS2 (declare (salience -10))
   (status (step ?n) (mode computer))
   (code (p1 ?c1&:(neq ?c1 blank)) (p2 blank) (p3 ?c3&:(neq ?c3 blank)) (p4 blank))
   ?cS <- (codeS (p1 blank) (p2 ?s2&:(neq ?s2 blank)) (p3 blank) (p4 ?s4&:(neq ?s4 blank)))
@@ -130,7 +130,7 @@
   (modify ?cS (p1 blank) (p2 ?s4) (p3 blank) (p4 ?s2))
   (pop-focus)
 )
-(defrule computer-stepN-2G-POS3 (declare (salience -9))
+(defrule computer-stepN-2G-POS3 (declare (salience -11))
   (status (step ?n) (mode computer))
   (code (p1 ?c1&:(neq ?c1 blank)) (p2 blank) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
   ?cS <- (codeS (p1 blank) (p2 ?s2&:(neq ?s2 blank)) (p4 ?s3&:(neq ?s3 blank)) (p3 blank))
@@ -140,7 +140,7 @@
   (modify ?cS (p1 blank) (p2 ?s3) (p3 ?s2) (p4 ?c4))
   (pop-focus)
 )
-(defrule computer-stepN-2G-POS4 (declare (salience -9))
+(defrule computer-stepN-2G-POS4 (declare (salience -12))
   (status (step ?n) (mode computer))
   (code (p1 blank) (p2 ?c2&:(neq ?c2 blank)) (p3 ?c3&:(neq ?c3 blank)) (p4 blank))
   ?cS <- (codeS (p2 ?s1&:(neq ?s1 blank)) (p1 blank) (p4 blank) (p3 ?s4&:(neq ?s4 blank)))
@@ -150,7 +150,7 @@
   (modify ?cS (p1 ?s4) (p2 blank) (p3 blank) (p4 ?s1))
   (pop-focus)
 )
-(defrule computer-stepN-2G-POS5 (declare (salience -9))
+(defrule computer-stepN-2G-POS5 (declare (salience -13))
   (status (step ?n) (mode computer))
   (code (p1 blank) (p2 ?c2&:(neq ?c2 blank)) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
   ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 blank) (p3 ?s3&:(neq ?s3 blank)) (p4 blank))
@@ -160,7 +160,7 @@
   (modify ?cS (p1 ?s3) (p2 blank) (p3 ?s1) (p4 blank))
   (pop-focus)
 )
-(defrule computer-stepN-2G-POS6 (declare (salience -9))
+(defrule computer-stepN-2G-POS6 (declare (salience -14))
   (status (step ?n) (mode computer))
   (code (p1 blank) (p2 blank) (p3 ?c3&:(neq ?c3 blank)) (p4 ?c4&:(neq ?c4 blank)))
   ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 blank) (p4 blank))
@@ -182,7 +182,7 @@
   ;(modify ?cS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4))
   (pop-focus)
 )
-(defrule computer-stepN-3G-POS2 (declare (salience -9))
+(defrule computer-stepN-3G-POS2 (declare (salience -10))
   (status (step ?n) (mode computer))
   (code (p1 ?c1&:(neq ?c1 blank)) (p2 ?c2&:(neq ?c2 blank)) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
   ?cS <- (codeS (p1 blank) (p2 blank) (p3 ?s3&:(neq ?s3 blank)) (p4 blank))
@@ -193,7 +193,7 @@
   ;(modify ?cS (p1 blank) (p2 blank) (p3 ?s3) (p4 blank))
   (pop-focus)
 )
-(defrule computer-stepN-3G-POS3 (declare (salience -9))
+(defrule computer-stepN-3G-POS3 (declare (salience -11))
   (status (step ?n) (mode computer))
   (code (p1 ?c1&:(neq ?c1 blank)) (p2 blank) (p3 ?c3&:(neq ?c3 blank)) (p4 ?c4&:(neq ?c4 blank)))
   ?cS <- (codeS (p1 blank) (p2 ?s2&:(neq ?s2 blank)) (p3 blank) (p4 blank))
@@ -204,7 +204,7 @@
   ;(modify ?cS (p1 blank) (p2 ?s2) (p3 blank) (p4 blank))
   (pop-focus)
 )
-(defrule computer-stepN-3G-POS4 (declare (salience -9))
+(defrule computer-stepN-3G-POS4 (declare (salience -12))
   (status (step ?n) (mode computer))
   (code (p1 blank) (p2 ?c2&:(neq ?c2 blank)) (p3 ?c3&:(neq ?c3 blank)) (p4 ?c4&:(neq ?c4 blank)))
   ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 blank) (p3 blank) (p4 blank))
@@ -246,28 +246,12 @@
 )
 
 ;---------------- 0 - Y ---------------- 
-;SE PEGGIORE
-(defrule 0-Y-Peggiore (declare (salience -7))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
-  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
-
-  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
-  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
-  =>
-  (printout t "-----------------------------------------" "Siamo in peggiore Right placed " ?rp " missplaced " ?mp crlf)
-  (do-for-fact  ((?var code)) TRUE (retract ?var))
-  (do-for-fact  ((?var codeS)) TRUE (retract ?var))
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
-
-  
-)
 ;SE MIGLIORE
 (defrule 0-Y-Migliore (declare (salience -7))
   (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
 
-  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
+  (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
   (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
   (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
@@ -278,27 +262,29 @@
 
   ;-------assert questi code
   (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 blank) (rp 0) (mp ?mp)))
-  (assert (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4) ))
+  (assert (codeS (p1 ?g1) (p2 ?g2) (p3 ?g3) (p4 ?g4) ))
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
 ;SE UGUALE
 ; non fai nulla
-
-;---------------- X - 0 ---------------- 
 ;SE PEGGIORE
-(defrule X-0-Peggiore (declare (salience -7))
+(defrule 0-Y-Peggiore (declare (salience -8))
   (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
-
-  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
-  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+  
   =>
   (printout t "-----------------------------------------" "Siamo in peggiore Right placed " ?rp " missplaced " ?mp crlf)
-  (do-for-fact  ((?var code)) TRUE (retract ?var))
-  (do-for-fact  ((?var codeS)) TRUE (retract ?var))
+  ;(test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+  (do-for-fact  ((?var code)) 
+    (< (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp)) 
+    (and
+      (retract ?var)
+      (do-for-fact  ((?var codeS)) TRUE (retract ?var))
+    )
+  )
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
+;---------------- X - 0 ---------------- 
 ;SE MIGLIORE O UGUALE
 (defrule 1X-0-Migliore (declare (salience -7))
   (answer (step ?n) (right-placed ?rp&:(= ?rp 1)) (miss-placed ?mp&:(= ?mp 0)))
@@ -422,7 +408,6 @@
   )
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
-
 (defrule 3X-0-Migliore (declare (salience -7))
   (answer (step ?n) (right-placed ?rp&:(= ?rp 3)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
@@ -469,24 +454,26 @@
   )
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
-;---------------- X - Y ---------------- 
-
-
 ;SE PEGGIORE
-(defrule X-Y-Peggiore (declare (salience -7))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+(defrule X-0-Peggiore (declare (salience -8))
+  (answer (step ?n) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
-
-  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
-  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+ 
   =>
   (printout t "-----------------------------------------" "Siamo in peggiore Right placed " ?rp " missplaced " ?mp crlf)
-  (do-for-fact  ((?var code)) TRUE (retract ?var)) 
-  (do-for-fact  ((?var codeS)) TRUE (retract ?var))
+  ;(test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+  (do-for-fact  ((?var code)) 
+    (< (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp))
+    (and
+      (retract ?var)
+      (do-for-fact  ((?var codeS)) TRUE (retract ?var))
+    )
+  )
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
-;SE MIGLIORE O UGUALE
+
+;---------------- X - Y ---------------- 
+;SE MIGLIORE
 (defrule 1X-Y-Migliore (declare (salience -7))
   (answer (step ?n) (right-placed ?rp&:(= ?rp 1)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
@@ -514,7 +501,6 @@
 
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
-
 (defrule 2X-Y-Migliore (declare (salience -7))
   (answer (step ?n) (right-placed ?rp&:(= ?rp 2)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
@@ -546,5 +532,21 @@
   (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 ?c4) (rp 2) (mp ?mp)))
   (assert (codeS (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank) ))
 
+  (printout t "------------------------------------------------------------------------------------------------" crlf)
+)
+;SE PEGGIORE
+(defrule X-Y-Peggiore (declare (salience -8))
+  (answer (step ?n) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
+  =>
+  (printout t "-----------------------------------------" "Siamo in peggiore Right placed " ?rp " missplaced " ?mp crlf)
+  ;(test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+  (do-for-fact  ((?var code)) 
+    (< (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp))
+    (and
+      (retract ?var)
+      (do-for-fact  ((?var codeS)) TRUE (retract ?var))
+    ) 
+  )
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
