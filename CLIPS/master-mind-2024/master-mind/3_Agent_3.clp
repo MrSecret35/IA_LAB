@@ -57,7 +57,6 @@
   (code (p1 blank) (p2 blank) (p3 blank) (p4 blank))
   ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 ?s3&:(neq ?s3 blank)) (p4 ?s4&:(neq ?s4 blank)))
   =>
-
   (assert (guess (step ?n) (g ?s2 ?s3 ?s4 ?s1) ))
   (printout t "La tua giocata allo step: " ?n " -> " ?s2 " " ?s3 " " ?s4 " " ?s1 crlf)
   (modify ?cS (p1 ?s2) (p2 ?s3) (p3 ?s4) (p4 ?s1))
@@ -66,12 +65,13 @@
 ;  ------------------------- 1 RP -------------------------
 (defrule computer-stepN-1G-POS1 (declare (salience -9))
   (status (step ?n) (mode computer))
-  (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank))
-  (codeS (p1 blank) (p2 ?s2) (p3 ?s3) (p4 ?s4))
+  (code (p1 ?c1&:(neq ?c1 blank)) (p2 blank) (p3 blank) (p4 blank))
+  ?cS <- (codeS (p1 blank) (p2 ?s2&:(neq ?s2 blank)) (p3 ?s3&:(neq ?s3 blank)) (p4 ?s4&:(neq ?s4 blank)))
   =>
   (printout t "computer-stepN-1G-POS1------------------------------------------------------------------" crlf)
   (assert (guess (step ?n) (g ?c1 ?s3 ?s4 ?s2) ))
   (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s3 " " ?s4 " " ?s2 crlf)
+  (modify ?cS (p1 blank) (p2 ?s3) (p3 ?s4) (p4 ?s2))
   (pop-focus)
 )
 (defrule computer-stepN-1G-POS2 (declare (salience -9))
@@ -416,10 +416,32 @@
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
 ;---------------- X - Y ---------------- 
+
+
+;SE PEGGIORE
+(defrule X-Y-Peggiore (declare (salience -7))
+  (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
+  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
+
+  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
+  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
+  (test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+  =>
+  (printout t "-----------------------------------------" "Siamo in peggiore Right placed " ?rp " missplaced " ?mp crlf)
+  (do-for-fact  ((?var code)) TRUE (retract ?var)) 
+  (do-for-fact  ((?var codeS)) TRUE (retract ?var))
+  (printout t "------------------------------------------------------------------------------------------------" crlf)
+)
+;SE MIGLIORE O UGUALE
 (defrule stepN-1X-Y (declare (salience -7))
   (answer (step ?n) (right-placed 1) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
+  (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
+  ;-------cancello tutto
+  (do-for-all-facts  ((?var code)) TRUE (retract ?var))
+  (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
+
   (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank) ))
   (assert (codeS (p1 blank) (p2 ?c2) (p3 ?c3) (p4 ?c4) ))
 
@@ -432,13 +454,18 @@
   (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4) ))
   (assert (codeS (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 blank) ))
 
-  (printout t "Right placed 1  missplaced " ?mp crlf)
+  (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
 
 (defrule stepN-2X-Y (declare (salience -7))
   (answer (step ?n) (right-placed 2) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
+  (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
+  ;-------cancello tutto
+  (do-for-all-facts  ((?var code)) TRUE (retract ?var))
+  (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
+
   (assert (code (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank) )) 
   (assert (codeS (p1 blank) (p2 blank) (p3 ?c3) (p4 ?c4) ))
 
@@ -457,6 +484,5 @@
   (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 ?c4) ))
   (assert (codeS (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank) ))
 
-  (printout t "Right placed 2  missplaced " ?mp crlf)
+  (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
-
