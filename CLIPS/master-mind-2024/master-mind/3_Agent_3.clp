@@ -304,7 +304,7 @@
   (answer (step ?n) (right-placed ?rp&:(= ?rp 1)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
 
-  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
+  (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
   (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
   (test (>= (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
@@ -358,7 +358,7 @@
   (answer (step ?n) (right-placed ?rp&:(= ?rp 2)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
 
-  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
+  (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
   (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
   (test (>= (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
@@ -427,7 +427,7 @@
   (answer (step ?n) (right-placed ?rp&:(= ?rp 3)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
 
-  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
+  (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
   (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
   (test (>= (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
