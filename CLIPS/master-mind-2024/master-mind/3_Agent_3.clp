@@ -100,7 +100,7 @@
 (defrule computer-stepN-1G-POS4 (declare (salience -9))
   (status (step ?n) (mode computer))
   (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
-  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 ?s3&:(neq ?33 blank)) (p4 blank) )
+  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 ?s3&:(neq ?s3 blank)) (p4 blank) )
   =>
   (printout t "computer-stepN-1G-POS4------------------------------------------------------------------" crlf)
   (assert (guess (step ?n) (g ?s2 ?s3 ?s1 ?c4) ))
@@ -171,7 +171,50 @@
   (pop-focus)
 )
 ;  ------------------------- 3 RP -------------------------
-
+(defrule computer-stepN-3G-POS1 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 ?c1&:(neq ?c1 blank)) (p2 ?c2&:(neq ?c2 blank)) (p3 ?c3&:(neq ?c3 blank)) (p4 blank))
+  ?cS <- (codeS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4&:(neq ?s4 blank)))
+  =>
+  (printout t "computer-stepN-3G-POS1------------------------------------------------------------------" crlf)
+  (assert (guess (step ?n) (g ?c1 ?c2 ?c3 ?s4) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?c3 " " ?s4 crlf)
+  ;(modify ?cS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4))
+  (pop-focus)
+)
+(defrule computer-stepN-3G-POS2 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 ?c1&:(neq ?c1 blank)) (p2 ?c2&:(neq ?c2 blank)) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
+  ?cS <- (codeS (p1 blank) (p2 blank) (p3 ?s3&:(neq ?s3 blank)) (p4 blank))
+  =>
+  (printout t "computer-stepN-3G-POS2------------------------------------------------------------------" crlf)
+  (assert (guess (step ?n) (g ?c1 ?c2 ?s3 ?c4) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?s3 " " ?c4 crlf)
+  ;(modify ?cS (p1 blank) (p2 blank) (p3 ?s3) (p4 blank))
+  (pop-focus)
+)
+(defrule computer-stepN-3G-POS3 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 ?c1&:(neq ?c1 blank)) (p2 blank) (p3 ?c3&:(neq ?c3 blank)) (p4 ?c4&:(neq ?c4 blank)))
+  ?cS <- (codeS (p1 blank) (p2 ?s2&:(neq ?s2 blank)) (p3 blank) (p4 blank))
+  =>
+  (printout t "computer-stepN-3G-POS3------------------------------------------------------------------" crlf)
+  (assert (guess (step ?n) (g ?c1 ?s2 ?c3 ?c4) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s2 " " ?c3 " " ?c4 crlf)
+  ;(modify ?cS (p1 blank) (p2 ?s2) (p3 blank) (p4 blank))
+  (pop-focus)
+)
+(defrule computer-stepN-3G-POS4 (declare (salience -9))
+  (status (step ?n) (mode computer))
+  (code (p1 blank) (p2 ?c2&:(neq ?c2 blank)) (p3 ?c3&:(neq ?c3 blank)) (p4 ?c4&:(neq ?c4 blank)))
+  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 blank) (p3 blank) (p4 blank))
+  =>
+  (printout t "computer-stepN-3G-POS4------------------------------------------------------------------" crlf)
+  (assert (guess (step ?n) (g ?s1 ?c2 ?c3 ?c4) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?s1 " " ?c2 " " ?c3 " " ?c4 crlf)
+  ;(modify ?cS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4))
+  (pop-focus)
+)
 ;  ---------------------------------------------
 ;  -------- Esame mossa / Cambio Valori --------
 ;  ---------------------------------------------
