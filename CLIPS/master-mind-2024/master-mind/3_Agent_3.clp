@@ -247,7 +247,7 @@
 
 ;---------------- 0 - Y ---------------- 
 ;SE PEGGIORE
-(defrule stepN-0-Y-Peggiore (declare (salience -7))
+(defrule 0-Y-Peggiore (declare (salience -7))
   (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
 
@@ -263,7 +263,7 @@
   
 )
 ;SE MIGLIORE
-(defrule stepN-0-Y-Migliore (declare (salience -7))
+(defrule 0-Y-Migliore (declare (salience -7))
   (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
 
@@ -306,49 +306,49 @@
 
   (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
   (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (>= (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
   (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
   ;-------cancello tutto
   (do-for-all-facts  ((?var code)) TRUE (retract ?var))
   (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
 
-  (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank) (rp 1) (mp 0)))
+  (assert (code (p1 ?g1) (p2 blank) (p3 blank) (p4 blank) (rp 1) (mp 0)))
   (do-for-fact ((?s2 color) (?s3 color) (?s4 color)) 
     (and 
-      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4)
-      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4) (neq ?s3:name ?s2:name)
-      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s3:name) (neq ?s4:name ?s2:name) 
+      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4)
+      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s2:name)
+      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s3:name) (neq ?s4:name ?s2:name) 
     )
     (assert (codeS (p1 blank) (p2 ?s2:name) (p3 ?s3:name) (p4 ?s4:name) ))
   )
 
-  (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 blank) (rp 1) (mp 0)))
+  (assert (code (p1 blank) (p2 ?g2) (p3 blank) (p4 blank) (rp 1) (mp 0)))
   (do-for-fact ((?s1 color) (?s3 color) (?s4 color)) 
     (and 
-      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
-      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4) (neq ?s3:name ?s1:name)
-      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s3:name) (neq ?s4:name ?s1:name) 
+      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
+      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s1:name)
+      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s3:name) (neq ?s4:name ?s1:name) 
     )
     (assert (codeS (p1 ?s1:name) (p2 blank) (p3 ?s3:name) (p4 ?s4:name) ))
   )
 
-  (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 blank) (rp 1) (mp 0)))
+  (assert (code (p1 blank) (p2 blank) (p3 ?g3) (p4 blank) (rp 1) (mp 0)))
   (do-for-fact ((?s1 color) (?s2 color) (?s4 color)) 
     (and 
-      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
-      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4) (neq ?s2:name ?s1:name)
-      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s2:name) (neq ?s4:name ?s1:name) 
+      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
+      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4) (neq ?s2:name ?s1:name)
+      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s2:name) (neq ?s4:name ?s1:name) 
     )
     (assert (codeS (p1 ?s1:name) (p2 ?s2:name) (p3 blank) (p4 ?s4:name) ))
   )
 
-  (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4) (rp 1) (mp 0)))
+  (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 ?g4) (rp 1) (mp 0)))
   (do-for-fact ((?s1 color) (?s2 color) (?s3 color)) 
     (and 
-      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
-      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4) (neq ?s2:name ?s1:name)
-      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4) (neq ?s3:name ?s2:name) (neq ?s3:name ?s1:name) 
+      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
+      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4) (neq ?s2:name ?s1:name)
+      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s2:name) (neq ?s3:name ?s1:name) 
     )
     (assert (codeS (p1 ?s1:name) (p2 ?s2:name) (p3 ?s3:name) (p4 blank)))
   )
@@ -360,63 +360,63 @@
 
   (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
   (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (>= (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
   (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
   ;-------cancello tutto
   (do-for-all-facts  ((?var code)) TRUE (retract ?var))
   (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
 
-  (assert (code (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank) (rp 1) (mp 0)))
+  (assert (code (p1 ?g1) (p2 ?g2) (p3 blank) (p4 blank) (rp 2) (mp 0)))
   (do-for-fact ((?s3 color) (?s4 color)) 
     (and 
-      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4)
-      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s3:name)
+      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4)
+      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s3:name)
     )
     (assert (codeS (p1 blank) (p2 blank) (p3 ?s3:name) (p4 ?s4:name) ))
   )
 
-  (assert (code (p1 ?c1) (p2 blank) (p3 ?c3) (p4 blank) (rp 1) (mp 0)))
+  (assert (code (p1 ?g1) (p2 blank) (p3 ?g3) (p4 blank) (rp 2) (mp 0)))
   (do-for-fact ((?s2 color) (?s4 color)) 
     (and 
-      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4)
-      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s2:name) 
+      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4)
+      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s2:name) 
     )
     (assert (codeS (p1 blank) (p2 ?s2:name) (p3 blank) (p4 ?s4:name) ))
   )
 
-  (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 ?c4) (rp 1) (mp 0)))
+  (assert (code (p1 ?g1) (p2 blank) (p3 blank) (p4 ?g4) (rp 2) (mp 0)))
   (do-for-fact ((?s2 color) (?s3 color)) 
     (and 
-      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4)
-      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4) (neq ?s3:name ?s2:name)
+      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4)
+      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s2:name)
     )
     (assert (codeS (p1 blank) (p2 ?s2:name) (p3 ?s3:name) (p4 blank) ))
   )
 
-  (assert (code (p1 blank) (p2 ?c2) (p3 ?c3) (p4 blank) (rp 1) (mp 0)))
+  (assert (code (p1 blank) (p2 ?g2) (p3 ?g3) (p4 blank) (rp 2) (mp 0)))
   (do-for-fact ((?s1 color) (?s4 color)) 
     (and 
-      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
-      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s1:name) 
+      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
+      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s1:name) 
     )
     (assert (codeS (p1 ?s1:name) (p2 blank) (p3 blank) (p4 ?s4:name) ))
   )
 
-  (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 ?c4) (rp 1) (mp 0)))
+  (assert (code (p1 blank) (p2 ?g2) (p3 blank) (p4 ?g4) (rp 2) (mp 0)))
   (do-for-fact ((?s1 color) (?s3 color)) 
     (and 
-      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
-      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4) (neq ?s3:name ?s1:name)
+      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
+      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s1:name)
     )
     (assert (codeS (p1 ?s1:name) (p2 blank) (p3 ?s3:name) (p4 blank) ))
   )
 
-  (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 ?c4) (rp 1) (mp 0)))
+  (assert (code (p1 blank) (p2 blank) (p3 ?g3) (p4 ?g4) (rp 2) (mp 0)))
   (do-for-fact ((?s1 color) (?s2 color) ) 
     (and 
-      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
-      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4) (neq ?s2:name ?s1:name)
+      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
+      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4) (neq ?s2:name ?s1:name)
     )
     (assert (codeS (p1 ?s1:name) (p2 ?s2:name) (p3 blank) (p4 blank) ))
   )
@@ -429,41 +429,41 @@
 
   (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
   (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (>= (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
   (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
   ;-------cancello tutto
   (do-for-all-facts  ((?var code)) TRUE (retract ?var))
   (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
 
-  (assert (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 blank) (rp 1) (mp 0)))
+  (assert (code (p1 ?g1) (p2 ?g2) (p3 ?g3) (p4 blank) (rp 3) (mp 0)))
   (do-for-fact ((?s4 color)) 
     (and 
-      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4)
+      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4)
     )
     (assert (codeS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4:name) ))
   )
 
-  (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 ?c4) (rp 1) (mp 0)))
+  (assert (code (p1 ?g1) (p2 ?g2) (p3 blank) (p4 ?g4) (rp 3) (mp 0)))
     (do-for-fact ((?s3 color)) 
     (and 
-      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4)
+      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4)
     )
     (assert (codeS (p1 blank) (p2 blank) (p3 ?s3:name) (p4 blank) ))
   )
 
-  (assert (code (p1 ?c1) (p2 blank) (p3 ?c3) (p4 ?c4) (rp 1) (mp 0)))
+  (assert (code (p1 ?g1) (p2 blank) (p3 ?g3) (p4 ?g4) (rp 3) (mp 0)))
     (do-for-fact ((?s2 color)) 
     (and 
-      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4)
+      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4)
     )
     (assert (codeS (p1 blank) (p2 ?s2:name) (p3 blank) (p4 blank) ))
   )
 
-  (assert (code (p1 blank) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp 1) (mp 0)))
+  (assert (code (p1 blank) (p2 ?g2) (p3 ?g3) (p4 ?g4) (rp 3) (mp 0)))
     (do-for-fact ((?s1 color)) 
     (and 
-      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
+      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
     )
     (assert (codeS (p1 ?s1:name) (p2 blank) (p3 blank) (p4 blank) ))
   )
@@ -487,55 +487,63 @@
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
 ;SE MIGLIORE O UGUALE
-(defrule stepN-1X-Y (declare (salience -7))
-  (answer (step ?n) (right-placed 1) (miss-placed ?mp&:(> ?mp 0)))
+(defrule 1X-Y-Migliore (declare (salience -7))
+  (answer (step ?n) (right-placed ?rp&:(= ?rp 1)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
+
+  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
+  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
+  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
   (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
   ;-------cancello tutto
   (do-for-all-facts  ((?var code)) TRUE (retract ?var))
   (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
 
-  (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank) ))
+  (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank) (rp 1) (mp ?mp)))
   (assert (codeS (p1 blank) (p2 ?c2) (p3 ?c3) (p4 ?c4) ))
 
-  (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 blank) ))
+  (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 blank) (rp 1) (mp ?mp)))
   (assert (codeS (p1 ?c1) (p2 blank) (p3 ?c3) (p4 ?c4) ))
 
-  (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 blank) ))
+  (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 blank) (rp 1) (mp ?mp)))
   (assert (codeS (p1 ?c1) (p2 ?c2) (p3 blank) (p4 ?c4) ))
 
-  (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4) ))
+  (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4) (rp 1) (mp ?mp)))
   (assert (codeS (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 blank) ))
 
   (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
 
-(defrule stepN-2X-Y (declare (salience -7))
-  (answer (step ?n) (right-placed 2) (miss-placed ?mp&:(> ?mp 0)))
+(defrule 2X-Y-Migliore (declare (salience -7))
+  (answer (step ?n) (right-placed ?rp&:(= ?rp 2)) (miss-placed ?mp&:(> ?mp 0)))
   (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
+
+  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
+  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
+  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
   =>
   (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
   ;-------cancello tutto
   (do-for-all-facts  ((?var code)) TRUE (retract ?var))
   (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
 
-  (assert (code (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank) )) 
+  (assert (code (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank) (rp 2) (mp ?mp))) 
   (assert (codeS (p1 blank) (p2 blank) (p3 ?c3) (p4 ?c4) ))
 
-  (assert (code (p1 ?c1) (p2 blank) (p3 ?c3) (p4 blank) ))
+  (assert (code (p1 ?c1) (p2 blank) (p3 ?c3) (p4 blank) (rp 2) (mp ?mp)))
   (assert (codeS (p1 blank) (p2 ?c2) (p3 blank) (p4 ?c4) ))
 
-  (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 ?c4) ))
+  (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 ?c4) (rp 2) (mp ?mp)))
   (assert (codeS (p1 blank) (p2 ?c2) (p3 ?c3) (p4 blank) ))
 
-  (assert (code (p1 blank) (p2 ?c2) (p3 ?c3) (p4 blank) ))
+  (assert (code (p1 blank) (p2 ?c2) (p3 ?c3) (p4 blank) (rp 2) (mp ?mp)))
   (assert (codeS (p1 ?c1) (p2 blank) (p3 blank) (p4 ?c4) ))
 
-  (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 ?c4) ))
+  (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 ?c4) (rp 2) (mp ?mp)))
   (assert (codeS (p1 ?c1) (p2 blank) (p3 ?c3) (p4 blank) ))
 
-  (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 ?c4) ))
+  (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 ?c4) (rp 2) (mp ?mp)))
   (assert (codeS (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank) ))
 
   (printout t "------------------------------------------------------------------------------------------------" crlf)
