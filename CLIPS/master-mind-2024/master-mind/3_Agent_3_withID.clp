@@ -392,7 +392,7 @@
   (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
 
   (assert (code (p1 ?g1) (p2 ?g2) (p3 blank) (p4 blank) (rp 2) (mp 0) (id (+ ?n 100)) ))
-  (assert (code (p1 ?g1) (p2 ?g2) (p3 blank) (p4 blank) (rp 2) (mp 0) (id (+ ?n 101)) ))
+  (assert (code (p1 ?g1) (p2 ?g2) (p3 blank) (p4 blank) (rp 2) (mp 0) (id (+ ?n 106)) ))
   (do-for-fact ((?s3_1 color) (?s4_1 color) (?s3_2 color) (?s4_2 color)) 
     (and 
       (neq ?s3_1:name ?g1) (neq ?s3_1:name ?g2) (neq ?s3_1:name ?g3) (neq ?s3_1:name ?g4)
@@ -401,11 +401,11 @@
       (neq ?s4_2:name ?g1) (neq ?s4_2:name ?g2) (neq ?s4_2:name ?g3) (neq ?s4_2:name ?g4) (neq ?s4_2:name ?s3_2:name) (neq ?s4_2:name ?s4_1:name) (neq ?s4_2:name ?s3_1:name)
     )
     (assert (codeS (p1 blank) (p2 blank) (p3 ?s3_1:name) (p4 ?s4_1:name) (id (+ ?n 100)) ))
-    (assert (codeS (p1 blank) (p2 blank) (p3 ?s3_2:name) (p4 ?s4_2:name) (id (+ ?n 101)) ))
+    (assert (codeS (p1 blank) (p2 blank) (p3 ?s3_2:name) (p4 ?s4_2:name) (id (+ ?n 106)) ))
   )
 
-  (assert (code (p1 ?g1) (p2 blank) (p3 ?g3) (p4 blank) (rp 2) (mp 0) (id (+ ?n 102)) ))
-  (assert (code (p1 ?g1) (p2 blank) (p3 ?g3) (p4 blank) (rp 2) (mp 0) (id (+ ?n 103)) ))
+  (assert (code (p1 ?g1) (p2 blank) (p3 ?g3) (p4 blank) (rp 2) (mp 0) (id (+ ?n 101)) ))
+  (assert (code (p1 ?g1) (p2 blank) (p3 ?g3) (p4 blank) (rp 2) (mp 0) (id (+ ?n 107)) ))
   (do-for-fact ((?s2_1 color) (?s4_1 color) (?s2_2 color) (?s4_2 color))
     (and 
       (neq ?s2_1:name ?g1) (neq ?s2_1:name ?g2) (neq ?s2_1:name ?g3) (neq ?s2_1:name ?g4)
@@ -413,12 +413,12 @@
       (neq ?s2_2:name ?g1) (neq ?s2_2:name ?g2) (neq ?s2_2:name ?g3) (neq ?s2_2:name ?g4) (neq ?s2_2:name ?s4_1:name) (neq ?s2_2:name ?s2_1:name)
       (neq ?s4_2:name ?g1) (neq ?s4_2:name ?g2) (neq ?s4_2:name ?g3) (neq ?s4_2:name ?g4) (neq ?s4_2:name ?s2_2:name) (neq ?s4_2:name ?s4_1:name) (neq ?s4_2:name ?s2_1:name)
     )
-    (assert (codeS (p1 blank) (p2 ?s2_1:name) (p3 blank) (p4 ?s4_1:name) (id (+ ?n 102)) ))
-    (assert (codeS (p1 blank) (p2 ?s2_2:name) (p3 blank) (p4 ?s4_2:name) (id (+ ?n 103)) ))
+    (assert (codeS (p1 blank) (p2 ?s2_1:name) (p3 blank) (p4 ?s4_1:name) (id (+ ?n 101)) ))
+    (assert (codeS (p1 blank) (p2 ?s2_2:name) (p3 blank) (p4 ?s4_2:name) (id (+ ?n 107)) ))
   )
 
-  (assert (code (p1 ?g1) (p2 blank) (p3 blank) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 104)) ))
-  (assert (code (p1 ?g1) (p2 blank) (p3 blank) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 105)) ))
+  (assert (code (p1 ?g1) (p2 blank) (p3 blank) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 102)) ))
+  (assert (code (p1 ?g1) (p2 blank) (p3 blank) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 108)) ))
   (do-for-fact ((?s2_1 color) (?s3_1 color) (?s2_2 color) (?s3_2 color))
     (and 
       (neq ?s2_1:name ?g1) (neq ?s2_1:name ?g2) (neq ?s2_1:name ?g3) (neq ?s2_1:name ?g4)
@@ -426,12 +426,12 @@
       (neq ?s2_2:name ?g1) (neq ?s2_2:name ?g2) (neq ?s2_2:name ?g3) (neq ?s2_2:name ?g4) (neq ?s2_2:name ?s3_1:name) (neq ?s2_2:name ?s2_1:name)
       (neq ?s3_2:name ?g1) (neq ?s3_2:name ?g2) (neq ?s3_2:name ?g3) (neq ?s3_2:name ?g4) (neq ?s3_2:name ?s2_2:name) (neq ?s3_2:name ?s3_1:name) (neq ?s3_2:name ?s2_1:name)
     )
-    (assert (codeS (p1 blank) (p2 ?s2_1:name) (p3 ?s3_1:name) (p4 blank) (id (+ ?n 104)) ))
-    (assert (codeS (p1 blank) (p2 ?s2_2:name) (p3 ?s3_2:name) (p4 blank) (id (+ ?n 105)) ))
+    (assert (codeS (p1 blank) (p2 ?s2_1:name) (p3 ?s3_1:name) (p4 blank) (id (+ ?n 102)) ))
+    (assert (codeS (p1 blank) (p2 ?s2_2:name) (p3 ?s3_2:name) (p4 blank) (id (+ ?n 108)) ))
   )
 
-  (assert (code (p1 blank) (p2 ?g2) (p3 ?g3) (p4 blank) (rp 2) (mp 0) (id (+ ?n 106)) ))
-  (assert (code (p1 blank) (p2 ?g2) (p3 ?g3) (p4 blank) (rp 2) (mp 0) (id (+ ?n 107)) ))
+  (assert (code (p1 blank) (p2 ?g2) (p3 ?g3) (p4 blank) (rp 2) (mp 0) (id (+ ?n 103)) ))
+  (assert (code (p1 blank) (p2 ?g2) (p3 ?g3) (p4 blank) (rp 2) (mp 0) (id (+ ?n 109)) ))
   (do-for-fact ((?s1_1 color) (?s4_1 color) (?s1_2 color) (?s4_2 color))
     (and 
       (neq ?s1_1:name ?g1) (neq ?s1_1:name ?g2) (neq ?s1_1:name ?g3) (neq ?s1_1:name ?g4)
@@ -439,13 +439,13 @@
       (neq ?s1_2:name ?g1) (neq ?s1_2:name ?g2) (neq ?s1_2:name ?g3) (neq ?s1_2:name ?g4) (neq ?s1_2:name ?s4_1:name) (neq ?s1_2:name ?s1_1:name)
       (neq ?s4_2:name ?g1) (neq ?s4_2:name ?g2) (neq ?s4_2:name ?g3) (neq ?s4_2:name ?g4) (neq ?s4_2:name ?s1_2:name) (neq ?s4_2:name ?s4_1:name) (neq ?s4_2:name ?s1_1:name)
     )
-    (assert (codeS (p1 ?s1_1:name) (p2 blank) (p3 blank) (p4 ?s4_1:name) (id (+ ?n 106)) ))
-    (assert (codeS (p1 ?s1_2:name) (p2 blank) (p3 blank) (p4 ?s4_2:name) (id (+ ?n 107)) ))
+    (assert (codeS (p1 ?s1_1:name) (p2 blank) (p3 blank) (p4 ?s4_1:name) (id (+ ?n 103)) ))
+    (assert (codeS (p1 ?s1_2:name) (p2 blank) (p3 blank) (p4 ?s4_2:name) (id (+ ?n 109)) ))
     
   )
 
-  (assert (code (p1 blank) (p2 ?g2) (p3 blank) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 108)) ))
-  (assert (code (p1 blank) (p2 ?g2) (p3 blank) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 109)) ))
+  (assert (code (p1 blank) (p2 ?g2) (p3 blank) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 104)) ))
+  (assert (code (p1 blank) (p2 ?g2) (p3 blank) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 110)) ))
   (do-for-fact ((?s1_1 color) (?s3_1 color) (?s1_2 color) (?s3_2 color))
     (and 
       (neq ?s1_1:name ?g1) (neq ?s1_1:name ?g2) (neq ?s1_1:name ?g3) (neq ?s1_1:name ?g4)
@@ -453,11 +453,11 @@
       (neq ?s1_2:name ?g1) (neq ?s1_2:name ?g2) (neq ?s1_2:name ?g3) (neq ?s1_2:name ?g4) (neq ?s1_2:name ?s3_1:name) (neq ?s1_2:name ?s1_1:name)
       (neq ?s3_2:name ?g1) (neq ?s3_2:name ?g2) (neq ?s3_2:name ?g3) (neq ?s3_2:name ?g4) (neq ?s3_2:name ?s1_2:name) (neq ?s3_2:name ?s3_1:name) (neq ?s3_2:name ?s1_1:name)
     )
-    (assert (codeS (p1 ?s1_1:name) (p2 blank) (p3 ?s3_1:name) (p4 blank) (id (+ ?n 108)) ))
-    (assert (codeS (p1 ?s1_2:name) (p2 blank) (p3 ?s3_2:name) (p4 blank) (id (+ ?n 109)) ))
+    (assert (codeS (p1 ?s1_1:name) (p2 blank) (p3 ?s3_1:name) (p4 blank) (id (+ ?n 104)) ))
+    (assert (codeS (p1 ?s1_2:name) (p2 blank) (p3 ?s3_2:name) (p4 blank) (id (+ ?n 110)) ))
   )
 
-  (assert (code (p1 blank) (p2 blank) (p3 ?g3) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 110)) ))
+  (assert (code (p1 blank) (p2 blank) (p3 ?g3) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 105)) ))
   (assert (code (p1 blank) (p2 blank) (p3 ?g3) (p4 ?g4) (rp 2) (mp 0) (id (+ ?n 111)) ))
   (do-for-fact ((?s1_1 color) (?s2_1 color) (?s1_2 color) (?s2_2 color))
     (and 
@@ -466,7 +466,7 @@
       (neq ?s1_2:name ?g1) (neq ?s1_2:name ?g2) (neq ?s1_2:name ?g3) (neq ?s1_2:name ?g4) (neq ?s1_2:name ?s2_1:name) (neq ?s1_2:name ?s1_1:name)
       (neq ?s2_2:name ?g1) (neq ?s2_2:name ?g2) (neq ?s2_2:name ?g3) (neq ?s2_2:name ?g4) (neq ?s2_2:name ?s1_2:name) (neq ?s2_2:name ?s2_1:name) (neq ?s2_2:name ?s1_1:name)
     )
-    (assert (codeS (p1 ?s1_1:name) (p2 ?s2_1:name) (p3 blank) (p4 blank) (id (+ ?n 110)) ))
+    (assert (codeS (p1 ?s1_1:name) (p2 ?s2_1:name) (p3 blank) (p4 blank) (id (+ ?n 105)) ))
     (assert (codeS (p1 ?s1_2:name) (p2 ?s2_2:name) (p3 blank) (p4 blank) (id (+ ?n 111)) ))
   )
   ;(printout t "------------------------------------------------------------------------------------------------" crlf)
@@ -576,6 +576,8 @@
   )
 
   ;per tutte le answer con 3-0 per tutti i guess, prendiamo un colore che non è tra quelli
+
+
   ;se uguale
   (do-for-fact  ((?var code)) 
     (and
