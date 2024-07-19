@@ -3,6 +3,7 @@ num_colonne(10).
 
 iniziale(pos(4,2)).
 finale(pos(7,9)).
+finale(pos(10,2)).
 
 occupata(pos(7,1)).
 occupata(pos(7,2)).
