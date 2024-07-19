@@ -13,38 +13,49 @@
   (pop-focus)
 )
 
-(deftemplate rp
-  (slot valore)
-  (slot step)
-)
-(deftemplate mp
-  (slot valore)
-  (slot step)
+(deftemplate cp ; colore-posizione
+  (slot posizione) ;indica la posizione nella guess (1 2 3 o 4)
+  (slot colore) ; contiene la stringa del colore
+  (slot valore) ; valore associato a ciascuna lettera-posizione
 )
 
-(deftemplate code
-  (slot p1) (slot p2) (slot p3) (slot p4)
-)
-
-(deffacts colori
-  (colore blue)  
-  (colore green) 
-  (colore red)   
-  (colore yellow)
-  (colore orange)
-  (colore white) 
-  (colore black) 
-  (colore purple)
-)
-
-(defrule genera_combinazioni
-  (colore ?color_1)
-  (colore ?color_2&:(neq ?color_2 ?color_1))
-  (colore ?color_3&:(neq ?color_3 ?color_2)&:(neq ?color_3 ?color_1))
-  (colore ?color_4&:(neq ?color_4 ?color_3)&:(neq ?color_4 ?color_2)&:(neq ?color_4 ?color_1))
-  =>
-  (printout ?color_1 crlf)
-  (assert (code (p1 ?color_1) (p2 ?color_2) (p3 ?color_3) (p4 ?color_4)) )
+;(colors blue green red yellow orange white black purple)
+(deffacts colore-posizione
+  (cp (posizione 1) (colore blue)   (valore 0) )
+  (cp (posizione 1) (colore green)  (valore 0) )
+  (cp (posizione 1) (colore red)    (valore 0) )
+  (cp (posizione 1) (colore yellow) (valore 0) )
+  (cp (posizione 1) (colore orange) (valore 0) )
+  (cp (posizione 1) (colore white)  (valore 0) )
+  (cp (posizione 1) (colore black)  (valore 0) )
+  (cp (posizione 1) (colore purple) (valore 0) )
+  ;---------------------------------------------
+  (cp (posizione 2) (colore blue)   (valore 0) )
+  (cp (posizione 2) (colore green)  (valore 0) )
+  (cp (posizione 2) (colore red)    (valore 0) )
+  (cp (posizione 2) (colore yellow) (valore 0) )
+  (cp (posizione 2) (colore orange) (valore 0) )
+  (cp (posizione 2) (colore white)  (valore 0) )
+  (cp (posizione 2) (colore black)  (valore 0) )
+  (cp (posizione 2) (colore purple) (valore 0) )
+  ;---------------------------------------------
+  (cp (posizione 3) (colore blue)   (valore 0) )
+  (cp (posizione 3) (colore green)  (valore 0) )
+  (cp (posizione 3) (colore red)    (valore 0) )
+  (cp (posizione 3) (colore yellow) (valore 0) )
+  (cp (posizione 3) (colore orange) (valore 0) )
+  (cp (posizione 3) (colore white)  (valore 0) )
+  (cp (posizione 3) (colore black)  (valore 0) )
+  (cp (posizione 3) (colore purple) (valore 0) )
+  ;---------------------------------------------
+  (cp (posizione 4) (colore blue)   (valore 0) )
+  (cp (posizione 4) (colore green)  (valore 0) )
+  (cp (posizione 4) (colore red)    (valore 0) )
+  (cp (posizione 4) (colore yellow) (valore 0) )
+  (cp (posizione 4) (colore orange) (valore 0) )
+  (cp (posizione 4) (colore white)  (valore 0) )
+  (cp (posizione 4) (colore black)  (valore 0) )
+  (cp (posizione 4) (colore purple) (valore 0) )
 )
 
 
@@ -56,32 +67,79 @@
 (defrule computer-player-step-0 (declare (salience -9))
   (status (step 0) (mode computer))
   =>
-  (bind ?l (length (find-all-facts ((?var code)) TRUE)))
-  (printout t "mosse rimanenti  " ?l crlf)
+  (assert (guess (step 0) (g blue green red yellow) ))
+  (printout t "La tua giocata allo step: 0 -> blue green red yellow"crlf)
 
-  (assert (guess (step 0) (g blue red yellow green) ))
-  (printout t "La tua giocata allo step: 0 -> blue red yellow green"crlf)
+  (pop-focus)
+)
+
+(defrule computer-player-step-1 (declare (salience -90))
+  (status (step 1) (mode computer))
+  =>
+  (assert (guess (step 1) (g orange white black purple) ))
+  (printout t "La tua giocata allo step: 1 -> orange white black purple " crlf)
 
   (pop-focus)
 )
 
 (defrule computer-player-step-n (declare (salience -10))
-  (status (step ?n) (mode computer))
+  (maxduration ?x)
+  (status (step ?s&:(< ?s (- ?x 1))) (mode computer))
   =>
-  (bind ?l (length (find-all-facts ((?var code)) TRUE)))
-  (printout t "mosse rimanenti  " ?l crlf)
+  (bind ?i_1 (random 1 (length$  (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) ) ) )
+  (bind ?r_Pos1 (nth$ ?i_1 (find-all-facts  ((?var cp)) (and (= ?var:posizione 1) (>= ?var:valore 0))) )) 
+  (bind ?color1  (fact-slot-value ?r_Pos1 colore))
 
-  (bind ?i (random 0 ?l) )
-  (bind ?g (nth ?i (find-all-facts ((?var code)) TRUE) ) )
+  (bind ?i_2 (random 1 (length$  (find-all-facts  ((?var cp)) (and (neq ?var:colore ?color1) (and (= ?var:posizione 2) (>= ?var:valore 0)))) ) ) )
+  (bind ?r_Pos2 (nth$ ?i_2 (find-all-facts  ((?var cp)) (and (neq ?var:colore ?color1) (and (= ?var:posizione 2) (>= ?var:valore 0)))) )) 
+  (bind ?color2  (fact-slot-value ?r_Pos2 colore))
 
-  (bind ?c1  (fact-slot-value ?g p1))
-  (bind ?c2  (fact-slot-value ?g p2))
-  (bind ?c3  (fact-slot-value ?g p3))
-  (bind ?c4  (fact-slot-value ?g p4))
+  (bind ?i_3 (random 1 (length$  (find-all-facts  ((?var cp)) (and (neq ?var:colore ?color2) (and (neq ?var:colore ?color1) (and (= ?var:posizione 3) (>= ?var:valore 0))))) ) ) )
+  (bind ?r_Pos3 (nth$ ?i_3 (find-all-facts  ((?var cp)) (and (neq ?var:colore ?color2) (and (neq ?var:colore ?color1) (and (= ?var:posizione 3) (>= ?var:valore 0))))) ))
+  (bind ?color3  (fact-slot-value ?r_Pos3 colore))
 
-  (assert (guess (step ?n) (g ?c1 ?c2 ?c3 ?c4) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?c3 " " ?c4 crlf)
+  (bind ?i_4 (random 1 (length$  (find-all-facts  ((?var cp)) (and (neq ?var:colore ?color3) (and (neq ?var:colore ?color2) (and (neq ?var:colore ?color1) (and (= ?var:posizione 4) (>= ?var:valore 0)))))) ) ) )
+  (bind ?r_Pos4 (nth$ ?i_4 (find-all-facts  ((?var cp)) (and (neq ?var:colore ?color3) (and (neq ?var:colore ?color2) (and (neq ?var:colore ?color1) (and (= ?var:posizione 4) (>= ?var:valore 0)))))) ))
+  (bind ?color4  (fact-slot-value ?r_Pos4 colore))
 
+  (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
+  (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
+  (bind ?x (length$  (find-all-facts  ((?var cp))  (< ?var:valore 0))) ) 
+  (printout t "Numero possibilità eliminate: " ?x crlf)
+  (pop-focus)
+)
+
+(defrule computer-player-step-last (declare (salience -10))
+  (maxduration ?x)
+  (status (step ?s&:(= ?s (- ?x 1))) (mode computer))
+
+  (cp (posizione 1) (valore ?valP1&:(>= ?valP1 0)))
+  (not (cp (posizione 1) (valore ?valP1_bis&:(> ?valP1_bis ?valP1))))
+
+  (cp (posizione 2) (valore ?valP2&:(>= ?valP2 0)))
+  (not (cp (posizione 2) (valore ?valP2_bis&:(> ?valP2_bis ?valP2))))
+
+  (cp (posizione 3) (valore ?valP3&:(>= ?valP3 0)))
+  (not (cp (posizione 3) (valore ?valP3_bis&:(> ?valP3_bis ?valP3))))
+
+  (cp (posizione 4) (valore ?valP4&:(>= ?valP4 0)))
+  (not (cp (posizione 4) (valore ?valP4_bis&:(> ?valP4_bis ?valP4))))
+  =>
+  (bind ?r_Pos1 (nth$ 1(find-all-facts ((?var cp)) (and (= ?var:posizione 1) (= ?var:valore ?valP1)))))
+  (bind ?color1 (fact-slot-value ?r_Pos1 colore))
+
+  (bind ?r_Pos2 (nth$ 1(find-all-facts ((?var cp)) (and (= ?var:posizione 2) (= ?var:valore ?valP2)))))
+  (bind ?color2 (fact-slot-value ?r_Pos2 colore))
+
+  (bind ?r_Pos3 (nth$ 1(find-all-facts ((?var cp)) (and (= ?var:posizione 3) (= ?var:valore ?valP3)))))
+  (bind ?color3 (fact-slot-value ?r_Pos3 colore))
+
+  (bind ?r_Pos4 (nth$ 1(find-all-facts ((?var cp)) (and (= ?var:posizione 4) (= ?var:valore ?valP4)))))
+  (bind ?color4 (fact-slot-value ?r_Pos4 colore))
+
+  (printout t "Ultimo GIRO: " ?x crlf)
+  (assert (guess (step ?s) (g  ?color1 ?color2 ?color3 ?color4) ))
+  (printout t "La tua giocata allo step: " ?s " -> " ?color1 " " ?color2 " " ?color3 " " ?color4 crlf)
   (pop-focus)
 )
 
@@ -91,170 +149,135 @@
 ;  -------- Esame mossa / Cambio Valori --------
 ;  ---------------------------------------------
 
-(defrule aggiorna-pesi (declare (salience -7))
-  (answer (step ?s) (right-placed ?rp) (miss-placed ?mp))
+(defrule aggiorna-pesi-0-0 (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
-  (assert (rp (valore ?rp) (step ?s)))
-  (assert (mp (valore ?mp) (step ?s)))
-  ;(assert (miss-placed ?mp))
-
   (printout t "Right placed " ?rp " missplaced " ?mp crlf)
 
+  (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c1) (modify ?var (valore (- ?var:valore 100))) )
+  (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c2) (modify ?var (valore (- ?var:valore 100))) )
+  (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c3) (modify ?var (valore (- ?var:valore 100))) )
+  (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c4) (modify ?var (valore (- ?var:valore 100))) )
 )
 
-
-
-;  ---------------------------------------------
-;  --------------- Right Placed ----------------
-;  ---------------------------------------------
-
-(defrule elimina_facts_rp_0 (declare (salience -7))
-  (rp (valore 0) (step ?s))
+(defrule aggiorna-pesi-0-X (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)&:(< ?mp 4)) )
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+
   =>
-  (delayed-do-for-all-facts ((?var code)) 
-                            (or (or (or
-                            (eq ?var:p1 ?c1)
-                            (eq ?var:p2 ?c2) ) 
-                            (eq ?var:p3 ?c3) ) 
-                            (eq ?var:p4 ?c4) )
-                            (retract ?var)
-  )
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (eq ?var:colore ?c1)) ) ) )
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (eq ?var:colore ?c2)) ) ) )
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (eq ?var:colore ?c3)) ) ) )
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (eq ?var:colore ?c4)) ) ) )
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
+
+  (modify ?cp1 (valore (- ?v1 100)) )
+  (modify ?cp2 (valore (- ?v2 100)) )
+  (modify ?cp3 (valore (- ?v3 100)) )
+  (modify ?cp4 (valore (- ?v4 100)) )
+
+  (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c1) (modify ?var (valore (+ ?var:valore 0.5))) )
+  (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c2) (modify ?var (valore (+ ?var:valore 0.5))) )
+  (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c3) (modify ?var (valore (+ ?var:valore 0.5))) )
+  (delayed-do-for-all-facts ((?var cp)) (eq ?var:colore ?c4) (modify ?var (valore (+ ?var:valore 0.5))) )
 )
 
-(defrule elimina_facts_rp_1 (declare (salience -7))
-  (rp (valore 1) (step ?s))
+(defrule aggiorna-pesi-X-0 (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(= ?mp 0)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-  ?g <- (code (p1 ?color_1&:(neq ?c1 ?color_1) ) 
-        (p2 ?color_2&:(neq ?c2 ?color_2) )
-        (p3 ?color_3&:(neq ?c3 ?color_3) ) 
-        (p4 ?color_4&:(neq ?c4 ?color_4) ) )
   =>
-  ;(printout t "elimino: " ?color_1 "  "  ?color_2 "  "  ?color_3 "  "  ?color_4 crlf)
-  (retract ?g)
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (eq ?var:colore ?c1)) ) )) 
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (eq ?var:colore ?c2)) ) ))
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (eq ?var:colore ?c3)) ) ))
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (eq ?var:colore ?c4)) ) ))
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
+
+  (modify ?cp1 (valore (+ ?v1 1)) )
+  (modify ?cp2 (valore (+ ?v2 1)) )
+  (modify ?cp3 (valore (+ ?v3 1)) )
+  (modify ?cp4 (valore (+ ?v4 1)) )
+
+  (delayed-do-for-all-facts ((?var cp)) (and (eq ?var:colore ?c1) (neq ?var:posizione 1)) (modify ?var (valore (- ?var:valore 100))) )
+  (delayed-do-for-all-facts ((?var cp)) (and (eq ?var:colore ?c2) (neq ?var:posizione 2)) (modify ?var (valore (- ?var:valore 100))) )
+  (delayed-do-for-all-facts ((?var cp)) (and (eq ?var:colore ?c3) (neq ?var:posizione 3)) (modify ?var (valore (- ?var:valore 100))) )
+  (delayed-do-for-all-facts ((?var cp)) (and (eq ?var:colore ?c4) (neq ?var:posizione 4)) (modify ?var (valore (- ?var:valore 100))) )
 )
 
-(defrule elimina_facts_rp_2 (declare (salience -7))
-  (rp (valore 2) (step ?s))
+(defrule aggiorna-pesi-X-X-rp (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(> ?mp 0)&:(> ?rp ?mp)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+
   =>
-  (delayed-do-for-all-facts ((?var code)) 
-                            (not ( or (or (or (or (or
-                              (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2) )
-                              (and (eq ?var:p1 ?c1) (eq ?var:p3 ?c3) ) )
-                              (and (eq ?var:p1 ?c1) (eq ?var:p4 ?c4) ) )
-                              (and (eq ?var:p2 ?c2) (eq ?var:p3 ?c3) ) )
-                              (and (eq ?var:p2 ?c2) (eq ?var:p4 ?c4) ) )
-                              (and (eq ?var:p3 ?c3) (eq ?var:p4 ?c4) )  
-                            ) )
-                            (retract ?var)
-  )
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (eq ?var:colore ?c1)) ) ))
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (eq ?var:colore ?c2)) ) ))
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (eq ?var:colore ?c3)) ) ))
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (eq ?var:colore ?c4)) ) ))
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
+
+  (modify ?cp1 (valore (+ ?v1 1.5)) )
+  (modify ?cp2 (valore (+ ?v2 1.5)) )
+  (modify ?cp3 (valore (+ ?v3 1.5)) )
+  (modify ?cp4 (valore (+ ?v4 1.5)) )
 )
 
-(defrule elimina_facts_rp_3 (declare (salience -7))
-  (rp (valore 3) (step ?s))
+(defrule aggiorna-pesi-X-X-mp (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(> ?mp 0)&:(<= ?rp ?mp)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+
   =>
-  (delayed-do-for-all-facts ((?var code)) 
-                            (not (or (or (or (and (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2))(eq ?var:p3 ?c3))
-                            (and (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2))(eq ?var:p4 ?c4)))
-                            (and (and (eq ?var:p1 ?c1) (eq ?var:p3 ?c3))(eq ?var:p4 ?c4)))
-                            (and (and (eq ?var:p2 ?c2) (eq ?var:p3 ?c3))(eq ?var:p4 ?c4))))
-                            (retract ?var)
-  )
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
+
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (eq ?var:colore ?c1)) ) ))
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (eq ?var:colore ?c2)) ) ))
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (eq ?var:colore ?c3)) ) ))
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (eq ?var:colore ?c4)) ) ))
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
+
+  (modify ?cp1 (valore (+ ?v1 0.5)) )
+  (modify ?cp2 (valore (+ ?v2 0.5)) )
+  (modify ?cp3 (valore (+ ?v3 0.5)) )
+  (modify ?cp4 (valore (+ ?v4 0.5)) )
 )
 
-
-
-;  ---------------------------------------------
-;  ---------------- Miss Placed ----------------
-;  ---------------------------------------------
-(defrule elimina_facts_mp_0 (declare (salience -7))
-  (mp (valore 0) (step ?s))
+(defrule aggiorna-pesi-0-4 (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(= ?mp 4)))
   (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-  =>
-  (delayed-do-for-all-facts ((?var code)) 
-                            (and (and (and 
-                            (or (or (eq ?var:p2 ?c1) (eq ?var:p3 ?c1) ) (eq ?var:p4 ?c1) )
-                            (or (or (eq ?var:p1 ?c2) (eq ?var:p3 ?c2) ) (eq ?var:p4 ?c2) ) )
-                            (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p4 ?c3) ) )
-                            (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) ) )
-                            (retract ?var)
-  )
-)
 
-(defrule elimina_facts_mp_1 (declare (salience -7))
-  (mp (valore 1) (step ?s))
-  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
-  (delayed-do-for-all-facts ((?var code)) 
-                            (and (and (and 
-                            (not (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) )
-                            (not (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) )
-                            (not (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) )
-                            (not (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) )
-                            (retract ?var)
-  )
-)
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
 
-(defrule elimina_facts_mp_2 (declare (salience -7))
-  (mp (valore 2) (step ?s))
-  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-  =>
-  (delayed-do-for-all-facts ((?var code))
-                             
-                            (and (and (and (and (and 
-                            (not (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
-                                      (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) )
-                            (not (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
-                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) ) )
-                            (not (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
-                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ) )
-                            (not (and (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) 
-                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) ) )
-                            (not (and (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) 
-                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ) )
-                            (not (and (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) 
-                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ) )
-                            
-                            (retract ?var)
-  )
-)
+  (bind ?cp1 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 1) (= ?var:colore ?c1)) ) ))
+  (bind ?cp2 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 2) (= ?var:colore ?c2)) ) ))
+  (bind ?cp3 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 3) (= ?var:colore ?c3)) ) ))
+  (bind ?cp4 (nth$ 1 (find-fact ((?var cp)) (and (= ?var:posizione 4) (= ?var:colore ?c4)) ) ))
+  (bind ?v1  (fact-slot-value ?cp1 valore))
+  (bind ?v2  (fact-slot-value ?cp2 valore))
+  (bind ?v3  (fact-slot-value ?cp3 valore))
+  (bind ?v4  (fact-slot-value ?cp4 valore))
 
-(defrule elimina_facts_mp_3 (declare (salience -7))
-  (mp (valore 3) (step ?s))
-  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-  =>
-  (delayed-do-for-all-facts ((?var code))
-                             
-                            (and (and (and (not (and (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
-                                      (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) 
-                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) )
-                            (not (and (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
-                                      (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) 
-                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ))
-                            (not (and (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
-                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) 
-                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ))
-                            (not (and (and (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) 
-                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) 
-                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ))
-                            
-                            (retract ?var)
-  )
-)
+  (modify ?cp1 (valore (- ?v1 100)) )
+  (modify ?cp2 (valore (- ?v2 100)) )
+  (modify ?cp3 (valore (- ?v3 100)) )
+  (modify ?cp4 (valore (- ?v4 100)) )
 
-(defrule elimina_facts_mp_4 (declare (salience -7))
-  (mp (valore 4) (step ?s))
-  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
-  =>
-  (delayed-do-for-all-facts ((?var code)) 
-                            (not (and (and (and 
-                            (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
-                            (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) )
-                            (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) )
-                            (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) )
-                            (retract ?var)
-  )
+  (delayed-do-for-all-facts ((?var cp)) (neq (neq (neq (neq ?var:colore ?c1) ?var:colore ?c2) ?var:colore ?c3) ?var:colore ?c4) (modify ?var (valore (- ?var:valore 100))) )
 )

@@ -3,20 +3,6 @@
 ;  ---------------------------------------------
 (defmodule AGENT (import MAIN ?ALL) (import GAME ?ALL) (export ?ALL))
 
-(deftemplate color
-  (slot name)
-)
-(deffacts my-colors
-  (color (name blue))
-  (color (name green))
-  (color (name red))
-  (color (name yellow))
-  (color (name orange))
-  (color (name white))
-  (color (name black))
-  (color (name purple))
-)
-
 
 (defrule human-player
   (status (step ?s) (mode human))
@@ -27,588 +13,247 @@
   (pop-focus)
 )
 
+(deftemplate rp
+  (slot valore)
+  (slot step)
+)
+(deftemplate mp
+  (slot valore)
+  (slot step)
+)
+
 (deftemplate code
   (slot p1) (slot p2) (slot p3) (slot p4)
-  (slot rp) (slot mp)
-)
-(deftemplate codeS
-  (slot p1) (slot p2) (slot p3) (slot p4)
 )
 
-;  ----------------------------------------------
-;  ------------- Scelta della mossa -------------
-;  ----------------------------------------------
+(deffacts colori
+  (colore blue)  
+  (colore green) 
+  (colore red)   
+  (colore yellow)
+  (colore orange)
+  (colore white) 
+  (colore black) 
+  (colore purple)
+)
 
-(defrule computer-step-0 (declare (salience -9))
+(defrule genera_combinazioni
+  (colore ?color_1)
+  (colore ?color_2&:(neq ?color_2 ?color_1))
+  (colore ?color_3&:(neq ?color_3 ?color_2)&:(neq ?color_3 ?color_1))
+  (colore ?color_4&:(neq ?color_4 ?color_3)&:(neq ?color_4 ?color_2)&:(neq ?color_4 ?color_1))
+  =>
+  (printout ?color_1 crlf)
+  (assert (code (p1 ?color_1) (p2 ?color_2) (p3 ?color_3) (p4 ?color_4)) )
+)
+
+
+
+;  ---------------------------------------------
+;  ------------ Scelta della mossa -------------
+;  ---------------------------------------------
+
+(defrule computer-player-step-0 (declare (salience -9))
   (status (step 0) (mode computer))
   =>
   (bind ?l (length (find-all-facts ((?var code)) TRUE)))
   (printout t "mosse rimanenti  " ?l crlf)
 
   (assert (guess (step 0) (g blue red yellow green) ))
-  (assert (code (p1 blue) (p2 red) (p3 yellow) (p4 green) (rp 0) (mp 0)))
-  (assert (codeS (p1 blank) (p2 blank) (p3 blank) (p4 blank) ))
   (printout t "La tua giocata allo step: 0 -> blue red yellow green"crlf)
-  (pop-focus)
-)
-(defrule computer-stepN-0-0 (declare (salience -9))
-  (status (step ?n) (mode computer))
-  (code (p1 blank) (p2 blank) (p3 blank) (p4 blank))
-  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 ?s3&:(neq ?s3 blank)) (p4 ?s4&:(neq ?s4 blank)))
-  =>
-  (assert (guess (step ?n) (g ?s2 ?s3 ?s4 ?s1) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?s2 " " ?s3 " " ?s4 " " ?s1 crlf)
-  (modify ?cS (p1 ?s2) (p2 ?s3) (p3 ?s4) (p4 ?s1))
+
   (pop-focus)
 )
 
-;  ------------------------- 1 RP -------------------------
-(defrule computer-stepN-1G-POS1 (declare (salience -9))
+(defrule computer-player-step-n (declare (salience -10))
   (status (step ?n) (mode computer))
-  (code (p1 ?c1&:(neq ?c1 blank)) (p2 blank) (p3 blank) (p4 blank))
-  ?cS <- (codeS (p1 blank) (p2 ?s2&:(neq ?s2 blank)) (p3 ?s3&:(neq ?s3 blank)) (p4 ?s4&:(neq ?s4 blank)))
   =>
-  (printout t "computer-stepN-1G-POS1------------------------------------------------------------------" crlf)
-  (assert (guess (step ?n) (g ?c1 ?s3 ?s4 ?s2) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s3 " " ?s4 " " ?s2 crlf)
-  (modify ?cS (p1 blank) (p2 ?s3) (p3 ?s4) (p4 ?s2))
-  (pop-focus)
-)
-(defrule computer-stepN-1G-POS2 (declare (salience -10))
-  (status (step ?n) (mode computer))
-  (code (p1 blank) (p2 ?c2&:(neq ?c2 blank)) (p3 blank) (p4 blank))
-  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 blank) (p3 ?s3&:(neq ?s3 blank)) (p4 ?s4&:(neq ?s4 blank)))
-  =>
-  (printout t "computer-stepN-1G-POS2------------------------------------------------------------------" crlf)
-  (assert (guess (step ?n) (g ?s3 ?c2 ?s4 ?s1) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?s3 " " ?c2 " " ?s4 " " ?s1 crlf)
-  (modify ?cS (p1 ?s3) (p2 blank) (p3 ?s4) (p4 ?s1))
-  (pop-focus)
-)
-(defrule computer-stepN-1G-POS3 (declare (salience -11))
-  (status (step ?n) (mode computer))
-  (code (p1 blank) (p2 blank) (p3 ?c3&:(neq ?c3 blank)) (p4 blank))
-  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 blank) (p4 ?s4&:(neq ?s4 blank)))
-  =>
-  (printout t "computer-stepN-1G-POS3------------------------------------------------------------------" crlf)
-  (assert (guess (step ?n) (g ?s2 ?s4 ?c3 ?s1) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?s2 " " ?s4 " " ?c3 " " ?s1 crlf)
-  (modify ?cS (p1 ?s2) (p2 ?s4) (p3 blank) (p4 ?s1))
-  (pop-focus)
-)
-(defrule computer-stepN-1G-POS4 (declare (salience -12))
-  (status (step ?n) (mode computer))
-  (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
-  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 ?s3&:(neq ?s3 blank)) (p4 blank) )
-  =>
-  (printout t "computer-stepN-1G-POS4------------------------------------------------------------------" crlf)
-  (assert (guess (step ?n) (g ?s2 ?s3 ?s1 ?c4) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?s2 " " ?s3 " " ?s1 " " ?c4 crlf)
-  (modify ?cS (p1 ?s2) (p2 ?s3) (p3 ?s1) (p4 blank))
+  (bind ?l (length (find-all-facts ((?var code)) TRUE)))
+  (printout t "mosse rimanenti  " ?l crlf)
+
+  (bind ?i (random 0 ?l) )
+  (bind ?g (nth ?i (find-all-facts ((?var code)) TRUE) ) )
+
+  (bind ?c1  (fact-slot-value ?g p1))
+  (bind ?c2  (fact-slot-value ?g p2))
+  (bind ?c3  (fact-slot-value ?g p3))
+  (bind ?c4  (fact-slot-value ?g p4))
+
+  (assert (guess (step ?n) (g ?c1 ?c2 ?c3 ?c4) ))
+  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?c3 " " ?c4 crlf)
+
   (pop-focus)
 )
 
-;  ------------------------- 2 RP -------------------------
-(defrule computer-stepN-2G-POS1 (declare (salience -9))
-  (status (step ?n) (mode computer))
-  (code (p1 ?c1&:(neq ?c1 blank)) (p2 ?c2&:(neq ?c2 blank)) (p3 blank) (p4 blank))
-  ?cS <- (codeS (p1 blank) (p2 blank) (p3 ?s3&:(neq ?s3 blank)) (p4 ?s4&:(neq ?s4 blank)))
-  =>
-  (assert (guess (step ?n) (g ?c1 ?c2 ?s4 ?s3) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?s4 " " ?s3 crlf)
-  (modify ?cS (p1 blank) (p2 blank) (p3 ?s4) (p4 ?s3))
-  (pop-focus)
-)
-(defrule computer-stepN-2G-POS2 (declare (salience -10))
-  (status (step ?n) (mode computer))
-  (code (p1 ?c1&:(neq ?c1 blank)) (p2 blank) (p3 ?c3&:(neq ?c3 blank)) (p4 blank))
-  ?cS <- (codeS (p1 blank) (p2 ?s2&:(neq ?s2 blank)) (p3 blank) (p4 ?s4&:(neq ?s4 blank)))
-  =>
-  (assert (guess (step ?n) (g ?c1 ?s4 ?c3 ?s2) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s4 " " ?c3 " " ?s2 crlf)
-  (modify ?cS (p1 blank) (p2 ?s4) (p3 blank) (p4 ?s2))
-  (pop-focus)
-)
-(defrule computer-stepN-2G-POS3 (declare (salience -11))
-  (status (step ?n) (mode computer))
-  (code (p1 ?c1&:(neq ?c1 blank)) (p2 blank) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
-  ?cS <- (codeS (p1 blank) (p2 ?s2&:(neq ?s2 blank)) (p4 ?s3&:(neq ?s3 blank)) (p3 blank))
-  =>
-  (assert (guess (step ?n) (g ?c1 ?s3 ?s2 ?c4) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s3 " " ?s2 " " ?c4 crlf)
-  (modify ?cS (p1 blank) (p2 ?s3) (p3 ?s2) (p4 ?c4))
-  (pop-focus)
-)
-(defrule computer-stepN-2G-POS4 (declare (salience -12))
-  (status (step ?n) (mode computer))
-  (code (p1 blank) (p2 ?c2&:(neq ?c2 blank)) (p3 ?c3&:(neq ?c3 blank)) (p4 blank))
-  ?cS <- (codeS (p2 ?s1&:(neq ?s1 blank)) (p1 blank) (p4 blank) (p3 ?s4&:(neq ?s4 blank)))
-  =>
-  (assert (guess (step ?n) (g ?s4 ?c2 ?c3 ?s1) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?s4 " " ?c2 " " ?c3 " " ?s1 crlf)
-  (modify ?cS (p1 ?s4) (p2 blank) (p3 blank) (p4 ?s1))
-  (pop-focus)
-)
-(defrule computer-stepN-2G-POS5 (declare (salience -13))
-  (status (step ?n) (mode computer))
-  (code (p1 blank) (p2 ?c2&:(neq ?c2 blank)) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
-  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 blank) (p3 ?s3&:(neq ?s3 blank)) (p4 blank))
-  =>
-  (assert (guess (step ?n) (g ?s3 ?c2 ?s1 ?c4) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?s3 " " ?c2 " " ?s1 " " ?c4 crlf)
-  (modify ?cS (p1 ?s3) (p2 blank) (p3 ?s1) (p4 blank))
-  (pop-focus)
-)
-(defrule computer-stepN-2G-POS6 (declare (salience -14))
-  (status (step ?n) (mode computer))
-  (code (p1 blank) (p2 blank) (p3 ?c3&:(neq ?c3 blank)) (p4 ?c4&:(neq ?c4 blank)))
-  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 ?s2&:(neq ?s2 blank)) (p3 blank) (p4 blank))
-  =>
-  (assert (guess (step ?n) (g ?s2 ?s1 ?c3 ?c4) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?s2 " " ?s1 " " ?c3 " " ?c4 crlf)
-  (modify ?cS (p1 ?s2) (p2 ?s1) (p3 blank) (p4 blank))
-  (pop-focus)
-)
-;  ------------------------- 3 RP -------------------------
-(defrule computer-stepN-3G-POS1 (declare (salience -9))
-  (status (step ?n) (mode computer))
-  (code (p1 ?c1&:(neq ?c1 blank)) (p2 ?c2&:(neq ?c2 blank)) (p3 ?c3&:(neq ?c3 blank)) (p4 blank))
-  ?cS <- (codeS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4&:(neq ?s4 blank)))
-  =>
-  (printout t "computer-stepN-3G-POS1------------------------------------------------------------------" crlf)
-  (assert (guess (step ?n) (g ?c1 ?c2 ?c3 ?s4) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?c3 " " ?s4 crlf)
-  ;(modify ?cS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4))
-  (pop-focus)
-)
-(defrule computer-stepN-3G-POS2 (declare (salience -10))
-  (status (step ?n) (mode computer))
-  (code (p1 ?c1&:(neq ?c1 blank)) (p2 ?c2&:(neq ?c2 blank)) (p3 blank) (p4 ?c4&:(neq ?c4 blank)))
-  ?cS <- (codeS (p1 blank) (p2 blank) (p3 ?s3&:(neq ?s3 blank)) (p4 blank))
-  =>
-  (printout t "computer-stepN-3G-POS2------------------------------------------------------------------" crlf)
-  (assert (guess (step ?n) (g ?c1 ?c2 ?s3 ?c4) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?c2 " " ?s3 " " ?c4 crlf)
-  ;(modify ?cS (p1 blank) (p2 blank) (p3 ?s3) (p4 blank))
-  (pop-focus)
-)
-(defrule computer-stepN-3G-POS3 (declare (salience -11))
-  (status (step ?n) (mode computer))
-  (code (p1 ?c1&:(neq ?c1 blank)) (p2 blank) (p3 ?c3&:(neq ?c3 blank)) (p4 ?c4&:(neq ?c4 blank)))
-  ?cS <- (codeS (p1 blank) (p2 ?s2&:(neq ?s2 blank)) (p3 blank) (p4 blank))
-  =>
-  (printout t "computer-stepN-3G-POS3------------------------------------------------------------------" crlf)
-  (assert (guess (step ?n) (g ?c1 ?s2 ?c3 ?c4) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?c1 " " ?s2 " " ?c3 " " ?c4 crlf)
-  ;(modify ?cS (p1 blank) (p2 ?s2) (p3 blank) (p4 blank))
-  (pop-focus)
-)
-(defrule computer-stepN-3G-POS4 (declare (salience -12))
-  (status (step ?n) (mode computer))
-  (code (p1 blank) (p2 ?c2&:(neq ?c2 blank)) (p3 ?c3&:(neq ?c3 blank)) (p4 ?c4&:(neq ?c4 blank)))
-  ?cS <- (codeS (p1 ?s1&:(neq ?s1 blank)) (p2 blank) (p3 blank) (p4 blank))
-  =>
-  (printout t "computer-stepN-3G-POS4------------------------------------------------------------------" crlf)
-  (assert (guess (step ?n) (g ?s1 ?c2 ?c3 ?c4) ))
-  (printout t "La tua giocata allo step: " ?n " -> " ?s1 " " ?c2 " " ?c3 " " ?c4 crlf)
-  ;(modify ?cS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4))
-  (pop-focus)
-)
+
+
 ;  ---------------------------------------------
 ;  -------- Esame mossa / Cambio Valori --------
 ;  ---------------------------------------------
 
-;---------------- 0 - 0 ---------------- 
-
-(defrule step0N-0-0 (declare (salience -7))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(= ?mp 0)))
-  (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
-
+(defrule aggiorna-pesi (declare (salience -7))
+  (answer (step ?s) (right-placed ?rp) (miss-placed ?mp))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
-  (printout t "------------------------------------------------------------" "Right placed " ?rp " missplaced "?mp crlf)
-  
-  (do-for-all-facts  ((?var code)) TRUE (retract ?var))
-  (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
+  (assert (rp (valore ?rp) (step ?s)))
+  (assert (mp (valore ?mp) (step ?s)))
+  ;(assert (miss-placed ?mp))
 
-  (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 blank) (rp 0) (mp 0)))
-  (do-for-fact ((?s1 color) (?s2 color) (?s3 color) (?s4 color)) 
-    (and 
-      (neq ?s1:name ?c1) (neq ?s1:name ?c2) (neq ?s1:name ?c3) (neq ?s1:name ?c4)
-      (neq ?s2:name ?c1) (neq ?s2:name ?c2) (neq ?s2:name ?c3) (neq ?s2:name ?c4) (neq ?s2:name ?s1:name)
-      (neq ?s3:name ?c1) (neq ?s3:name ?c2) (neq ?s3:name ?c3) (neq ?s3:name ?c4) (neq ?s3:name ?s2:name) (neq ?s3:name ?s1:name)
-      (neq ?s4:name ?c1) (neq ?s4:name ?c2) (neq ?s4:name ?c3) (neq ?s4:name ?c4) (neq ?s4:name ?s3:name) (neq ?s4:name ?s2:name) (neq ?s4:name ?s1:name)
-    )
-    (assert (codeS (p1 ?s1:name) (p2 ?s2:name) (p3 ?s3:name) (p4 ?s4:name) ))
-  )
+  (printout t "Right placed " ?rp " missplaced " ?mp crlf)
 
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
 
-;---------------- 0 - Y ---------------- 
-;SE MIGLIORE
-(defrule 0-Y-Migliore (declare (salience -7))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
-  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
 
-  (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
-  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+
+;  ---------------------------------------------
+;  --------------- Right Placed ----------------
+;  ---------------------------------------------
+
+(defrule elimina_facts_rp_0 (declare (salience -7))
+  (rp (valore 0) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
-  (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
-  ;-------cancello tutto
-  (do-for-all-facts  ((?var code)) TRUE (retract ?var))
-  (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
-
-  ;-------assert questi code
-  (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 blank) (rp 0) (mp ?mp)))
-  (assert (codeS (p1 ?g1) (p2 ?g2) (p3 ?g3) (p4 ?g4) ))
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
-)
-;SE PEGGIORE
-(defrule 0-Y-Peggiore (declare (salience -8))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
-  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
-  
-  =>
-  (printout t "-----------------------------------------" "Siamo in peggiore Right placed " ?rp " missplaced " ?mp crlf)
-  ;(test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
-  (do-for-fact  ((?var code)) 
-    (< (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp)) 
-    (and
-      (retract ?var)
-      (do-for-fact  ((?var codeS)) TRUE (retract ?var))
-    )
+  (delayed-do-for-all-facts ((?var code)) 
+                            (or (or (or
+                            (eq ?var:p1 ?c1)
+                            (eq ?var:p2 ?c2) ) 
+                            (eq ?var:p3 ?c3) ) 
+                            (eq ?var:p4 ?c4) )
+                            (retract ?var)
   )
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
-)
-;SE UGUALE
-; non fai nulla
-
-;---------------- X - 0 ---------------- 
-;SE MIGLIORE
-(defrule 1X-0-Migliore (declare (salience -7))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 1)) (miss-placed ?mp&:(= ?mp 0)))
-  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
-
-  (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
-  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
-  =>
-  (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
-  ;-------cancello tutto
-  (do-for-all-facts  ((?var code)) TRUE (retract ?var))
-  (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
-
-  (assert (code (p1 ?g1) (p2 blank) (p3 blank) (p4 blank) (rp 1) (mp 0)))
-  (do-for-fact ((?s2 color) (?s3 color) (?s4 color)) 
-    (and 
-      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4)
-      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s2:name)
-      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s3:name) (neq ?s4:name ?s2:name) 
-    )
-    (assert (codeS (p1 blank) (p2 ?s2:name) (p3 ?s3:name) (p4 ?s4:name) ))
-  )
-
-  (assert (code (p1 blank) (p2 ?g2) (p3 blank) (p4 blank) (rp 1) (mp 0)))
-  (do-for-fact ((?s1 color) (?s3 color) (?s4 color)) 
-    (and 
-      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
-      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s1:name)
-      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s3:name) (neq ?s4:name ?s1:name) 
-    )
-    (assert (codeS (p1 ?s1:name) (p2 blank) (p3 ?s3:name) (p4 ?s4:name) ))
-  )
-
-  (assert (code (p1 blank) (p2 blank) (p3 ?g3) (p4 blank) (rp 1) (mp 0)))
-  (do-for-fact ((?s1 color) (?s2 color) (?s4 color)) 
-    (and 
-      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
-      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4) (neq ?s2:name ?s1:name)
-      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s2:name) (neq ?s4:name ?s1:name) 
-    )
-    (assert (codeS (p1 ?s1:name) (p2 ?s2:name) (p3 blank) (p4 ?s4:name) ))
-  )
-
-  (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 ?g4) (rp 1) (mp 0)))
-  (do-for-fact ((?s1 color) (?s2 color) (?s3 color)) 
-    (and 
-      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
-      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4) (neq ?s2:name ?s1:name)
-      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s2:name) (neq ?s3:name ?s1:name) 
-    )
-    (assert (codeS (p1 ?s1:name) (p2 ?s2:name) (p3 ?s3:name) (p4 blank)))
-  )
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
-)
-(defrule 2X-0-Migliore (declare (salience -7))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 2)) (miss-placed ?mp&:(= ?mp 0)))
-  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
-
-  (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
-  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
-  =>
-  (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
-  ;-------cancello tutto
-  (do-for-all-facts  ((?var code)) TRUE (retract ?var))
-  (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
-
-  (assert (code (p1 ?g1) (p2 ?g2) (p3 blank) (p4 blank) (rp 2) (mp 0)))
-  (do-for-fact ((?s3 color) (?s4 color)) 
-    (and 
-      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4)
-      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s3:name)
-    )
-    (assert (codeS (p1 blank) (p2 blank) (p3 ?s3:name) (p4 ?s4:name) ))
-  )
-
-  (assert (code (p1 ?g1) (p2 blank) (p3 ?g3) (p4 blank) (rp 2) (mp 0)))
-  (do-for-fact ((?s2 color) (?s4 color)) 
-    (and 
-      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4)
-      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s2:name) 
-    )
-    (assert (codeS (p1 blank) (p2 ?s2:name) (p3 blank) (p4 ?s4:name) ))
-  )
-
-  (assert (code (p1 ?g1) (p2 blank) (p3 blank) (p4 ?g4) (rp 2) (mp 0)))
-  (do-for-fact ((?s2 color) (?s3 color)) 
-    (and 
-      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4)
-      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s2:name)
-    )
-    (assert (codeS (p1 blank) (p2 ?s2:name) (p3 ?s3:name) (p4 blank) ))
-  )
-
-  (assert (code (p1 blank) (p2 ?g2) (p3 ?g3) (p4 blank) (rp 2) (mp 0)))
-  (do-for-fact ((?s1 color) (?s4 color)) 
-    (and 
-      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
-      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) (neq ?s4:name ?s1:name) 
-    )
-    (assert (codeS (p1 ?s1:name) (p2 blank) (p3 blank) (p4 ?s4:name) ))
-  )
-
-  (assert (code (p1 blank) (p2 ?g2) (p3 blank) (p4 ?g4) (rp 2) (mp 0)))
-  (do-for-fact ((?s1 color) (?s3 color)) 
-    (and 
-      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
-      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) (neq ?s3:name ?s1:name)
-    )
-    (assert (codeS (p1 ?s1:name) (p2 blank) (p3 ?s3:name) (p4 blank) ))
-  )
-
-  (assert (code (p1 blank) (p2 blank) (p3 ?g3) (p4 ?g4) (rp 2) (mp 0)))
-  (do-for-fact ((?s1 color) (?s2 color) ) 
-    (and 
-      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
-      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4) (neq ?s2:name ?s1:name)
-    )
-    (assert (codeS (p1 ?s1:name) (p2 ?s2:name) (p3 blank) (p4 blank) ))
-  )
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
-)
-(defrule 3X-0-Migliore (declare (salience -7))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 3)) (miss-placed ?mp&:(= ?mp 0)))
-  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
-
-  (code (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 ?c4) (rp ?rpO) (mp ?mpO))
-  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
-  =>
-  (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
-  ;-------cancello tutto
-  (do-for-all-facts  ((?var code)) TRUE (retract ?var))
-  (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
-
-  (assert (code (p1 ?g1) (p2 ?g2) (p3 ?g3) (p4 blank) (rp 3) (mp 0)))
-  (do-for-fact ((?s4 color)) 
-    (and 
-      (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4)
-    )
-    (assert (codeS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4:name) ))
-  )
-
-  (assert (code (p1 ?g1) (p2 ?g2) (p3 blank) (p4 ?g4) (rp 3) (mp 0)))
-    (do-for-fact ((?s3 color)) 
-    (and 
-      (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4)
-    )
-    (assert (codeS (p1 blank) (p2 blank) (p3 ?s3:name) (p4 blank) ))
-  )
-
-  (assert (code (p1 ?g1) (p2 blank) (p3 ?g3) (p4 ?g4) (rp 3) (mp 0)))
-    (do-for-fact ((?s2 color)) 
-    (and 
-      (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4)
-    )
-    (assert (codeS (p1 blank) (p2 ?s2:name) (p3 blank) (p4 blank) ))
-  )
-
-  (assert (code (p1 blank) (p2 ?g2) (p3 ?g3) (p4 ?g4) (rp 3) (mp 0)))
-    (do-for-fact ((?s1 color)) 
-    (and 
-      (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4)
-    )
-    (assert (codeS (p1 ?s1:name) (p2 blank) (p3 blank) (p4 blank) ))
-  )
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
-)
-;SE PEGGIORE o SE UGUALE
-(defrule X-0-Peggiore (declare (salience -8))
-  (answer (step ?n) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(= ?mp 0)))
-  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
- 
-  =>
-  (printout t "-----------------------------------------" "Siamo in peggiore Right placed " ?rp " missplaced " ?mp crlf)
-  ;(test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
-
-  ;se peggiore
-  (do-for-fact  ((?var code)) 
-    (< (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp))
-    (and
-      (retract ?var)
-      (do-for-fact  ((?var codeS)) TRUE (retract ?var))
-    )
-  )
-
-  ;se uguale
-  (do-for-fact  ((?var code)) 
-    (and
-      (= (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp))
-      (eq ?var:p4 blank)
-    )
-    (do-for-fact  ((?varS codeS)) 
-      (neq ?varS:p4 blank)
-      (do-for-fact ((?s4 color)) 
-        (and  (neq ?s4:name ?g1) (neq ?s4:name ?g2) (neq ?s4:name ?g3) (neq ?s4:name ?g4) )
-        (modify ?varS (p1 blank) (p2 blank) (p3 blank) (p4 ?s4))
-      )
-    )
-  )
-
-  (do-for-fact  ((?var code)) 
-    (and
-      (= (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp))
-      (eq ?var:p3 blank)
-    )
-    (do-for-fact  ((?varS codeS)) 
-      (neq ?varS:p3 blank)
-      (do-for-fact ((?s3 color)) 
-        (and  (neq ?s3:name ?g1) (neq ?s3:name ?g2) (neq ?s3:name ?g3) (neq ?s3:name ?g4) )
-        (modify ?varS (p1 blank) (p2 blank) (p3 ?s3) (p4 blank))
-      )
-    )
-  )
-
-  (do-for-fact  ((?var code)) 
-    (and
-      (= (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp))
-      (eq ?var:p2 blank)
-    )
-    (do-for-fact  ((?varS codeS)) 
-      (neq ?varS:p2 blank)
-      (do-for-fact ((?s2 color)) 
-        (and  (neq ?s2:name ?g1) (neq ?s2:name ?g2) (neq ?s2:name ?g3) (neq ?s2:name ?g4) )
-        (modify ?varS (p1 blank) (p2 ?s2) (p3 blank) (p4 blank))
-      )
-    )
-  )
-
-  (do-for-fact  ((?var code)) 
-    (and
-      (= (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp))
-      (eq ?var:p1 blank)
-    )
-    (do-for-fact  ((?varS codeS)) 
-      (neq ?varS:p1 blank)
-      (do-for-fact ((?s1 color)) 
-        (and  (neq ?s1:name ?g1) (neq ?s1:name ?g2) (neq ?s1:name ?g3) (neq ?s1:name ?g4) )
-        (modify ?varS (p1 ?s1) (p2 blank) (p3 blank) (p4 blank))
-      )
-    )
-  )
-
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
 
-;---------------- X - Y ---------------- 
-;SE MIGLIORE
-(defrule 1X-Y-Migliore (declare (salience -7))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 1)) (miss-placed ?mp&:(> ?mp 0)))
-  (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
-
-  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
-  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+(defrule elimina_facts_rp_1 (declare (salience -7))
+  (rp (valore 1) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  ?g <- (code (p1 ?color_1&:(neq ?c1 ?color_1) ) 
+        (p2 ?color_2&:(neq ?c2 ?color_2) )
+        (p3 ?color_3&:(neq ?c3 ?color_3) ) 
+        (p4 ?color_4&:(neq ?c4 ?color_4) ) )
   =>
-  (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
-  ;-------cancello tutto
-  (do-for-all-facts  ((?var code)) TRUE (retract ?var))
-  (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
-
-  (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 blank) (rp 1) (mp ?mp)))
-  (assert (codeS (p1 blank) (p2 ?c2) (p3 ?c3) (p4 ?c4) ))
-
-  (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 blank) (rp 1) (mp ?mp)))
-  (assert (codeS (p1 ?c1) (p2 blank) (p3 ?c3) (p4 ?c4) ))
-
-  (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 blank) (rp 1) (mp ?mp)))
-  (assert (codeS (p1 ?c1) (p2 ?c2) (p3 blank) (p4 ?c4) ))
-
-  (assert (code (p1 blank) (p2 blank) (p3 blank) (p4 ?c4) (rp 1) (mp ?mp)))
-  (assert (codeS (p1 ?c1) (p2 ?c2) (p3 ?c3) (p4 blank) ))
-
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
+  (retract ?g)
 )
-(defrule 2X-Y-Migliore (declare (salience -7))
-  (answer (step ?n) (right-placed ?rp&:(= ?rp 2)) (miss-placed ?mp&:(> ?mp 0)))
-  (guess (step ?n) (g  ?c1 ?c2 ?c3 ?c4) )
 
-  (code (p1 ?z1) (p2 ?z2) (p3 ?z3) (p4 ?z4) (rp ?rpO) (mp ?mpO))
-  (codeS (p1 ?s1) (p2 ?s2) (p3 ?s3) (p4 ?s4))
-  (test (> (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
+(defrule elimina_facts_rp_2 (declare (salience -7))
+  (rp (valore 2) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
   =>
-  (printout t "-----------------------------------------" "Siamo in migliore Right placed " ?rp " missplaced " ?mp crlf)
-  ;-------cancello tutto
-  (do-for-all-facts  ((?var code)) TRUE (retract ?var))
-  (do-for-all-facts  ((?var codeS)) TRUE (retract ?var))
-
-  (assert (code (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank) (rp 2) (mp ?mp))) 
-  (assert (codeS (p1 blank) (p2 blank) (p3 ?c3) (p4 ?c4) ))
-
-  (assert (code (p1 ?c1) (p2 blank) (p3 ?c3) (p4 blank) (rp 2) (mp ?mp)))
-  (assert (codeS (p1 blank) (p2 ?c2) (p3 blank) (p4 ?c4) ))
-
-  (assert (code (p1 ?c1) (p2 blank) (p3 blank) (p4 ?c4) (rp 2) (mp ?mp)))
-  (assert (codeS (p1 blank) (p2 ?c2) (p3 ?c3) (p4 blank) ))
-
-  (assert (code (p1 blank) (p2 ?c2) (p3 ?c3) (p4 blank) (rp 2) (mp ?mp)))
-  (assert (codeS (p1 ?c1) (p2 blank) (p3 blank) (p4 ?c4) ))
-
-  (assert (code (p1 blank) (p2 ?c2) (p3 blank) (p4 ?c4) (rp 2) (mp ?mp)))
-  (assert (codeS (p1 ?c1) (p2 blank) (p3 ?c3) (p4 blank) ))
-
-  (assert (code (p1 blank) (p2 blank) (p3 ?c3) (p4 ?c4) (rp 2) (mp ?mp)))
-  (assert (codeS (p1 ?c1) (p2 ?c2) (p3 blank) (p4 blank) ))
-
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
-)
-;SE PEGGIORE
-(defrule X-Y-Peggiore (declare (salience -8))
-  (answer (step ?n) (right-placed ?rp&:(> ?rp 0)) (miss-placed ?mp&:(> ?mp 0)))
-  (guess (step ?n) (g  ?g1 ?g2 ?g3 ?g4) )
-  =>
-  (printout t "-----------------------------------------" "Siamo in peggiore Right placed " ?rp " missplaced " ?mp crlf)
-  ;(test (< (+ (* ?rp 4) ?mp) (+ (* ?rpO 4) ?mpO)))
-  (do-for-fact  ((?var code)) 
-    (< (+ (* ?rp 4) ?mp) (+ (* ?var:rp 4) ?var:mp))
-    (and
-      (retract ?var)
-      (do-for-fact  ((?var codeS)) TRUE (retract ?var))
-    ) 
+  (delayed-do-for-all-facts ((?var code)) 
+                            (not ( or (or (or (or (or
+                              (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2) )
+                              (and (eq ?var:p1 ?c1) (eq ?var:p3 ?c3) ) )
+                              (and (eq ?var:p1 ?c1) (eq ?var:p4 ?c4) ) )
+                              (and (eq ?var:p2 ?c2) (eq ?var:p3 ?c3) ) )
+                              (and (eq ?var:p2 ?c2) (eq ?var:p4 ?c4) ) )
+                              (and (eq ?var:p3 ?c3) (eq ?var:p4 ?c4) )  
+                            ) )
+                            (retract ?var)
   )
-  (printout t "------------------------------------------------------------------------------------------------" crlf)
 )
-;SE UGUALE
-; non fai nulla
+
+(defrule elimina_facts_rp_3 (declare (salience -7))
+  (rp (valore 3) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code)) 
+                            (not (or (or (or (and (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2))(eq ?var:p3 ?c3))
+                            (and (and (eq ?var:p1 ?c1) (eq ?var:p2 ?c2))(eq ?var:p4 ?c4)))
+                            (and (and (eq ?var:p1 ?c1) (eq ?var:p3 ?c3))(eq ?var:p4 ?c4)))
+                            (and (and (eq ?var:p2 ?c2) (eq ?var:p3 ?c3))(eq ?var:p4 ?c4))))
+                            (retract ?var)
+  )
+)
+
+
+
+;  ---------------------------------------------
+;  ---------------- Miss Placed ----------------
+;  ---------------------------------------------
+(defrule elimina_facts_mp_0 (declare (salience -7))
+  (mp (valore 0) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code)) 
+                            (and (and (and 
+                            (or (or (eq ?var:p2 ?c1) (eq ?var:p3 ?c1) ) (eq ?var:p4 ?c1) )
+                            (or (or (eq ?var:p1 ?c2) (eq ?var:p3 ?c2) ) (eq ?var:p4 ?c2) ) )
+                            (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p4 ?c3) ) )
+                            (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) ) )
+                            (retract ?var)
+  )
+)
+
+(defrule elimina_facts_mp_1 (declare (salience -7))
+  (mp (valore 1) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code)) 
+                            (and (and (and 
+                            (not (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) )
+                            (not (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) )
+                            (not (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) )
+                            (not (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) )
+                            (retract ?var)
+  )
+)
+
+(defrule elimina_facts_mp_2 (declare (salience -7))
+  (mp (valore 2) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code))
+                             
+                            (and (and (and (and (and 
+                            (not (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                                      (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) )
+                            (not (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) ) )
+                            (not (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ) )
+                            (not (and (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) 
+                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) ) )
+                            (not (and (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) 
+                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ) )
+                            (not (and (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) 
+                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ) )
+                            
+                            (retract ?var)
+  )
+)
+
+(defrule elimina_facts_mp_3 (declare (salience -7))
+  (mp (valore 3) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code))
+                             
+                            (and (and (and (not (and (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                                      (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) 
+                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) )
+                            (not (and (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                                      (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) ) 
+                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ))
+                            (not (and (and (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) 
+                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ))
+                            (not (and (and (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) 
+                                      (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) ) 
+                                      (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) ))
+                            
+                            (retract ?var)
+  )
+)
+
+(defrule elimina_facts_mp_4 (declare (salience -7))
+  (mp (valore 4) (step ?s))
+  (guess (step ?s) (g  ?c1 ?c2 ?c3 ?c4) )
+  =>
+  (delayed-do-for-all-facts ((?var code)) 
+                            (not (and (and (and 
+                            (or (or (or (eq ?var:p1 ?c1) (eq ?var:p2 ?c1) ) (eq ?var:p3 ?c1) )(eq ?var:p4 ?c1) ) 
+                            (or (or (or (eq ?var:p1 ?c2) (eq ?var:p2 ?c2) ) (eq ?var:p3 ?c2) )(eq ?var:p4 ?c2) ) )
+                            (or (or (or (eq ?var:p1 ?c3) (eq ?var:p2 ?c3) ) (eq ?var:p3 ?c3) )(eq ?var:p4 ?c3) ) )
+                            (or (or (or (eq ?var:p1 ?c4) (eq ?var:p2 ?c4) ) (eq ?var:p3 ?c4) )(eq ?var:p4 ?c4) ) ) )
+                            (retract ?var)
+  )
+)
