@@ -1,0 +1,35 @@
+test
+
+prolog
+-labirinto 8x8
+	ITDeep	-> Insta
+	A*		-> Insta - il primo è il minore gli altri un pò a cazzo dovuti a più finali
+-labirinto 8x8 NoSol
+	ITDeep	-> 
+	A*		->
+-labirinto 10x10
+-labirinto 10x10 NoSol
+-labirinto 16x16
+-labirinto 16x16 NoSol
+-labirinto 20x20
+-labirinto 20x20 NoSol
+-labirinto 25x25
+-labirinto 25x25 NoSol
+-labirinto 35x35
+-labirinto 35x35 NoSol
+-labirinto 50x50
+-labirinto 50x50 NoSol
+
+CLINGO
+
+-14 squadre 0 Derby
+-14 squadre 1 Derby2
+-14 squadre 2 Derby2
+-14 squadre 1 Derby3/ 1 Derby2
+-14 squadre 2 Derby3/ 1 Derby2
+
+-16 squadre 0 Derby
+-16 squadre 1 Derby2
+-16 squadre 2 Derby2
+-16 squadre 1 Derby3/ 1 Derby2
+-16 squadre 2 Derby3/ 1 Derby2
