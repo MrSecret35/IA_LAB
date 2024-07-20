@@ -72,14 +72,20 @@ def generate_labirinto_image(file_path, output_image):
     plt.show()
 
 # Esempio di utilizzo
+
+
+generate_labirinto_image('labirinto4x4.pl', 'labirinto4x4.png')
 generate_labirinto_image('labirinto8x8.pl', 'labirinto8x8.png')
-generate_labirinto_image('labirinto8x8NoSol.pl', 'labirinto8x8NoSol.png')
-
-generate_labirinto_image('labirinto10x10.pl', 'labirinto10x10.png')
-generate_labirinto_image('labirinto10x10NoSol.pl', 'labirinto10x10NoSol.png')
-
+generate_labirinto_image('labirinto8x8NoSol.pl', 'labirin8x8NoSol25.png')
+generate_labirinto_image('labirinto10x10.pl', 'labirinto210x10png')
+generate_labirinto_image('labirinto10x10NoSol.pl', 'labirinto210x10NoSolpng')
+generate_labirinto_image('labirinto10x10NoSol12.pl', 'labirinto25x10x10NoSol12g')
+generate_labirinto_image('labirinto10x10NoSol16.pl', 'labirint10x10NoSol165.png')
+generate_labirinto_image('labirinto10x10NoSol20.pl', 'labirint10x10NoSol205.png')
 generate_labirinto_image('labirinto16x16.pl', 'labirinto16x16.png')
-
+generate_labirinto_image('labirinto20x20.pl', 'labirinto20x20.png')
+generate_labirinto_image('labirinto25x25.pl', 'labirinto25x25.png')
+generate_labirinto_image('labirinto35x35.pl', 'labirinto35x35.png')
 generate_labirinto_image('labirinto50x50.pl', 'labirinto50x50.png')
-
 generate_labirinto_image('labirinto100x100.pl', 'labirinto100x100.png')
+

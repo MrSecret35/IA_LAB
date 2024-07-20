@@ -4,13 +4,21 @@ num_colonne(8).
 iniziale(pos(1,4)).
 finale(pos(4,8)).
 finale(pos(8,2)).
+finale(pos(8,8)).
 
+occupata(pos(1,2)).
 occupata(pos(1,6)).
 occupata(pos(2,2)).
+occupata(pos(2,7)).
 occupata(pos(2,8)).
+occupata(pos(3,2)).
+occupata(pos(3,7)).
 occupata(pos(3,8)).
+occupata(pos(4,2)).
+occupata(pos(4,3)).
 occupata(pos(4,4)).
 occupata(pos(4,5)).
+occupata(pos(4,6)).
 occupata(pos(4,7)).
 occupata(pos(5,5)).
 occupata(pos(5,8)).

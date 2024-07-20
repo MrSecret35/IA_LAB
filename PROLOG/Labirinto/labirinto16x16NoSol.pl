@@ -11,6 +11,9 @@ occupata(pos(6,4)).
 occupata(pos(7,4)).
 occupata(pos(8,4)).
 occupata(pos(9,4)).
+occupata(pos(10,1)).
+occupata(pos(10,2)).
+occupata(pos(10,3)).
 occupata(pos(10,4)).
 occupata(pos(10,5)).
 occupata(pos(10,6)).
@@ -27,4 +30,5 @@ occupata(pos(2,8)).
 occupata(pos(2,9)).
 occupata(pos(2,10)).
 occupata(pos(2,11)).
+occupata(pos(1,12)).
 occupata(pos(2,12)).

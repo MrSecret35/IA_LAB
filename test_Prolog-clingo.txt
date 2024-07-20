@@ -2,23 +2,45 @@ test
 
 prolog
 -labirinto 8x8
-	ITDeep	-> Insta
-	A*		-> Insta - il primo è il minore gli altri un pò a cazzo dovuti a più finali
--labirinto 8x8 NoSol
+	ITDeep	-> 37,163 inferences, 0.006 CPU in 0.006 seconds (100% CPU, 6260686 Lips)
+	A*		-> 24,828 inferences, 0.005 CPU in 0.005 seconds (100% CPU, 4859896 Lips)
+		il primo è il minore gli altri un pò a cazzo dovuti a più finali
+-labirinto 8x8 NoSol -> 10 blocchi
+	ITDeep	-> 122,605 inferences, 0.014 CPU in 0.014 seconds (100% CPU, 9028433 Lips)
+	A*		-> 304,919 inferences, 0.047 CPU in 0.047 seconds (99% CPU, 6485992 Lips)
+-labirinto 10x10
+	ITDeep	-> 55,749,358 inferences, 2.668 CPU in 2.668 seconds (100% CPU, 20897798 Lips)
+	A*		-> 22,067,283 inferences, 2.598 CPU in 2.598 seconds (100% CPU, 8494973 Lips)
+-labirinto 10x10 NoSol -> 12 blocchi
+	ITDeep	-> 221,012 inferences, 0.018 CPU in 0.019 seconds (99% CPU, 12104364 Lips)
+	A*		-> 148,405,610 inferences, 16.783 CPU in 16.784 seconds (100% CPU, 8842663 Lips)
+-labirinto 10x10 NoSol -> 16 blocchi
+	ITDeep	-> 2,193,415 inferences, 0.101 CPU in 0.101 seconds (100% CPU, 21687807 Lips)
+	A*		-> 1,104,626,347 inferences, 114.314 CPU in 114.321 seconds (100% CPU, 9663104 Lips)
+-labirinto 10x10 NoSol -> 20 blocchi
+	ITDeep	-> 16,480,333 inferences, 0.714 CPU in 0.714 seconds (100% CPU, 23075559 Lips)
+	A*		-> 2,946,974,865 inferences, 265.668 CPU in 265.692 seconds (100% CPU, 11092706 Lips)
+-labirinto 10x10 NoSol -> 24 blocchi
+	ITDeep	-> 120,787,779 inferences, 5.769 CPU in 5.769 seconds (100% CPU, 20937559 Lips)
+	A*		-> 19,046,183,410 inferences, 1747.180 CPU in 1747.308 seconds (100% CPU, 10901101 Lips)
+-labirinto 16x16
+	ITDeep	-> 430,763,258 inferences, 21.597 CPU in 21.598 seconds (100% CPU, 19945123 Lips)
+	A*		-> 46,674 inferences, 0.011 CPU in 0.011 seconds (100% CPU, 4082683 Lips)
+-labirinto 16x16 NoSol -> 43 blocchi
+	ITDeep	-> ...
+	A*		-> ...
+-labirinto 20x20
+	ITDeep	-> 34,489,047 inferences, 1.688 CPU in 1.688 seconds (100% CPU, 20427531 Lips)
+	A*		-> 624,729 inferences, 0.107 CPU in 0.107 seconds (100% CPU, 5828240 Lips)
+-labirinto 25x25
+	ITDeep	-> 533,763,195 inferences, 24.296 CPU in 24.296 seconds (100% CPU, 21969179 Lips)
+	A*		-> 1,089,377 inferences, 0.154 CPU in 0.154 seconds (100% CPU, 7096701 Lips)
+-labirinto 35x35
+	ITDeep	-> 
+	A*		-> 354,950,062 inferences, 52.755 CPU in 52.757 seconds (100% CPU, 6728315 Lips)
+-labirinto 50x50
 	ITDeep	-> 
 	A*		->
--labirinto 10x10
--labirinto 10x10 NoSol
--labirinto 16x16
--labirinto 16x16 NoSol
--labirinto 20x20
--labirinto 20x20 NoSol
--labirinto 25x25
--labirinto 25x25 NoSol
--labirinto 35x35
--labirinto 35x35 NoSol
--labirinto 50x50
--labirinto 50x50 NoSol
 
 CLINGO
 
