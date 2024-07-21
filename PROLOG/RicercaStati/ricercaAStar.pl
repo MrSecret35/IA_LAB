@@ -83,7 +83,6 @@ invOpt([Head|Tail],Temp,Res):-
 
 inv(L,R):-invOpt(L,[],R).
     
-%aggiungi((S,G,H,C), Lista, ListaNuova):-
 
 
 firstElem([Head | _], Head).

@@ -16,9 +16,9 @@ squadra(q).
 squadra(r).
 
 sc(a,a1).
-sc(b,b1).
+sc(b,a1).
 sc(c,c1).
-sc(d,d1).
+sc(d,c1).
 sc(e,e1).
 sc(f,f1).
 sc(g,g1).
@@ -45,7 +45,6 @@ giornata(1..15).
 :- assign_andata(G,S1,S2), assign_andata(G,SS1,S2), S1<>SS1.
 :- assign_andata(G,S1,SX), assign_andata(G,SY,S1).
 
-%inserito durante l'assegnazione S1<>S2
 % nessuna squadra giochi contro se stessa
 % :- assign_andata(G,S1,S1).
 
@@ -74,11 +73,9 @@ giornata(1..15).
 :- assign_ritorno(G,S1,S2), assign_ritorno(G,SS1,S2), S1<>SS1.
 :- assign_ritorno(G,S1,SX), assign_ritorno(G,SY,S1).
 
-%conttrollo inutile in quanto assign_andata(G1,S2,S1) implica
 % nessuna squadra giochi contro se stessa
 % :- assign_ritorno(G,S1,S1).
 
-%conttrollo inutile in quanto assign_andata(G1,S2,S1) implica
 % non esistano giornate con partine invertine nello stesso girone
 % :- assign_ritorno(G,S1,S2), assign_ritorno(G1,S2,S1).
 
@@ -96,23 +93,18 @@ giornata(1..15).
 %------------------- Controlli ------------------- 
 %-------------------------------------------------
 
-%non necessario perchè assegnamento solo se assign_andata(G1,S2,S1)
 %non esistano giornate speculati
 %:- assign_andata(G,S1,S2), assign_ritorno(G,S1,S2).
-%non nec essario secondo richiesta
-%:- assign_andata(G,S1,S2), assign_ritorno(G,S2,S1).
-
 %una squadra non giochi 2 volte contro la stessa in casa o fuori casa
 %:- assign_andata(G,S1,S2), assign_ritorno(G1,S1,S2).
 
-% non funziona
 % una squadra non deve giocare 2 volte consecitive in casa o fuori casa 
 %1-2
-:- assign_andata(G,S1,S2), assign_ritorno(G+1,S1,S3), assign_ritorno(G+2,S1,S4).
-:- assign_andata(G,S2,S1), assign_ritorno(G+1,S3,S1), assign_ritorno(G+2,S4,S1).
+:- assign_andata(15,S1,S2), assign_ritorno(1,S1,S3), assign_ritorno(2,S1,S4).
+:- assign_andata(15,S2,S1), assign_ritorno(1,S3,S1), assign_ritorno(2,S4,S1).
 %2-1
-:- assign_andata(G,S1,S2), assign_andata(G+1,S1,S3), assign_ritorno(G+2,S1,S4).
-:- assign_andata(G,S2,S1), assign_andata(G+1,S3,S1), assign_ritorno(G+2,S4,S1).
+:- assign_andata(14,S1,S2), assign_andata(15,S1,S3), assign_ritorno(1,S1,S4).
+:- assign_andata(14,S2,S1), assign_andata(15,S3,S1), assign_ritorno(1,S4,S1).
 
 %show
 #show assign_andata/3.

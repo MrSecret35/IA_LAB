@@ -4,7 +4,6 @@ prolog
 -labirinto 8x8
 	ITDeep	-> 37,163 inferences, 0.006 CPU in 0.006 seconds (100% CPU, 6260686 Lips)
 	A*		-> 24,828 inferences, 0.005 CPU in 0.005 seconds (100% CPU, 4859896 Lips)
-		il primo è il minore gli altri un pò a cazzo dovuti a più finali
 -labirinto 8x8 NoSol -> 10 blocchi
 	ITDeep	-> 122,605 inferences, 0.014 CPU in 0.014 seconds (100% CPU, 9028433 Lips)
 	A*		-> 304,919 inferences, 0.047 CPU in 0.047 seconds (99% CPU, 6485992 Lips)
@@ -61,9 +60,11 @@ Fatti:
 -14 squadre 0 Derby
 -14 squadre 0 Derby Squadre Stringhe
 -14 squadre 1 Derby2
-
-Da fare:
 -14 squadre 2 Derby2
+
+Ora: -16 squadre 1 Derby2
+Da fare:
+
 -14 squadre 1 Derby3
 -14 squadre 1 Derby3 Squadre Stringhe
 -14 squadre 1 Derby3/ 1 Derby2

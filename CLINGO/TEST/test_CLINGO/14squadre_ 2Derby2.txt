@@ -1,0 +1,43 @@
+Answer: 1
+assign_andata(1,l,a) assign_ritorno(3,a,b) assign_andata(2,p,b) assign_andata(2,m,c) assign_andata(1,b,d) assign_ritorno(3,i,d) assign_andata(2,a,e) assign_ritorno(3,g,e) assign_andata(2,l,f) assign_andata(1,f,g) assign_andata(2,d,g) assign_andata(1,c,h) assign_ritorno(3,n,h) assign_andata(1,e,i) assign_andata(2,o,i) assign_ritorno(3,f,l) assign_andata(1,n,m) assign_ritorno(3,o,m) assign_andata(2,h,n) assign_andata(1,p,o) assign_ritorno(3,c,p) assign_ritorno(4,e,a) assign_andata(3,c,b) assign_ritorno(4,b,c) assign_andata(3,e,d) assign_andata(3,o,f) assign_ritorno(4,i,g) assign_ritorno(4,p,h) assign_andata(3,g,l) assign_ritorno(4,n,l) assign_andata(3,h,m) assign_ritorno(4,f,m) assign_andata(3,a,n) assign_ritorno(4,d,o) assign_andata(3,i,p) assign_andata(4,d,a) assign_ritorno(5,h,b) assign_ritorno(5,a,c) assign_andata(4,g,c) assign_andata(4,b,e) assign_ritorno(5,o,e) assign_ritorno(5,p,f) assign_ritorno(5,l,g) assign_andata(4,l,h) assign_andata(4,n,i) assign_ritorno(5,m,i) assign_ritorno(5,d,n) assign_andata(4,m,o) assign_andata(4,f,p) assign_andata(5,o,b) assign_ritorno(6,g,b) assign_andata(5,p,c) assign_ritorno(6,a,d) assign_andata(5,l,e) assign_ritorno(6,n,f) assign_andata(5,a,g) assign_andata(5,d,h) assign_ritorno(6,h,l) assign_andata(5,i,m) assign_ritorno(6,c,m) assign_andata(5,f,n) assign_ritorno(6,i,o) assign_ritorno(6,e,p) assign_andata(6,i,a) assign_ritorno(7,n,a) assign_andata(6,o,d) assign_ritorno(7,m,d) assign_ritorno(7,c,e) assign_andata(6,m,f) assign_andata(6,b,g) assign_ritorno(7,g,h) assign_ritorno(7,b,i) assign_andata(6,c,l) assign_andata(6,e,n) assign_ritorno(7,f,o) assign_andata(6,h,p) assign_ritorno(7,l,p) assign_andata(7,m,b) assign_ritorno(8,d,b) assign_ritorno(8,l,c) assign_andata(7,n,d) assign_andata(7,f,e) assign_ritorno(8,a,f) assign_ritorno(8,o,g) assign_andata(7,a,h) assign_ritorno(8,e,h) assign_andata(7,g,i) assign_andata(7,p,l) assign_ritorno(8,p,m) assign_ritorno(8,i,n) assign_andata(7,c,o) assign_andata(8,b,a) assign_ritorno(9,h,a) assign_andata(8,d,c) assign_ritorno(9,i,c) assign_andata(8,p,e) assign_andata(8,h,f) assign_ritorno(9,e,f) assign_ritorno(9,n,g) assign_andata(8,l,i) assign_ritorno(9,d,l) assign_andata(8,g,m) assign_ritorno(9,b,m) assign_andata(8,o,n) assign_ritorno(9,o,p) assign_andata(9,n,b) assign_ritorno(10,f,b) assign_andata(9,e,c) assign_ritorno(10,c,d) assign_ritorno(10,n,e) assign_andata(9,i,f) assign_andata(9,h,g) assign_ritorno(10,m,h) assign_ritorno(10,a,i) assign_andata(9,o,l) assign_andata(9,a,m) assign_ritorno(10,l,o) assign_andata(9,d,p) assign_ritorno(10,g,p) assign_andata(10,f,a) assign_ritorno(11,p,a) assign_andata(10,l,d) assign_ritorno(11,g,d) assign_andata(10,m,e) assign_ritorno(11,c,f) assign_andata(10,b,h) assign_andata(10,c,i) assign_ritorno(11,i,l) assign_ritorno(11,e,m) assign_andata(10,p,n) assign_ritorno(11,b,n) assign_andata(10,g,o) assign_ritorno(11,h,o) assign_andata(11,i,b) assign_ritorno(12,e,b) assign_andata(11,f,c) assign_ritorno(12,o,c) assign_ritorno(12,d,f) assign_andata(11,e,g) assign_ritorno(12,m,g) assign_andata(11,o,h) assign_ritorno(12,h,i) assign_ritorno(12,a,l) assign_andata(11,d,m) assign_andata(11,l,n) assign_andata(11,a,p) assign_ritorno(12,n,p) assign_andata(12,o,a) assign_ritorno(13,g,a) assign_andata(12,n,c) assign_ritorno(13,p,d) assign_andata(12,h,e) assign_ritorno(13,i,e) assign_andata(12,b,f) assign_andata(12,p,g) assign_ritorno(13,f,h) assign_andata(12,d,i) assign_andata(12,m,l) assign_ritorno(13,l,m) assign_ritorno(13,c,n) assign_ritorno(13,b,o) assign_ritorno(2,l,b) assign_ritorno(2,h,c) assign_ritorno(2,d,e) assign_ritorno(2,g,f) assign_ritorno(2,p,i) assign_ritorno(2,m,n) assign_ritorno(2,a,o) assign_ritorno(1,m,a) assign_ritorno(1,h,d) assign_ritorno(1,c,g) assign_ritorno(1,f,i) assign_ritorno(1,e,l) assign_ritorno(1,n,o) assign_ritorno(1,b,p) assign_andata(13,c,a) assign_andata(13,f,d) assign_andata(13,i,h) assign_andata(13,b,l) assign_andata(13,g,n) assign_andata(13,e,o) assign_andata(13,m,p)
+SATISFIABLE
+
+Models       : 1+
+Calls        : 1
+Time         : 7807.807s (Solving: 7803.90s 1st Model: 7803.77s Unsat: 0.00s)
+CPU Time     : 49919.953s
+Threads      : 7        (Winner: 6)
+
+squadra(a).
+squadra(b).
+squadra(c).
+squadra(d).
+squadra(e).
+squadra(f).
+squadra(g).
+squadra(h).
+squadra(i).
+squadra(l).
+squadra(m).
+squadra(n).
+squadra(o).
+squadra(p).
+%squadra(q).
+%squadra(r).
+
+sc(a,a1).
+sc(b,a1).
+sc(c,c1).
+sc(d,c1).
+sc(e,e1).
+sc(f,f1).
+sc(g,g1).
+sc(h,h1).
+sc(i,i1).
+sc(l,l1).
+sc(m,m1).
+sc(n,n1).
+sc(o,o1).
+sc(p,p1).
+%sc(q,q1).
+%sc(r,r1).
