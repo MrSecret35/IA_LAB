@@ -2,7 +2,7 @@
 %-------------------- Andata -------------------- 
 %------------------------------------------------
 
-7 {assign_andata(G,S1,S2):squadra(S1),squadra(S2),S1<>S2} 7 :- giornata(G).
+8 {assign_andata(G,S1,S2):squadra(S1),squadra(S2),S1<>S2} 8 :- giornata(G).
 
 % nessuna squadra giochi 2 volte in una giornata
 :- assign_andata(G,S1,S2), assign_andata(G,S1,SS2), S2<>SS2.
@@ -30,7 +30,7 @@
 %-------------------- Ritorno -------------------- 
 %-------------------------------------------------
 
-7 {assign_ritorno(G,S1,S2):squadra(S1),squadra(S2),S1<>S2,assign_andata(G1,S2,S1)} 7 :- giornata(G).
+8 {assign_ritorno(G,S1,S2):squadra(S1),squadra(S2),S1<>S2,assign_andata(G1,S2,S1)} 8 :- giornata(G).
 
 % nessuna squadra giochi 2 volte in una giornata
 :- assign_ritorno(G,S1,S2), assign_ritorno(G,S1,SS2), S2<>SS2.

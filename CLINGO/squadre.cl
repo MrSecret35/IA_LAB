@@ -46,8 +46,8 @@ squadra(m).
 squadra(n).
 squadra(o).
 squadra(p).
-%squadra(q).
-%squadra(r).
+squadra(q).
+squadra(r).
 
 sc(a,a1).
 sc(b,a1).
@@ -63,5 +63,5 @@ sc(m,m1).
 sc(n,n1).
 sc(o,o1).
 sc(p,p1).
-%sc(q,q1).
-%sc(r,r1).
+sc(q,q1).
+sc(r,r1).
