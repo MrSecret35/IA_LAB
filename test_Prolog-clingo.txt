@@ -57,10 +57,17 @@ prolog
 	A*		-> 646,388,478 inferences, 85.194 CPU in 85.194 seconds (100% CPU, 7587243 Lips)
 CLINGO
 
+Fatti:
 -14 squadre 0 Derby
+-14 squadre 0 Derby Squadre Stringhe
 -14 squadre 1 Derby2
+
+Da fare:
 -14 squadre 2 Derby2
+-14 squadre 1 Derby3
+-14 squadre 1 Derby3 Squadre Stringhe
 -14 squadre 1 Derby3/ 1 Derby2
+-14 squadre 1 Derby3/ 2 Derby2
 -14 squadre 2 Derby3/ 1 Derby2
 
 -16 squadre 0 Derby
