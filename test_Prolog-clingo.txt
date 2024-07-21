@@ -42,6 +42,19 @@ prolog
 	ITDeep	-> 
 	A*		->
 
+---Mostriciattolo
+-labirinto 8x8
+	ITDeep	-> 216,716 inferences, 0.020 CPU in 0.020 seconds (100% CPU, 10607665 Lips)
+	A*		-> 57,185 inferences, 0.030 CPU in 0.030 seconds (100% CPU, 1899926 Lips)
+-labirinto 20x20
+	ITDeep	-> 1,652,757 inferences, 0.100 CPU in 0.101 seconds (100% CPU, 16483233 Lips)
+	A*		-> 237,463 inferences, 0.022 CPU in 0.022 seconds (99% CPU, 10976490 Lips)
+-labirinto 25x25
+	ITDeep	-> 25,877,415 inferences, 1.327 CPU in 1.327 seconds (100% CPU, 19499058 Lips)
+	A*		-> 1,518,753 inferences, 0.079 CPU in 0.079 seconds (99% CPU, 19334306 Lips)
+-labirinto 25x25 NoSol
+	ITDeep	-> 
+	A*		-> 646,388,478 inferences, 85.194 CPU in 85.194 seconds (100% CPU, 7587243 Lips)
 CLINGO
 
 -14 squadre 0 Derby

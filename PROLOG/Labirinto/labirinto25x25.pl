@@ -5,6 +5,9 @@ iniziale(pos(1,1)).
 finale(pos(25,25)).
 finale(pos(12,12)).
 
+occupata(pos(9,2)).
+occupata(pos(10,2)).
+occupata(pos(11,2)).
 occupata(pos(24,19)).
 occupata(pos(6,5)).
 occupata(pos(4,10)).

@@ -5,19 +5,16 @@ ricerca(Cammino):-
 
     euristicaMartello(S0,H),
     ricercaAStarMartello([(S0,0,H,Ghiaccio,Gemme,[])], [], GhiaccioFinale, GemmeFinali, Cammino1),
-    %inv(Cammino1, CamminoInvertito1),
-    %write(CamminoInvertito1), write("\n"),
 
     martello(S1),
     euristicaPortale(S1,H1),
     ricercaAStarPortale([(S1,0,H1, GhiaccioFinale, GemmeFinali,[])], [], _, GemmeFinaliFinali, Cammino2),
-    
     inv(Cammino1, CamminoInvertito1),
     inv(Cammino2, CamminoInvertito2),
 
-    % posizioniContigue(GemmeFinaliFinali,GemmeFinaliFinali,N,0),
-    % %N \== 0, 
-    % write("Gemme Contigue: "), write(N), write("\n"),
+    %posizioniContigue(GemmeFinaliFinali,GemmeFinaliFinali,N,0),
+    %N == 0, 
+    %write("Gemme Contigue: "), write(N), write("\n"),
 
     tell('output.txt'),
     scriviCammino1(S0,CamminoInvertito1,Ghiaccio,_,Gemme,_),
@@ -51,7 +48,6 @@ ricercaAStarMartello([(S,G,H, Gh,Ge, Cammino)| Open], Closed, GhiaccioFinale, Ge
 ricercaAStarMartello([(S,G,H,Gh,Ge, Cammino)| Open], Closed, [], [], ["Finish"]):-
     Open == [],
     findall(Az, applicabileTutto(Az,[S | Gh],Ge),ElencoAz),
-    write("ops4"),write("\n"),
     elaboraMartello((S,G,H,Gh,Ge,Cammino), ElencoAz, Open, Closed, ListaNuovaOpen ),
     ListaNuovaOpen == [],!.
 
